@@ -6,7 +6,7 @@ export default function Document() {
       <title>SET - Semana Empresarial e Tecnológica</title>
       <meta
         name="description"
-        content="Feira Empresarial e Tecnológica do Instituto Superior Técnico. Encontra o teu estágio ou emprego de 26 a 29 de fevereiro."
+        content="Feira Empresarial e Tecnológica do Instituto Superior Técnico. Encontra o teu estágio ou emprego de 24 a 27 de fevereiro."
       />
       <meta
         name="keywords"
