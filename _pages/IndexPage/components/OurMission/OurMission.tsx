@@ -36,7 +36,7 @@ const OurMissionSection = () => {
             </Text>
           </Container>
         </div>
-        <Button
+        {/* <Button
           onClick={() => router.push(links.activities)}
           variant="filled"
           fullWidth={isMobile}
@@ -44,7 +44,7 @@ const OurMissionSection = () => {
           size={isMobile ? 'sm' : 'md'}
         >
           As nossas atividades
-        </Button>
+        </Button> */}
       </div>
       <MantineImage className=" sm:max-w-lg" src={Palestra.src} />
     </div>
