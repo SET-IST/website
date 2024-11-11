@@ -15,7 +15,7 @@ import { rem } from '@mantine/core'
 import { LogoutNavItem } from '@/components/Navbar/components'
 
 export const MainNavLinks: NavLinkExtendedProps[] = [
-  {
+  /*{
     visibility: NavLinkVisibility.MOBILE,
     label: 'Atividades',
     navId: 'activities',
@@ -23,7 +23,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
     leftSection: (
       <IconList style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     ),
-  },
+  }, /*
   /* {
     visibility: NavLinkVisibility.MOBILE,
     label: 'Prémios',
@@ -33,7 +33,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
       <IconGift style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     ),
   }, */
-  {
+  /*{
     visibility: NavLinkVisibility.MOBILE,
     label: 'Equipa',
     navId: 'team',
@@ -41,7 +41,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
     leftSection: (
       <IconUser style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     ),
-  },
+  },*/
 ]
 
 export const SessionNavLinks: NavLinkExtendedProps[] = [
