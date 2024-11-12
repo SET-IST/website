@@ -36,15 +36,17 @@ const OurMissionSection = () => {
             </Text>
           </Container>
         </div>
-        {/* <Button
-          onClick={() => router.push(links.activities)}
-          variant="filled"
-          fullWidth={isMobile}
-          mt={10}
-          size={isMobile ? 'sm' : 'md'}
-        >
-          As nossas atividades
-        </Button> */}
+          {process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ? ("") : (
+            <Button
+              onClick={() => router.push(links.activities)}
+              variant="filled"
+              fullWidth={isMobile}
+              mt={10}
+              size={isMobile ? 'sm' : 'md'}
+            >
+              As nossas atividades
+            </Button>
+          )}
       </div>
       <MantineImage className=" sm:max-w-lg" src={Palestra.src} />
     </div>
