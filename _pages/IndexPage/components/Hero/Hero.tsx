@@ -17,7 +17,7 @@ export default function Example() {
 
       <Text className="text-center font-poppins uppercase" fw={600} c="gray.0">
         <span className="sm:text-xl">
-          De 24 a 27 de Fevereiro no Instituto Superior Técnico - Taguspark
+          De {process.env.NEXT_PUBLIC_EVENT_DATES} no Instituto Superior Técnico - Taguspark
         </span>
       </Text>
     </div>
