@@ -85,7 +85,7 @@ export default function Navbar({ children, startTransparent }: NavbarProps) {
             {/* Desktop navbar */}
 
             <Group ml="xl" gap={8} visibleFrom="sm">
-              {MainNavLinks.map((link, index) => (
+              {MainNavLinks.filter(() => process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION != "true").map((link, index) => (
                 <DesktopNavItem
                   key={`desktop_nav_${index}`}
                   link={link}

@@ -23,14 +23,16 @@ export default function WelcomeSection() {
           <strong>empresarial</strong>.
         </Text>
       </Container>
-      <Button
-        onClick={() => router.push(links.team)}
-        mt={10}
-        fullWidth={isMobile}
-        size={isMobile ? 'sm' : 'md'}
-      >
-        Conhece a nossa equipa
-      </Button>
+      {process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ? ("") : (
+        <Button
+          onClick={() => router.push(links.team)}
+          mt={10}
+          fullWidth={isMobile}
+          size={isMobile ? 'sm' : 'md'}
+        >
+          Conhece a nossa equipa
+        </Button>
+      )}
     </div>
   )
 }
