@@ -18,7 +18,7 @@ export default function CompaniesSection() {
           </Text>
         </Container>
       </div>
-      <CompaniesCarousel isMobile={isMobile || false} />
+      {process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ? ("") : <CompaniesCarousel isMobile={isMobile || false} />}
     </div>
   )
 }

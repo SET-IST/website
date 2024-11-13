@@ -42,8 +42,8 @@ export function TCDialog() {
         <Section title="1. Objectivo">
           a) O presente documento tem por objetivo definir as condições para a
           submissão de currículos através da plataforma disponibilizada pela
-          equipa da edição de 2024 do evento SET – Semana Empresarial e
-          Tecnológica, a decorrer entre os dias 26 a 29 de Fevereiro de 2024 no
+          equipa do evento SET – Semana Empresarial e
+          Tecnológica, a decorrer entre os dias 24 a 27 de Fevereiro de 2025 no
           campus Taguspark do Instituto Superior Técnico, sito em Avenida
           Professor Doutor Cavaco Silva, 2744 -016 Porto Salvo, Portugal.
         </Section>
@@ -57,11 +57,11 @@ export function TCDialog() {
           Salvo, Portugal. <br />
           <br />
           b) A submissão de currículos por parte dos alunos, e o posterior
-          acesso por parte das empresas tem por principal objetivo de dar mais
+          acesso por parte das empresas, tem por principal objetivo dar mais
           uma oportunidade aos alunos de serem reconhecidos pelas empresas que
           detêm acesso aos currículos. <br />
           <br />
-          c) A plataforma de submissão de currículos do evento SET 2024,
+          c) A plataforma de submissão de currículos do evento SET,
           incluída na app da SET, é uma plataforma onde os participantes desta
           edição podem submeter os seus currículos, em formato digital PDF, para
           consulta das empresas que escolham e decidam ter acesso aos
@@ -80,12 +80,12 @@ export function TCDialog() {
           nos servidores do Instituto Superior Técnico, localizados em Portugal.
           <br />
           <br />
-          b) Apenas empresas que participam na edição da SET de 2024, e que
-          decidam subscrever do serviço de acesso aos currículos, têm acesso à
+          b) Apenas empresas que participam na mais recente edição da SET, e que
+          decidam subscrever o serviço de acesso aos currículos, têm acesso à
           plataforma.
           <br />
           <br />
-          c) A equipa do evento SET 2024 fornece credenciais de acesso à
+          c) A equipa do evento SET fornece credenciais de acesso à
           plataforma a cada empresa, sendo que cada empresa se compromete a que
           a credencial dada seja apenas usada por colaboradores da empresa.
           <br />
@@ -105,7 +105,7 @@ export function TCDialog() {
           empresa tenha interesse em apresentar alguma proposta ao aluno.
         </Section>
         <Text fw="bold" size="sm">
-          Porto Salvo, 17 de Fevereiro de 2024
+          Porto Salvo, 11 de Novembro de 2024
         </Text>
       </div>
     </Modal>

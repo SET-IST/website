@@ -16,9 +16,12 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
+
       - name: Build Docker image
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v6
         with:
           file: Dockerfile
           push: false
           tags: "${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ github.sha }}"
+          build-args: |
+            NEXT_PUBLIC_EVENT_DATES=${{ vars.EVENT_DATES }}
