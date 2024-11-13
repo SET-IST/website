@@ -42,6 +42,9 @@ jobs:
           echo FENIX_SECRET="${{ secrets.FENIX_CLIENT_SECRET_STAG }}" >> env
           echo FENIX_URL="${{ vars.FENIX_CLIENT_URL_STAG }}" >> env
 
+          echo NEXT_PUBLIC_EVENT_DATES="${{ vars.EVENT_DATES }}" >> env
+          echo NEXT_PUBLIC_PREPARE_NEXT_EDITION="${{ vars.PREPARE_NEXT_EDITION_STAG }}" >> env
+
       - name: upload env artifact
         uses: actions/upload-artifact@v3
         with:
