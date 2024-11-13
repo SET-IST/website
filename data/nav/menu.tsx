@@ -24,7 +24,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
       <IconList style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     ),
   },
-  {
+  /* {
     visibility: NavLinkVisibility.MOBILE,
     label: 'Prémios',
     navId: 'prizes',
@@ -32,7 +32,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
     leftSection: (
       <IconGift style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     ),
-  },
+  }, */
   {
     visibility: NavLinkVisibility.MOBILE,
     label: 'Equipa',
