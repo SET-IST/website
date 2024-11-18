@@ -7,9 +7,7 @@ on:
       - '!main'
       - '!production'
   pull_request:
-    types:
-      - opened
-      - synchronize
+    types: [opened, reopened, synchronize]
 
 jobs:
   build:
