@@ -18,6 +18,7 @@ export default function Footer() {
             <span>
               <strong>geral@set-tagus.tecnico.ulisboa.pt</strong>
             </span>
+            <span>+351 918 770 973 | +351 927 281 374</span>
           </div>
           <div className="flex flex-col gap-1 sm:gap-0">
             <Text className={classes.title}>Ajuda</Text>
