@@ -99,7 +99,7 @@ const UserActivities = () => {
             <ActivitySkeleton />
           </>
         )}
-        {activities?.map((activityData, index) => (
+        {activities instanceof Array && activities.map((activityData, index) => (
           <Activity
             key={`activity_${index}`}
             data={activityData}
