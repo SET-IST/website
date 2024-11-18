@@ -21,6 +21,6 @@ jobs:
         with:
           file: Dockerfile
           push: false
-          tags: "${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ github.sha }}"
+          tags: "${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:${{ github.sha }}"
           build-args: |
             NEXT_PUBLIC_EVENT_DATES=${{ vars.EVENT_DATES }}
