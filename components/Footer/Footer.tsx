@@ -5,13 +5,14 @@ import SocialLinks from './SocialLinks';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[color:var(--mantine-color-gray-2)] bg-[color:var(--mantine-color-gray-1)] pt-5 sm:pt-10 pb-5">
+    <footer className="border-t border-[color:var(--mantine-color-gray-2)] bg-[color:var(--mantine-color-gray-1)] pt-5 pb-5">
       <div className="flex flex-col gap-6 sm:gap-0 sm:flex-row sm:justify-between items-start sm:items-center mx-5 sm:mx-20 py-8">
         <SetLogo aria-hidden />
-        <div className="flex justify-center sm:justify-end mx-5 sm:mx-20 mt-6">
-          <SocialLinks />
-        </div>
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+          <div className="flex flex-col gap-0">
+            <Text className={classes.title}>Social</Text>
+            <span><SocialLinks /></span>
+          </div>
           <div className="flex flex-col gap-0">
             <Text className={classes.title}>Localização</Text>
             <span>Instituto Superior Técnico (Campus Taguspark)</span>
@@ -20,9 +21,9 @@ export default function Footer() {
           <div className="flex flex-col gap-0">
             <Text className={classes.title}>Contactos</Text>
             <span>
-              <strong>geral@set-tagus.tecnico.ulisboa.pt</strong>
+              <strong><a href='mailto:geral@set-tagus.tecnico.ulisboa.pt'>geral@set-tagus.tecnico.ulisboa.pt</a></strong>
             </span>
-            <span>+351 918 770 973 | +351 927 281 374</span>
+            <span><a href='tel:+351918770973'>+351 918 770 973</a> | <a href='tel:+351927281374'>+351 927 281 374</a></span>
           </div>
           <div className="flex flex-col gap-1 sm:gap-0">
             <Text className={classes.title}>Ajuda</Text>
@@ -45,7 +46,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      
     </footer>
   )
 }
