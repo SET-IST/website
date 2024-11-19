@@ -22,6 +22,15 @@ export default function SocialLinks() {
                 <FaInstagram size={24} />
             </a>
             <a
+            href="https://www.tiktok.com/@set.tecnico"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+            className="text-gray-600 hover:text-black"
+            >
+                <FaTiktok size={24} />
+            </a>
+            <a
             href="https://www.facebook.com/SET.Tecnico/"
             target="_blank"
             rel="noopener noreferrer"
@@ -29,15 +38,6 @@ export default function SocialLinks() {
             className="text-gray-600 hover:text-blue-700"
             >
                 <FaFacebook size={24} />
-            </a>
-            <a
-            href="https://www.tiktok.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TikTok"
-            className="text-gray-600 hover:text-black"
-            >
-                <FaTiktok size={24} />
             </a>
             <a
             href="https://x.com/SET_ISTTagus"
