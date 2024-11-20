@@ -1,12 +1,4 @@
-import {
-  coordenacao,
-  marketingDesign,
-  logistica,
-  people,
-  relacoesExternas,
-  suporteInformatico,
-  embaixadores,
-} from '@/data/team'
+import { team24 } from '@/data/team'
 import cn from 'classnames'
 import Header from './components/Header'
 import Department from './components/Department'
@@ -20,13 +12,9 @@ const TeamPage = () => {
     >
       <Header />
       <div className="w-full flex flex-col gap-12">
-        <Department {...coordenacao} />
-        <Department {...marketingDesign} />
-        <Department {...suporteInformatico} />
-        <Department {...relacoesExternas} />
-        <Department {...logistica} />
-        <Department {...people} />
-        <Department {...embaixadores} />
+        {team24.map((department, index) => (
+          <Department key={index} {...department} />
+        ))}
       </div>
     </div>
   )
