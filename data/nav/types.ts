@@ -5,6 +5,7 @@ export enum NavLinkVisibility {
   MOBILE,
   DESKTOP,
   ALL,
+  NONE,
 }
 
 export type NavLinkExtendedProps = NavLinkProps & {
