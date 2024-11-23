@@ -16,7 +16,7 @@ import { LogoutNavItem } from '@/components/Navbar/components'
 
 export const MainNavLinks: NavLinkExtendedProps[] = [
   {
-    visibility: NavLinkVisibility.MOBILE,
+    visibility: process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ?  NavLinkVisibility.NONE : NavLinkVisibility.MOBILE,
     label: 'Atividades',
     navId: 'activities',
     link: appLinks.activities,
@@ -25,7 +25,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
     ),
   },
   /* {
-    visibility: NavLinkVisibility.MOBILE,
+    visibility: process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ?  NavLinkVisibility.NONE : NavLinkVisibility.MOBILE,
     label: 'Prémios',
     navId: 'prizes',
     link: appLinks.awards,
@@ -34,7 +34,7 @@ export const MainNavLinks: NavLinkExtendedProps[] = [
     ),
   }, */
   {
-    visibility: NavLinkVisibility.MOBILE,
+    visibility: process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ?  NavLinkVisibility.NONE : NavLinkVisibility.MOBILE,
     label: 'Equipa',
     navId: 'team',
     link: appLinks.team,
