@@ -61,6 +61,9 @@ function NavComposite(
       case NavLinkVisibility.ALL:
         visible = true
         break
+      case NavLinkVisibility.NONE:
+        visible = false
+        break
     }
 
     if (!visible) return null
