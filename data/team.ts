@@ -3,6 +3,7 @@ import { coordenacao24, marketingDesign24, logistica24, people24, relacoesExtern
 import { coordenacao23, design23, logistica23, marketing23, relacoesExternas23, suporteInformatico23, } from './team23';
 import { coordenacao22, logistica22, marketing22, relacoesExternas22, suporteInformatico22, } from './team22';
 import { coordenacao21, logistica21, marketing21, relacoesExternas21, suporteInformatico21, } from './team21';
+import { coordenacao20, logistica20, marketing20, relacoesExternas20, suporteInformatico20, } from './team20';
   
 
 export interface TeamMember {
@@ -56,4 +57,11 @@ export const team21: Team = [
 	relacoesExternas21,
     suporteInformatico21,
 ]
-  
+
+export const team20: Team = [
+    coordenacao20,
+    logistica20,
+    marketing20,
+	relacoesExternas20,
+    suporteInformatico20,
+]

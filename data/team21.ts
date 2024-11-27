@@ -1,7 +1,6 @@
 //  Components
-//import carolinaFerreira from "@/assets/team/2022/Carolina Ferreira.webp";
-// Coordenacao
 
+// Coordenacao
 import franciscaFerreira from '@/assets/team/2021/franciscaFerreira.webp';
 import joanaDrago from '@/assets/team/2021/joanaDrago.webp';
 import miguelOliveira from '@/assets/team/2021/miguelOliveira.webp';
