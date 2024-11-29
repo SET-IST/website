@@ -55,7 +55,7 @@
     "next": "13.2.4",
     "next-api-decorators": "^2.0.0",
     "next-auth": "^4.24.5",
-    "path-to-regexp": "^6.2.1",
+    "path-to-regexp": "^6.3.0",
     "qr-scanner": "^1.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
