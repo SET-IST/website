@@ -3,7 +3,6 @@ import {
   Get,
   Patch,
   Body,
-  ValidationPipe,
   Param,
   BadRequestException,
   Post,
@@ -53,6 +52,11 @@ class StudentRoutes {
   @Get('/award')
   public async requestAward(@UserData() user: User) {
     return await Server.requestAward(user)
+  }
+
+  @Get('/redemptionSettings')
+  public async getRedemptionSettings() {
+    return await Server.getRedemptionSettings()
   }
 }
 

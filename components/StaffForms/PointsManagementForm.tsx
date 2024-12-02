@@ -2,11 +2,11 @@ import * as Yup from 'yup'
 import { useForm, yupResolver } from '@mantine/form'
 import { Button, NumberInput, Text } from '@mantine/core'
 import { AccountSelect } from './components'
-import { User, UserType } from '@prisma/client'
-import { useEffect, useState } from 'react'
+import { UserType } from '@prisma/client'
+import { useEffect } from 'react'
 import { useUpdateStudentPoints, useUserDetails } from '@/lib/frontend/hooks'
-import { StudentProfile } from '@/lib/frontend/api'
-import { useQueryClient } from '@tanstack/react-query'
+import { fetchRedemptionSettings, RedemptionSettings, StudentProfile } from '@/lib/frontend/api'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -78,6 +78,8 @@ const PointsManagementForm = () => {
       })
   }
 
+  const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
+
   return (
     <div className="h-fit p-4">
       <Text c="#00415a" fz="xl" fw={700}>
@@ -102,35 +104,37 @@ const PointsManagementForm = () => {
         <Button.Group orientation="vertical">
           <Button
             disabled={!isValidUser}
-            onClick={() => addPoints(10)}
+            onClick={() => addPoints(redemptionSettings.data?.REWARD ?? 10)}
             fullWidth
             variant="default"
           >
-            Scan a empresa (+10)
+            Scan a empresa (+{redemptionSettings.data?.REWARD ?? 10})
           </Button>
           <Button
             disabled={!isValidUser}
-            onClick={() => addPoints(20)}
+            onClick={() => addPoints(redemptionSettings.data?.LECTURE ?? 20)}
             fullWidth
             variant="default"
           >
-            Palestra (+20)
+            Palestra (+{redemptionSettings.data?.LECTURE ?? 20})
           </Button>
           <Button
             disabled={!isValidUser}
-            onClick={() => addPoints(30)}
+            onClick={() =>
+              addPoints(redemptionSettings.data?.SPEED_INTERVIEW ?? 30)
+            }
             fullWidth
             variant="default"
           >
-            Speed Interview (+30)
+            Speed Interview (+{redemptionSettings.data?.SPEED_INTERVIEW ?? 30})
           </Button>
           <Button
             disabled={!isValidUser}
-            onClick={() => addPoints(40)}
+            onClick={() => addPoints(redemptionSettings.data?.WORKSHOP ?? 40)}
             fullWidth
             variant="default"
           >
-            Workshop (+40)
+            Workshop (+{redemptionSettings.data?.WORKSHOP ?? 40})
           </Button>
           <Button
             disabled={!isValidUser}

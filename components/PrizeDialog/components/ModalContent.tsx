@@ -1,7 +1,8 @@
 import { Text, Modal, Transition } from '@mantine/core'
 import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
-import { StudentProfile } from '@/lib/frontend/api'
+import { fetchRedemptionSettings, RedemptionSettings, StudentProfile } from '@/lib/frontend/api'
+import { useQuery } from '@tanstack/react-query'
 
 export function ModalContent() {
   const { data, isLoading: isUserLoading, isError: isUserError } = useProfile()
@@ -15,6 +16,7 @@ export function ModalContent() {
   const notEnoughPoints = awardError?.response?.status === 400
 
   const user = data as StudentProfile
+  const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
 
   return (
     <div className="h-screen p-4 flex flex-col">
@@ -37,7 +39,7 @@ export function ModalContent() {
             {notEnoughPoints && (
               <Text c="white" ta="center" fz="md" fw={500}>
                 Faltam-te{' '}
-                <strong>{30 - (user?.studentDetails?.points ?? 0)}</strong>{' '}
+                <strong>{(redemptionSettings.data?.REDEEM ?? 0) - (user?.studentDetails?.points ?? 0)}</strong>{' '}
                 pontos para teres um brinde
               </Text>
             )}

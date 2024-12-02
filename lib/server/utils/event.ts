@@ -3,7 +3,7 @@ import { StudentDetails } from '@prisma/client'
 import { isEqual } from 'lodash'
 import { DateTime } from 'luxon'
 
-function getCurrentDayCode() {
+export function getCurrentDayCode() {
   return DateTime.now().toFormat('dd_LL_yyyy')
 }
 
