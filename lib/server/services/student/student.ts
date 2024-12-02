@@ -188,6 +188,13 @@ export async function scanCompany(user: User, companyId: string) {
       where: {
         userId: user.id,
       },
+      include: {
+        dayTotalPoints: {
+          include: {
+            day: true
+          }
+        }
+      }
     })
 
     if (student.companies_ids.includes(company.userId))
@@ -233,8 +240,10 @@ export async function scanCompany(user: User, companyId: string) {
             increment: 1,
           },
         },
-      }),
+      })
     ])
+
+    await addTotalPoints(student, points)
 
     return {
       ...company,
