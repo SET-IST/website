@@ -1,10 +1,11 @@
 import { databaseQueryWrapper } from '@/core/utils'
 import { PrismaService } from '../../../../core/services/server'
-import { AwardType, type User } from '@prisma/client'
+import { PointSetting, AwardType, type User, Prisma } from '@prisma/client'
 import { PatchStudentProfileDto } from './dtos'
 import { getFile, getFullResourcePath } from '@/lib/server/utils'
 import { BadRequestException, ConflictException } from 'next-api-decorators'
-import { visitedAllDayStands } from '../../utils/event'
+import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
+import { DateTime } from 'luxon'
 
 export async function getStudentProfile(user: User) {
   return await databaseQueryWrapper(async () => {
@@ -21,6 +22,11 @@ export async function getStudentProfile(user: User) {
             course: true,
             scans: true,
             points: true,
+            dayTotalPoints: {
+              include: {
+                day: true
+              },
+            },
             cvLocation: true,
             phoneNumber: true,
             reedems: true,
@@ -35,9 +41,7 @@ export async function getStudentProfile(user: User) {
       cv:
         student.studentDetails?.cvLocation &&
         (await getFile(student.studentDetails?.cvLocation)),
-      totalPoints:
-        (student.studentDetails?.points ?? 0) +
-        30 * (student.studentDetails?.reedems ?? 0),
+      totalPoints: getTotalPoints(student.studentDetails as StudentDetails | null, true)
     }
 
     return response
@@ -184,6 +188,13 @@ export async function scanCompany(user: User, companyId: string) {
       where: {
         userId: user.id,
       },
+      include: {
+        dayTotalPoints: {
+          include: {
+            day: true
+          }
+        }
+      }
     })
 
     if (student.companies_ids.includes(company.userId))
@@ -191,7 +202,7 @@ export async function scanCompany(user: User, companyId: string) {
 
     const points = (await visitedAllDayStands(student, company.userId))
       ? 50
-      : 10
+      : (await getRedemptionSettings()).REWARD
 
     await PrismaService.$transaction([
       PrismaService.companyDetails.update({
@@ -229,8 +240,10 @@ export async function scanCompany(user: User, companyId: string) {
             increment: 1,
           },
         },
-      }),
+      })
     ])
+
+    await addTotalPoints(student, points)
 
     return {
       ...company,
@@ -269,7 +282,7 @@ export async function requestAward(user: User) {
         },
       })
 
-      if (studentTx.points - 30 < 0) {
+      if (studentTx.points - (await getRedemptionSettings()).REDEEM < 0) {
         throw new BadRequestException(
           'The student does not have enough points to request awards'
         )
@@ -278,7 +291,7 @@ export async function requestAward(user: User) {
       return await tx.awardToken.create({
         data: {
           type:
-            studentTx.reedems % 2 !== 0
+            studentTx.reedems % (await getRedemptionSettings()).RATIO !== 0
               ? AwardType.SPECIAL
               : AwardType.NORMAL,
           student: {
@@ -294,4 +307,82 @@ export async function requestAward(user: User) {
       })
     })
   })
+}
+
+export async function getRedemptionSettings() {
+  return (await PrismaService.redemptionSettings.findMany()).reduce((acc, row) => {
+    acc[row.setting] = row.amount;
+    return acc;
+  }, {} as Record<PointSetting, number>)
+}
+
+type StudentDetails = Prisma.StudentDetailsGetPayload<{
+  include: {
+    dayTotalPoints: {
+      include: {
+        day: true
+      }
+    }
+  }
+}>
+
+export function getTotalPoints(studentDetails: StudentDetails | null, all?: boolean): number {
+  if (!studentDetails) return 0;
+
+  if(all) {
+    return studentDetails.dayTotalPoints
+      .reduce((sum, transaction) => {
+        return sum + transaction.total_points
+      }, 0)
+  }
+
+  const dayTotalPoints =
+    studentDetails.dayTotalPoints.find(
+      (points) => points.day.dateCode === getCurrentDayCode()
+    ) ||
+    studentDetails.dayTotalPoints.find(
+      (points) =>
+        points.day.dateCode === DateTime.fromMillis(0).toFormat('dd_LL_yyyy')
+    );
+
+  return dayTotalPoints?.total_points ?? 0;
+}
+
+export async function addTotalPoints(studentDetails: StudentDetails, totalPoints: number) {
+  return databaseQueryWrapper(async () => {
+    const currentDayCode = getCurrentDayCode();
+    const defaultDayCode = DateTime.fromMillis(0).toFormat('dd_LL_yyyy');
+
+    let day = await PrismaService.day.findFirst({
+      where: {
+        OR: [
+          { dateCode: currentDayCode },
+          { dateCode: defaultDayCode },
+        ],
+      },
+    });
+
+    if (!day) {
+      day = await PrismaService.day.create({
+        data: { dateCode: defaultDayCode },
+      });
+    }
+
+    return PrismaService.dayTotalPoints.upsert({
+      where: {
+        dayId_studentDetailsId: {
+          dayId: day.id,
+          studentDetailsId: studentDetails.id,
+        },
+      },
+      update: {
+        total_points: { increment: totalPoints },
+      },
+      create: {
+        dayId: day.id,
+        studentDetailsId: studentDetails.id,
+        total_points: totalPoints,
+      },
+    });
+  });
 }
