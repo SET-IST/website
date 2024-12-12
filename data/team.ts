@@ -6,6 +6,7 @@ import { coordenacao21, logistica21, marketing21, relacoesExternas21, suporteInf
 import { coordenacao20, logistica20, marketing20, relacoesExternas20, suporteInformatico20, } from './team20';
 import { coordenacao19, logistica19, marketing19, relacoesExternas19, suporteInformatico19, } from './team19';
 import { coordenacao18, logistica18, marketing18, relacoesExternas18, suporteInformatico18, } from './team18';
+import { coordenacao17, logistics17, marketing17, relacoesExternas17, suporteInformatico17, eventSupporter17 } from './team17';
 
   
 
@@ -83,4 +84,13 @@ export const team18: Team = [
     marketing18,
 	relacoesExternas18,
     suporteInformatico18,
+]
+
+export const team17: Team = [
+    coordenacao17,
+    logistics17,
+    marketing17,
+    relacoesExternas17,
+    suporteInformatico17,
+    eventSupporter17,
 ]
