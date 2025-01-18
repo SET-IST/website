@@ -1,4 +1,4 @@
-import { team24 } from '@/data/team'
+import { teams } from '@/data/team'
 import cn from 'classnames'
 import Header from './components/Header'
 import Department from './components/Department'
@@ -12,7 +12,7 @@ const TeamPage = () => {
     >
       <Header />
       <div className="w-full flex flex-col gap-12">
-        {team24.map((department, index) => (
+        {teams[8].team.map((department, index) => (
           <Department key={index} {...department} />
         ))}
       </div>

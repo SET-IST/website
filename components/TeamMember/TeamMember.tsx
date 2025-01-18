@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { ActionIcon, Avatar, Text } from '@mantine/core'
-import { TeamMember } from '@/data/team'
+import { ITeamMember, ImageFormat } from '@/data/team'
 import { IconBrandLinkedin } from '@tabler/icons-react'
 import Image from 'next/image'
 
 interface TeamMemberProps {
-  data: TeamMember
+  data: ITeamMember
 }
 
 const TeamMember = ({ data }: TeamMemberProps) => {

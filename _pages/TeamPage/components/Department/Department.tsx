@@ -1,7 +1,7 @@
 import { Title } from '@mantine/core'
 import classes from './department.module.css'
 
-import { IDepartment, TeamMember as TeamMemberData } from '@/data/team'
+import { IDepartment } from '@/data/team'
 import TeamMember from '@/components/TeamMember'
 import classNames from 'classnames'
 
