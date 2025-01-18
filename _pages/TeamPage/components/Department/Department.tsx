@@ -1,7 +1,7 @@
 import { Title } from '@mantine/core'
 import classes from './department.module.css'
 
-import { IDepartment } from '@/data/team'
+import { IDepartment, ImageFormat } from '@/data/team'
 import TeamMember from '@/components/TeamMember'
 import classNames from 'classnames'
 
@@ -10,7 +10,8 @@ export default function Department({
   slug,
   coordinators,
   members,
-}: IDepartment) {
+  imageFormat,
+}: IDepartment & { imageFormat: ImageFormat }) {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <Title
@@ -24,12 +25,12 @@ export default function Department({
       </Title>
       <div className="w-full flex flex-wrap justify-center gap-x-24 gap-y-4">
         {coordinators.map((member, index) => (
-          <TeamMember key={`${slug}-coordinator-${index}`} data={member} />
+          <TeamMember key={`${slug}-coordinator-${index}`} data={member} imageFormat={imageFormat} />
         ))}
       </div>
       <div className="w-full flex flex-wrap justify-center gap-x-28 gap-y-4">
         {members.map((member, index) => (
-          <TeamMember key={`${slug}-member-${index}`} data={member} />
+          <TeamMember key={`${slug}-member-${index}`} data={member} imageFormat={imageFormat} />
         ))}
       </div>
     </div>

@@ -13,7 +13,7 @@ const TeamPage = () => {
       <Header />
       <div className="w-full flex flex-col gap-12">
         {teams[8].team.map((department, index) => (
-          <Department key={index} {...department} />
+          <Department key={index} {...department} imageFormat={teams[8].imageFormat} />
         ))}
       </div>
     </div>
