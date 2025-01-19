@@ -9,9 +9,6 @@ import {
 import React, { useEffect, useRef } from 'react';
 import { useBoundStore } from '@/lib/frontend/store'
 
-// FIXME: in some mobile resolutions, a grey bar appears on the right before shrinking the year picker SegmentedControl (testing the responsive design on the browser developer tools while shriking it's obvious)
-
-
 const TeamPage = () => {
   const scrollableContainerRef = useRef<HTMLDivElement>(null); // Create a ref for the scrollable container
 
@@ -28,10 +25,9 @@ const TeamPage = () => {
     yearData.push({value: String(teams[teams.length-1].year +1), label: String(teams[teams.length-1].year +1), disabled: true});
   }
 
-  const currentYear = useBoundStore((state) => state.year)
+  // const currentYear = useBoundStore((state) => state.year)
   const teamIndex = useBoundStore((state) => state.teamIndex)
   const setCurrentYear = useBoundStore((state) => state.setSelectedYear)
-  
 
   return (
     <div
