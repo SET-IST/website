@@ -14,13 +14,17 @@ const TeamMember = ({
 }: TeamMemberProps & { imageFormat: ImageFormat }) => {
   let bottom = '0px'
   let classes =''
+  let classes2 = ''
+
   if (imageFormat === 'round') {
     bottom = '-45px'
     classes = 'relative h-36 w-36 overflow-clip rounded-full'
+    classes2 = 'absolute h-36 w-36 scale-[2]'
   }
   else if (imageFormat === 'original'){
     bottom = '30px'
-    classes = 'relative h-64 w-36'
+    classes = 'relative h-52 w-36 overflow-show'
+    classes2 = 'absolute h-44 w-36'
   }
   if (data.customImagePosition) {
     bottom = data.customImagePosition.split(' ')[1]
@@ -33,7 +37,7 @@ const TeamMember = ({
           style={{
             bottom: bottom,
           }}
-          className="absolute h-36 w-36 scale-[2]"
+          className={classes2}
         >
           <Image
             src={data.image}

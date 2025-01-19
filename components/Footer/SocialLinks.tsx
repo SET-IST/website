@@ -2,7 +2,7 @@ import { FaLinkedin, FaInstagram, FaTwitter, FaFacebook, FaTiktok } from "react-
 
 export default function SocialLinks() {
     return (
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
             <a
             href="https://www.linkedin.com/company/settaguspark"
             target="_blank"
