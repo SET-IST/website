@@ -146,7 +146,7 @@ const logistica25: IDepartment = {
       linkedin: '',
     },
     {
-      name: 'Marina Nóbregae',
+      name: 'Marina Nóbrega',
       image: MarinaNobrega,
       role: 'Colaboradora',
       linkedin: 'www.linkedin.com/in/marina-mnóbrega',
