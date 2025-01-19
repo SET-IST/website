@@ -1,19 +1,34 @@
 import React, { useState } from 'react'
 import { ActionIcon, Avatar, Text } from '@mantine/core'
-import { TeamMember } from '@/data/team'
+import { ITeamMember, ImageFormat } from '@/data/team'
 import { IconBrandLinkedin } from '@tabler/icons-react'
 import Image from 'next/image'
 
 interface TeamMemberProps {
-  data: TeamMember
+  data: ITeamMember
 }
 
-const TeamMember = ({ data }: TeamMemberProps) => {
-  const bottom = data.customImagePosition?.split(' ')[1] ?? '-45px'
+const TeamMember = ({
+  data,
+  imageFormat,
+}: TeamMemberProps & { imageFormat: ImageFormat }) => {
+  let bottom = '0px'
+  let classes =''
+  if (imageFormat === 'round') {
+    bottom = '-45px'
+    classes = 'relative h-36 w-36 overflow-clip rounded-full'
+  }
+  else if (imageFormat === 'original'){
+    bottom = '30px'
+    classes = 'relative h-64 w-36'
+  }
+  if (data.customImagePosition) {
+    bottom = data.customImagePosition.split(' ')[1]
+  }
 
   return (
     <div className="flex flex-col items-center min-w-fit">
-      <div className="relative h-36 w-36 overflow-clip rounded-full">
+      <div className={classes}>
         <div
           style={{
             bottom: bottom,
