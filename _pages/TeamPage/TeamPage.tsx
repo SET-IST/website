@@ -7,6 +7,9 @@ import {
   SegmentedControl,
 } from '@mantine/core'
 import React, { useEffect, useRef } from 'react';
+import { useBoundStore } from '@/lib/frontend/store'
+
+// FIXME: in some mobile resolutions, a grey bar appears on the right before shrinking the year picker SegmentedControl (testing the responsive design on the browser developer tools while shriking it's obvious)
 
 
 const TeamPage = () => {
@@ -19,6 +22,16 @@ const TeamPage = () => {
     }
   }, []); // Run only once when the component mounts
 
+
+  let yearData = teams.map((team) => ({value: String(team.year), label: String(team.year), disabled: false}));
+  if (process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true") {
+    yearData.push({value: String(teams[teams.length-1].year +1), label: String(teams[teams.length-1].year +1), disabled: true});
+  }
+
+  const currentYear = useBoundStore((state) => state.year)
+  const teamIndex = useBoundStore((state) => state.teamIndex)
+  const setCurrentYear = useBoundStore((state) => state.setSelectedYear)
+  
 
   return (
     <div
@@ -49,56 +62,19 @@ const TeamPage = () => {
                 <SegmentedControl
                   fullWidth={false}
                   size={'md'}
-                  defaultValue={'2024'} // most recent with people
-                  data={[
-                    {
-                      label: '2017',
-                      value: '2017',
-                    },
-                    {
-                      label: '2018',
-                      value: '2018',
-                    },
-                    {
-                      label: '2019',
-                      value: '2019',
-                    },
-                    {
-                      label: '2020',
-                      value: '2020',
-                    },
-                    {
-                      label: '2021',
-                      value: '2021',
-                    },
-                    {
-                      label: '2022',
-                      value: '2022',
-                    },
-                    {
-                      label: '2023',
-                      value: '2023',
-                    },
-                    {
-                      label: '2024',
-                      value: '2024',
-                    },
-                    {
-                      label: '2025',
-                      value: '2025',
-                      disabled: true,
-                    },
-                  ]}
                   style={{
                     flexShrink: 0, // Prevents shrinking of the SegmentedControl (necessary for scrolling)
                   }}
+                  defaultValue={String(teams[teams.length-1].year)} // most recent with people photos
+                  data = {yearData}
+                  onChange={setCurrentYear}
                 />
               </div>
             </div>
           </Paper>
       <div className="w-full flex flex-col gap-12">
-        {teams[8].team.map((department, index) => (
-          <Department key={index} {...department} imageFormat={teams[8].imageFormat} />
+        {teams[teamIndex].team.map((department, index) => (
+          <Department key={index} {...department} imageFormat={teams[teamIndex].imageFormat} />
         ))}
       </div>
     </div>
