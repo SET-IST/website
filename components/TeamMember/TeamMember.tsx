@@ -17,6 +17,11 @@ const TeamMember = ({
   let classes2 = ''
 
   if (imageFormat === 'round') {
+    bottom = '0px'
+    classes = 'relative h-36 w-36 overflow-clip rounded-full'
+    classes2 = 'absolute h-36 w-36'
+  }
+  else if (imageFormat === 'round-2x') {
     bottom = '-45px'
     classes = 'relative h-36 w-36 overflow-clip rounded-full'
     classes2 = 'absolute h-36 w-36 scale-[2]'

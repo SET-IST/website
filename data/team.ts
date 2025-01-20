@@ -9,7 +9,7 @@ import { coordenacao19, logistica19, marketing19, relacoesExternas19, suporteInf
 import { coordenacao18, logistica18, marketing18, relacoesExternas18, suporteInformatico18, } from './team18';
 import { coordenacao17, logistics17, marketing17, relacoesExternas17, suporteInformatico17, eventSupporter17 } from './team17';
 
-export type ImageFormat = 'round' | 'original';
+export type ImageFormat = 'round' | 'original' | 'round-2x';
 
 export interface ITeamMember {
   name: string;
@@ -45,7 +45,7 @@ export const team25: Team = {
 }
 export const team24: Team = {
     year: 2024,
-    imageFormat: 'round',
+    imageFormat: 'round-2x',
     team: [
         coordenacao24,
         marketingDesign24,
