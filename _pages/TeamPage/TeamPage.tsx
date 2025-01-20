@@ -58,6 +58,9 @@ const TeamPage = () => {
                 <SegmentedControl
                   fullWidth={false}
                   size={'md'}
+                  radius={'xl'}
+                  color={'var(--mantine-color-blue-5)'}
+                  transitionDuration={500}
                   style={{
                     flexShrink: 0, // Prevents shrinking of the SegmentedControl (necessary for scrolling)
                   }}
