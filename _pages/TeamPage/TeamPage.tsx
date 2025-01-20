@@ -42,7 +42,8 @@ const TeamPage = () => {
             ref={scrollableContainerRef}
             style={{
               overflowX: "auto",
-              padding: "0.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
               display: "flex",
               alignItems: "center",
               boxSizing: "border-box",
