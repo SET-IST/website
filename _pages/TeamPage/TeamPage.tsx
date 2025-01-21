@@ -42,7 +42,8 @@ const TeamPage = () => {
             ref={scrollableContainerRef}
             style={{
               overflowX: "auto",
-              padding: "0.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
               display: "flex",
               alignItems: "center",
               boxSizing: "border-box",
@@ -58,6 +59,9 @@ const TeamPage = () => {
                 <SegmentedControl
                   fullWidth={false}
                   size={'md'}
+                  radius={'xl'}
+                  color={'var(--mantine-color-blue-5)'}
+                  transitionDuration={500}
                   style={{
                     flexShrink: 0, // Prevents shrinking of the SegmentedControl (necessary for scrolling)
                   }}
