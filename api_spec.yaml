@@ -155,6 +155,7 @@ components:
             - SILVER
             - GOLD
             - PLATINUM
+            - NOTATTENDING
         username:
           type: string
         email:
