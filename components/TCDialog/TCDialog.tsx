@@ -105,7 +105,7 @@ export function TCDialog() {
           empresa tenha interesse em apresentar alguma proposta ao aluno.
         </Section>
         <Text fw="bold" size="sm">
-          Porto Salvo, 11 de Novembro de 2024
+          Porto Salvo, 1 de Janeiro de 2025
         </Text>
       </div>
     </Modal>

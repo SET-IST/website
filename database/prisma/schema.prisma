@@ -47,6 +47,7 @@ enum CompanyCategory {
   Platinum
   Gold
   Silver
+  NotAttending
 }
 
 // Add activities to students

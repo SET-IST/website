@@ -17,10 +17,10 @@ export const createActivitiesSlice: StateCreator<
   ActivitiesSlice
 > = (set) => ({
   selectedDate:
-    (DateTime.fromISO('2024-02-26') <= DateTime.now() &&
-    DateTime.now().startOf('day') <= DateTime.fromISO('2024-02-29')
+    (DateTime.fromISO('2025-02-24') <= DateTime.now() &&
+    DateTime.now().startOf('day') <= DateTime.fromISO('2025-02-27')
       ? DateTime.now().startOf('day').toISODate()
-      : '2024-02-26') ?? '2024-02-26',
+      : '2025-02-24') ?? '2025-02-24',
   cvDialogVisible: undefined,
   setSelectedDate: (date) =>
     set({
