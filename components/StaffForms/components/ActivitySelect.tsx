@@ -78,10 +78,10 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
   })
 
   const [currentDate, setCurrentDate] = useState<string>(
-    (DateTime.fromISO('2024-02-26') <= DateTime.now() &&
-    DateTime.now().startOf('day') <= DateTime.fromISO('2024-02-29')
+    (DateTime.fromISO('2025-02-24') <= DateTime.now() &&
+    DateTime.now().startOf('day') <= DateTime.fromISO('2025-02-28')
       ? DateTime.now().startOf('day').toISODate()
-      : '2024-02-26') ?? '2024-02-26'
+      : '2025-02-24') ?? '2025-02-24'
   )
 
   const { data: activities, isLoading } = useActivities(currentDate)
@@ -132,19 +132,19 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
             data={[
               {
                 label: 'Dia 26',
-                value: '2024-02-26',
+                value: '2025-02-26',
               },
               {
                 label: 'Dia 27',
-                value: '2024-02-27',
+                value: '2025-02-27',
               },
               {
                 label: 'Dia 28',
-                value: '2024-02-28',
+                value: '2025-02-28',
               },
               {
                 label: 'Dia 29',
-                value: '2024-02-29',
+                value: '2025-02-29',
               },
             ]}
           />

@@ -3,7 +3,7 @@ import { databaseQueryWrapper } from '@/core/utils'
 import { EventLogService, getFullResourcePath } from '../../utils'
 import { EventLogType, User, UserType } from '@prisma/client'
 import { getCompanyProfile } from '../company'
-import { getStudentProfile } from '../student'
+import { addTotalPoints, getRedemptionSettings, getStudentProfile } from '../student'
 import { CreateAwardDto, UpdatePointsDto } from './dtos'
 import { ConflictException } from 'next-api-decorators'
 
@@ -129,7 +129,7 @@ export async function redeemAward(uuid: string) {
         },
         data: {
           points: {
-            decrement: 30,
+            decrement: (await getRedemptionSettings()).REDEEM,
           },
           reedems: {
             increment: 1,
@@ -154,13 +154,30 @@ export async function setStudentPoints(
   )
 
   return await databaseQueryWrapper(async () => {
-    await PrismaService.studentDetails.update({
-      where: {
-        userId: uuid,
-      },
-      data: {
-        points: data.points,
-      },
+    await PrismaService.$transaction(async (tx) => {
+      const studentTx = await tx.studentDetails.findUniqueOrThrow({
+        where: {
+          userId: user.id,
+        },
+        include: {
+          dayTotalPoints: {
+            include: {
+              day: true
+            }
+          }
+        }
+      })
+
+      await addTotalPoints(studentTx, data.points - studentTx.points)
+
+      await PrismaService.studentDetails.update({
+        where: {
+          userId: uuid,
+        },
+        data: {
+          points: data.points,
+        },
+      })
     })
   })
 }

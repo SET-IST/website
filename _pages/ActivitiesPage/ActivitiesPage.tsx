@@ -34,20 +34,20 @@ const ActivitiesPage = () => {
                 onChange={setCurrentDate}
                 data={[
                   {
+                    label: 'Dia 24',
+                    value: '2025-02-24',
+                  },
+                  {
+                    label: 'Dia 25',
+                    value: '2025-02-25',
+                  },
+                  {
                     label: 'Dia 26',
-                    value: '2024-02-26',
+                    value: '2025-02-26',
                   },
                   {
                     label: 'Dia 27',
-                    value: '2024-02-27',
-                  },
-                  {
-                    label: 'Dia 28',
-                    value: '2024-02-28',
-                  },
-                  {
-                    label: 'Dia 29',
-                    value: '2024-02-29',
+                    value: '2025-02-27',
                   },
                 ]}
               />

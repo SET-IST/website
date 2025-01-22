@@ -1,5 +1,6 @@
 import Accenture from '@/assets/logos/empresas/accenture.webp'
 import Affinity from '@/assets/logos/empresas/affinity.webp'
+import Agicap from '@/assets/logos/empresas/agicap.webp'
 import Aquila from '@/assets/logos/empresas/aquila.webp'
 import Arquiconsult from '@/assets/logos/empresas/arquiconsult.webp'
 import Avanade from '@/assets/logos/empresas/avanade_rgb.webp'
@@ -11,6 +12,7 @@ import BubbleGo from '@/assets/logos/empresas/bubblego.webp'
 import Deloitte from '@/assets/logos/empresas/deloitte.webp'
 import Devoteam from '@/assets/logos/empresas/devoteam.webp'
 import Celfocus from '@/assets/logos/empresas/celfocus.webp'
+import Cgi from '@/assets/logos/empresas/cgi.webp'
 import Experis from '@/assets/logos/empresas/experis.webp'
 import EY from '@/assets/logos/empresas/ey.webp'
 import Fidelidade from '@/assets/logos/empresas/fidelidade.webp'
@@ -28,13 +30,17 @@ import LaRedoute from '@/assets/logos/empresas/laredoute.webp'
 import LeroyMerlin from '@/assets/logos/empresas/leroy_merlin.webp'
 import Lidl from '@/assets/logos/empresas/lidl.webp'
 import Logicalis from '@/assets/logos/empresas/logicalis.webp'
+import Lpt from '@/assets/logos/empresas/lpt.webp'
 import MagicBeans from '@/assets/logos/empresas/magic_beans.webp'
 import Neyond from '@/assets/logos/empresas/neyond.webp'
 import Noesis from '@/assets/logos/empresas/noesis_logo.webp'
 import Nos from '@/assets/logos/empresas/nos_rgb.webp'
 import NttData from '@/assets/logos/empresas/ntt_data.webp'
+import Opensoft from '@/assets/logos/empresas/opensoft.webp'
 import PremiumMinds from '@/assets/logos/empresas/premium_minds.webp'
 import PrimeIt from '@/assets/logos/empresas/primeit.webp'
+import Pwc from '@/assets/logos/empresas/pwc.webp'
+import Randstad from '@/assets/logos/empresas/randstad.webp'
 import Santander from '@/assets/logos/empresas/santander.webp'
 import Secil from '@/assets/logos/empresas/secil.webp'
 import Siemens from '@/assets/logos/empresas/siemens.webp'
@@ -54,58 +60,64 @@ import Worten from '@/assets/logos/empresas/worten.webp'
 
 const homeCompaniesSlider = [
   Accenture,
-  Affinity,
-  Aquila,
-  Arquiconsult,
-  Avanade,
-  Axians,
-  Blip,
-  BNP,
-  BPI,
-  BubbleGo,
-  Celfocus,
-  Deloitte,
+  // Affinity,
+  Agicap,
+  // Aquila,
+  // Arquiconsult,
+  // Avanade,
+  // Axians,
+  // Blip,
+  // BNP,
+  // BPI,
+  // BubbleGo,
+  // Celfocus,
+  Cgi,
+  // Deloitte,
   Devoteam,
-  Experis,
-  EY,
-  Fidelidade,
+  // Experis,
+  // EY,
+  // Fidelidade,
   Glintt,
-  GrupoVisabeira,
-  IndieCampers,
-  Inesc,
-  InnovationMakers,
+  // GrupoVisabeira,
+  // IndieCampers,
+  // Inesc,
+  // InnovationMakers,
   Innowave,
   ItSector,
-  JeronimoMartins,
-  Kaizen,
-  Kpmg,
-  LaRedoute,
-  LeroyMerlin,
-  Lidl,
-  Logicalis,
-  MagicBeans,
-  Neyond,
-  Noesis,
-  Nos,
+  // JeronimoMartins,
+  // Kaizen,
+  // Kpmg,
+  // LaRedoute,
+  // LeroyMerlin,
+  // Lidl,
+  // Logicalis,
+  Lpt,
+  // MagicBeans,
+  // Neyond,
+  // Noesis,
+  // Nos,
   NttData,
-  PremiumMinds,
-  PrimeIt,
-  Santander,
-  Secil,
+  Opensoft,
+  // PremiumMinds,
+  // PrimeIt,
+  Pwc,
+  Randstad,
+  // Santander,
+  // Secil,
   Siemens,
-  Skyline,
-  Somincor,
+  // Skyline,
+  // Somincor,
   Sonae,
-  Synopsys,
-  TeachForPortugal,
-  Thales,
-  TheLoop,
-  TimWeTech,
+  // Synopsys,
+  // TeachForPortugal,
+  // Thales,
+  // TheLoop,
+  // TimWeTech,
   Unicre,
-  Velocix,
+  // Velocix,
   Vodafone,
-  Vtxrm,
-  // Worten, Waiting for logo
+  // Vtxrm,
+  Worten,
 ]
 
 export { homeCompaniesSlider }
