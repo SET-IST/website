@@ -155,7 +155,7 @@ const CompanySettingsForm = () => {
         <Textarea
           label="Sobre"
           className="w-full"
-          description="Descrição breve da empresa com um máximo de 150 caracteres"
+          description="Descrição breve da empresa com um máximo de 500 caracteres"
           placeholder="Inserir descrição"
           {...form.getInputProps('description')}
         />
