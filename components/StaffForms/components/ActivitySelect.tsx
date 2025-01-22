@@ -79,7 +79,7 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
 
   const [currentDate, setCurrentDate] = useState<string>(
     (DateTime.fromISO('2025-02-24') <= DateTime.now() &&
-    DateTime.now().startOf('day') <= DateTime.fromISO('2025-02-28')
+    DateTime.now().startOf('day') <= DateTime.fromISO('2025-02-27')
       ? DateTime.now().startOf('day').toISODate()
       : '2025-02-24') ?? '2025-02-24'
   )
@@ -131,20 +131,20 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
             onChange={setCurrentDate}
             data={[
               {
+                label: 'Dia 24',
+                value: '2025-02-24',
+              },
+              {
+                label: 'Dia 25',
+                value: '2025-02-25',
+              },
+              {
                 label: 'Dia 26',
                 value: '2025-02-26',
               },
               {
                 label: 'Dia 27',
                 value: '2025-02-27',
-              },
-              {
-                label: 'Dia 28',
-                value: '2025-02-28',
-              },
-              {
-                label: 'Dia 29',
-                value: '2025-02-29',
               },
             ]}
           />
