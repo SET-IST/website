@@ -85,7 +85,7 @@ jobs:
             "${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest-prod"
             "${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:${{ steps.tag.outputs.tag }}"
       - name: upload prisma schema artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PrismaSchema
           path: database/prisma/schema.prisma
@@ -104,7 +104,7 @@ jobs:
         with:
           name: Environment
       - name: Download Prisma Schema
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: PrismaSchema
       - name: copy env to destination
