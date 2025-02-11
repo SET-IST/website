@@ -360,6 +360,9 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
           { dateCode: defaultDayCode },
         ],
       },
+      orderBy: {
+        dateCode: currentDayCode === defaultDayCode ? 'asc' : 'desc',
+      },
     });
 
     if (!day) {

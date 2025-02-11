@@ -122,7 +122,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-//create the activity model
+// create the activity model
 enum ActivityType {
   Lecture
   Workshop
@@ -147,6 +147,7 @@ model Activity {
   date        DateTime
   duration    Int
   location    String       @db.VarChar(80)
+  points      Int?
   validated   Boolean      @default(false)
   type        ActivityType
 
