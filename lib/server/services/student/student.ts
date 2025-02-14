@@ -29,7 +29,7 @@ export async function getStudentProfile(user: User) {
             },
             cvLocation: true,
             phoneNumber: true,
-            reedems: true,
+            redeems: true,
           },
         },
       },
@@ -291,7 +291,7 @@ export async function requestAward(user: User) {
       return await tx.awardToken.create({
         data: {
           type:
-            studentTx.reedems % (await getRedemptionSettings()).RATIO !== 0
+            studentTx.redeems % (await getRedemptionSettings()).RATIO !== 0
               ? AwardType.SPECIAL
               : AwardType.NORMAL,
           student: {

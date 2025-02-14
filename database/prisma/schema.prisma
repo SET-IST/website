@@ -65,7 +65,8 @@ model StudentDetails {
   user               User                 @relation(fields: [userId], references: [id])
   userId             String               @unique
   awardToken         AwardToken?
-  reedems            Int                  @default(0)
+  redeemedPrizes     RedeemedPrize[]
+  redeems            Int                  @default(0)
   enrolledActivities ActivityEnrollment[]
 }
 
@@ -176,10 +177,28 @@ enum AwardType {
 }
 
 model AwardToken {
-  id      String         @id @default(uuid())
-  type    AwardType
-  userId  String         @unique
-  student StudentDetails @relation(fields: [userId], references: [userId])
+  id              String         @id @default(uuid())
+  type            AwardType
+  userId          String         @unique
+  student         StudentDetails @relation(fields: [userId], references: [userId])
+  prize           RedeemedPrize  @relation(fields: [redeemedPrizeId], references: [id])
+  redeemedPrizeId Int
+}
+
+model WheelPrize {
+  id               Int       @id @default(autoincrement())
+  name             String
+  ammountAvailable Int // The available amount of this prize
+  type             AwardType
+}
+
+model RedeemedPrize {
+  id               Int             @id @default(autoincrement())
+  name             String
+  type             AwardType
+  StudentDetails   StudentDetails? @relation(fields: [studentDetailsId], references: [id])
+  studentDetailsId Int?
+  AwardToken       AwardToken[]
 }
 
 model Day {

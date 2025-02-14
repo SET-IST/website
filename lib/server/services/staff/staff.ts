@@ -131,7 +131,7 @@ export async function redeemAward(uuid: string) {
           points: {
             decrement: (await getRedemptionSettings()).REDEEM,
           },
-          reedems: {
+          redeems: {
             increment: 1,
           },
         },
