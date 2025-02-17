@@ -280,6 +280,9 @@ export async function requestAward(user: User) {
         where: {
           userId: user.id,
         },
+        include: { 
+          redeemedPrizes: true 
+        },
       })
 
       if (studentTx.points - (await getRedemptionSettings()).REDEEM < 0) {
@@ -288,18 +291,53 @@ export async function requestAward(user: User) {
         )
       }
 
-      const ratio = (await getRedemptionSettings()).RATIO;
+      const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
+      let availablePrizes = await tx.wheelPrize.findMany({
+        where: { 
+          id: { 
+            notIn: redeemedPrizeIds 
+          }, 
+          quantity: { 
+            gt: 0 
+          } 
+        },
+      })
+
+      if (availablePrizes.length === 0) {
+        availablePrizes = await tx.wheelPrize.findMany({
+          where: { ammountAvailable: { gt: 0 } },
+        })
+      }
+
+      if (availablePrizes.length === 0) {
+        throw new BadRequestException(
+          'No prizes available'
+        )
+      }
+
+      const selectedPrize =
+        availablePrizes[Math.floor(Math.random() * availablePrizes.length)]
+
+      const redeemedPrize = await tx.redeemedPrize.create({
+        data: {
+          name: selectedPrize.name,
+          type: selectedPrize.type,
+          studentDetailsId: studentTx.id,
+        },
+      })
 
       return await tx.awardToken.create({
         data: {
-          type:
-            (studentTx.reedems + (ratio - 1)) % ratio === 0
-              ? AwardType.SPECIAL
-              : AwardType.NORMAL,
-          student: {
-            connect: {
-              id: studentTx.id,
-            },
+          type: selectedPrize.type,
+          student: { 
+            connect: { 
+              userId: user.id 
+            } 
+          },
+          prize: { 
+            connect: { 
+              id: redeemedPrize.id 
+            } 
           },
         },
         select: {

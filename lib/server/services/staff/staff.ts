@@ -5,7 +5,7 @@ import { EventLogType, User, UserType } from '@prisma/client'
 import { getCompanyProfile } from '../company'
 import { addTotalPoints, getRedemptionSettings, getStudentProfile } from '../student'
 import { CreateAwardDto, UpdatePointsDto } from './dtos'
-import { ConflictException } from 'next-api-decorators'
+import { BadRequestException, ConflictException } from 'next-api-decorators'
 
 export async function searchUser(query?: string) {
   return await databaseQueryWrapper(async () => {
@@ -68,7 +68,7 @@ export async function createAward(
 ) {
   return await databaseQueryWrapper(async () => {
     // Check if student already has an award
-    let prize = await PrismaService.awardToken.findUnique({
+    let existingToken = await PrismaService.awardToken.findUnique({
       where: {
         userId: uuid,
       },
@@ -78,8 +78,26 @@ export async function createAward(
       },
     })
 
-    if (prize)
+    if (existingToken)
       throw new ConflictException('Student already has an award pending')
+
+    const prize = await PrismaService.wheelPrize.findFirst({
+      where: { 
+        name: data.prizeName, 
+        ammountAvailable: { gt: 0 } 
+      },
+    })
+
+    if (!prize)
+      throw new BadRequestException('Requested prize is not available')
+
+    const redeemedPrize = await PrismaService.redeemedPrize.create({
+      data: {
+        name: prize.name,
+        type: prize.type,
+        studentDetailsId: uuid,
+      },
+    })
 
     const response = await PrismaService.awardToken.create({
       data: {
@@ -89,6 +107,11 @@ export async function createAward(
             userId: uuid,
           },
         },
+        prize: {
+          connect: {
+            id: redeemedPrize.id
+          }
+        }
       },
     })
 
@@ -102,7 +125,7 @@ export async function createAward(
   })
 }
 
-export async function redeemAward(uuid: string) {
+export async function redeemAward(uuid: string, awardOverride?: string) {
   return await databaseQueryWrapper(async () => {
     const details = await PrismaService.awardToken.findUniqueOrThrow({
       where: {
@@ -113,17 +136,24 @@ export async function redeemAward(uuid: string) {
           select: {
             user: true,
           },
+          prize: true,
         },
       },
     })
 
-    await PrismaService.$transaction([
-      PrismaService.awardToken.delete({
+    let finalPrizeName = details.prize.name
+    if (awardOverride) {
+      finalPrizeName = awardOverride
+    }
+
+    await PrismaService.$transaction(async (tx) => {
+      await tx.awardToken.delete({
         where: {
           id: details.id,
         },
-      }),
-      PrismaService.studentDetails.update({
+      })
+
+      await tx.studentDetails.update({
         where: {
           userId: details.userId,
         },
@@ -135,10 +165,17 @@ export async function redeemAward(uuid: string) {
             increment: 1,
           },
         },
-      }),
-    ])
+      })
 
-    return details
+      await tx.redeemedPrize.create({
+        data: {
+          name: finalPrizeName,
+          type: details.prize.type,
+          studentDetailsId: details.userId,
+        },
+      })
+    })
+    return { redeemedPrize: finalPrizeName }
   })
 }
 
