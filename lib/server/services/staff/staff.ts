@@ -82,9 +82,9 @@ export async function createAward(
       throw new ConflictException('Student already has an award pending')
 
     const prize = await PrismaService.wheelPrize.findFirst({
-      where: { 
-        name: data.prizeName, 
-        ammountAvailable: { gt: 0 } 
+      where: {
+        name: data.prizeName,
+        ammountAvailable: { gt: 0 }
       },
     })
 
@@ -134,14 +134,15 @@ export async function redeemAward(uuid: string, awardOverride?: string) {
       include: {
         student: {
           select: {
+            id: true,
             user: true,
           },
-          prize: true,
         },
+        award: true,
       },
     })
 
-    let finalPrizeName = details.prize.name
+    let finalPrizeName = details.award.name
     if (awardOverride) {
       finalPrizeName = awardOverride
     }
@@ -169,9 +170,9 @@ export async function redeemAward(uuid: string, awardOverride?: string) {
 
       await tx.redeemedPrize.create({
         data: {
-          name: finalPrizeName,
-          type: details.prize.type,
-          studentDetailsId: details.userId,
+          type: details.award.type,
+          studentDetailsId: details.student.id,
+          awardId: details.award.id,
         },
       })
     })

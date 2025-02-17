@@ -280,8 +280,8 @@ export async function requestAward(user: User) {
         where: {
           userId: user.id,
         },
-        include: { 
-          redeemedPrizes: true 
+        include: {
+          redeemedPrizes: true
         },
       })
 
@@ -292,20 +292,20 @@ export async function requestAward(user: User) {
       }
 
       const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
-      let availablePrizes = await tx.wheelPrize.findMany({
-        where: { 
-          id: { 
-            notIn: redeemedPrizeIds 
-          }, 
-          quantity: { 
-            gt: 0 
-          } 
+      let availablePrizes = await tx.award.findMany({
+        where: {
+          id: {
+            notIn: redeemedPrizeIds
+          },
+          amountAvailable: {
+            gt: 0
+          }
         },
       })
 
       if (availablePrizes.length === 0) {
-        availablePrizes = await tx.wheelPrize.findMany({
-          where: { ammountAvailable: { gt: 0 } },
+        availablePrizes = await tx.award.findMany({
+          where: { amountAvailable: { gt: 0 } },
         })
       }
 
@@ -318,26 +318,18 @@ export async function requestAward(user: User) {
       const selectedPrize =
         availablePrizes[Math.floor(Math.random() * availablePrizes.length)]
 
-      const redeemedPrize = await tx.redeemedPrize.create({
-        data: {
-          name: selectedPrize.name,
-          type: selectedPrize.type,
-          studentDetailsId: studentTx.id,
-        },
-      })
-
       return await tx.awardToken.create({
         data: {
           type: selectedPrize.type,
-          student: { 
-            connect: { 
-              userId: user.id 
-            } 
+          student: {
+            connect: {
+              userId: user.id
+            }
           },
-          prize: { 
-            connect: { 
-              id: redeemedPrize.id 
-            } 
+          award: {
+            connect: {
+              id: selectedPrize.id
+            }
           },
         },
         select: {
