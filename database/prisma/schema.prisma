@@ -110,8 +110,8 @@ model User {
   accounts       Account[]
   sessions       Session[]
   role           UserType        @default(Student) // custom relation for roles of student and company
-  studentDetails StudentDetails? // custom table with aditional info of student
-  companyDetails CompanyDetails? // custom table with aditional info of company
+  studentDetails StudentDetails? // custom table with additional info of student
+  companyDetails CompanyDetails? // custom table with additional info of company
   EventLog       EventLog[]
 }
 
@@ -181,24 +181,24 @@ model AwardToken {
   type            AwardType
   userId          String         @unique
   student         StudentDetails @relation(fields: [userId], references: [userId])
-  prize           RedeemedPrize  @relation(fields: [redeemedPrizeId], references: [id])
-  redeemedPrizeId Int
+  award           Award          @relation(fields: [awardId], references: [id])
+  awardId         Int
 }
 
-model WheelPrize {
+model Award {
   id               Int       @id @default(autoincrement())
   name             String
-  ammountAvailable Int // The available amount of this prize
+  amountAvailable  Int       // The available amount of this prize
   type             AwardType
 }
 
 model RedeemedPrize {
   id               Int             @id @default(autoincrement())
-  name             String
+  award            Award           @relation(fields: [awardId], references: [id])
+  awardId          Int
   type             AwardType
   StudentDetails   StudentDetails? @relation(fields: [studentDetailsId], references: [id])
   studentDetailsId Int?
-  AwardToken       AwardToken[]
 }
 
 model Day {
