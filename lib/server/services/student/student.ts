@@ -7,6 +7,20 @@ import { BadRequestException, ConflictException } from 'next-api-decorators'
 import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
+function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
+  const totalWeight = availablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
+  let randomValue = Math.random() * totalWeight;
+
+  for (const award of availablePrizes) {
+      randomValue -= award.amountAvailable;
+      if (randomValue <= 0) {
+          return award;
+      }
+  }
+
+  return availablePrizes[availablePrizes.length - 1]; // Fallback (shouldn't reach here)
+}
+
 export async function getStudentProfile(user: User) {
   return await databaseQueryWrapper(async () => {
     let student = await PrismaService.user.findUniqueOrThrow({
@@ -315,8 +329,7 @@ export async function requestAward(user: User) {
         )
       }
 
-      const selectedPrize =
-        availablePrizes[Math.floor(Math.random() * availablePrizes.length)]
+      const selectedPrize = weightedRandomSelection(availablePrizes);
 
       return await tx.awardToken.create({
         data: {
