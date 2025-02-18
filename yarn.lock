@@ -8249,6 +8249,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-custom-roulette@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "react-custom-roulette@npm:1.4.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/054c25e27acd771de46eb583cbcd889cbfb09a794f73d673cac78244a6f880bd580129e9dbd6be90b864e03039757c51b92d597bd8ccd6e4dfee116ad522636d
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -8852,6 +8862,7 @@ __metadata:
     prisma: "npm:^5.8.1"
     qr-scanner: "npm:^1.4.2"
     react: "npm:18.2.0"
+    react-custom-roulette: "npm:^1.4.1"
     react-dom: "npm:18.2.0"
     react-icons: "npm:^4.7.1"
     react-qr-code: "npm:^2.0.11"
