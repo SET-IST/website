@@ -10,6 +10,9 @@ import {
   scanCompany,
 } from '../api'
 import { AxiosError } from 'axios'
+import { useBoundStore } from '@/lib/frontend/store'
+import { databaseQueryWrapper } from '@/core/utils'
+
 
 export const useStudentCompanyScans = () => {
   return useQuery<ScannedCompany[], AxiosError>(['StudentCompanyScans'], () =>
@@ -40,9 +43,27 @@ export const useScan = (queryClient: QueryClient) => {
 }
 
 export const useAward = () => {
+  const setAwardToken = useBoundStore((state) => state.setAwardToken)
+  const lastToken = useBoundStore((state) => state.token)
+  console.log("fetchAward...")
+
   return useQuery<Award, AxiosError>(['Award'], () => fetchAward(), {
-    refetchInterval: (data, query) => {
-      return !query.state.error ? 800 : false
+    enabled: false,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false, // FIXME the page refetchs on window focus, even with false (the qrcode changes after redeem without the whell, if the user has the redeem modal open)
+    // refetchInterval: (data, query) => {
+    //   return !query.state.error ? 800 : false
+    // },
+    onSuccess: (data) => {
+      setAwardToken(data?.id || '')
+      console.log("data: ", data)
     },
   })
 }
+
+// const setAwardToken = useBoundStore((state) => state.setAwardToken)
+
+// useEffect(() => {
+//   fetchAward().then(setAwardToken)
+// }, [])
