@@ -1,7 +1,7 @@
 import { Text, Modal, Transition } from '@mantine/core'
 import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
-import { fetchRedemptionSettings, RedemptionSettings, StudentProfile } from '@/lib/frontend/api'
+import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Award, fetchAwardsList } from '@/lib/frontend/api'
 import { useQuery } from '@tanstack/react-query'
 import { awards } from '@/data/awards'
 import { WheelDataType } from 'react-custom-roulette'
@@ -16,19 +16,15 @@ const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wh
 export function ModalContent() {
   const { data, isLoading: isUserLoading, isError: isUserError } = useProfile()
 
-   const data_wheel: WheelDataType[] = [
-    { option: 'OLA'},
-    { option: 'ADEUS'},
-    { option: 'TESTE'},
-    { option: '0' },
-    { option: '1' },
-    { option: '2' },
-  ]
+  const awardsList = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
+  console.log("awardsList: ", awardsList)
+
+  // trasform awardsList into WheelDataType
+  const data_wheel: WheelDataType[] = awardsList?.data?.map((award) => ({ option: award?.name }))
 
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [mustSpin, setMustSpin] = useState(true);
   
-
 
   const {
     data: awardData,
@@ -36,6 +32,11 @@ export function ModalContent() {
     error: awardError,
     refetch
   } = useAward()
+
+  console.log("awardData: ", awardData)
+  console.log("awardLoaded: ", awardLoaded)
+  console.log("awardError: ", awardError)
+
 
   const notEnoughPoints = awardError?.response?.status === 400
 
@@ -51,11 +52,15 @@ export function ModalContent() {
   // if (!awardData) {
   //     refetch() // ✅ Fetch only when modal opens
   //   }
-  refetch()
-  console.log("refetching...")
+  // refetch()
+  // console.log("refetching...")
 
   lastAwardToken == awardData?.id ? console.log("same") : console.log("different") // FIXME: on mobile, it shows always the wheel
-  
+
+  useEffect(() => {
+    console.log("Wheel Stopped:", wheelStopped); // ✅ Debugging
+  }, [wheelStopped]); // Runs whenever wheelStopped changes
+
 
   return (
     <div className="h-screen p-4 flex flex-col">
@@ -87,7 +92,7 @@ export function ModalContent() {
           <div className="flex flex-col gap-5">
             <div className="flex flex-col items-center gap-4">
               <Transition
-                mounted={awardLoaded}
+                mounted={true} //{awardLoaded}
                 transition="slide-up"
                 duration={200}
                 timingFunction="ease"
@@ -110,7 +115,11 @@ export function ModalContent() {
                         mustStartSpinning={mustSpin}
                         prizeNumber={prizeNumber}
                         data={data_wheel}
-                        onStopSpinning={() => setWheelStopped(true)} // Hide wheel and show prize
+                        onStopSpinning={() => { // wait 1 second for readind the prize, and then hide wheel and show qrcode
+                          setTimeout(() => {
+                            setWheelStopped(true);
+                          }, 1000);
+                        }}
                         spinDuration={0.70}
                       />
                     ) : (
@@ -124,6 +133,10 @@ export function ModalContent() {
             </div>
           </div>
         </div>
+
+        {/* {useEffect(() => {
+          console.log("Wheel Stopped:", wheelStopped);
+        }, [wheelStopped])} */}
 
         {wheelStopped && (
           <div>

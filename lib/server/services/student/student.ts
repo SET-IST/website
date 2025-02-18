@@ -434,3 +434,14 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
     });
   });
 }
+
+export async function getAwardsList() {
+  return await PrismaService.award.findMany({
+    select: {
+      id: true,
+      name: true,
+      amountAvailable: true,
+      type: true,
+    },
+  })
+}

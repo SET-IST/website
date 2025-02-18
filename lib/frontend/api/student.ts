@@ -66,3 +66,9 @@ export const fetchRedemptionSettings = async (): Promise<RedemptionSettings> => 
   const { data } = await ApiClient.get('student/redemptionSettings')
   return await data
 }
+
+export const fetchAwardsList = async (): Promise<Award[]> => {
+  const { data } = await ApiClient.get('student/awardsList')
+  console.log("data: ", data)
+  return await data
+}
