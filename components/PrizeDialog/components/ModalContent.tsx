@@ -3,7 +3,6 @@ import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
 import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Award, fetchAwardsList } from '@/lib/frontend/api'
 import { useQuery } from '@tanstack/react-query'
-import { awards } from '@/data/awards'
 import { WheelDataType } from 'react-custom-roulette'
 import React, { useEffect, useState } from 'react'
 import { useBoundStore } from '@/lib/frontend/store'
@@ -16,17 +15,7 @@ const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wh
 export function ModalContent() {
   const { data, isLoading: isUserLoading, isError: isUserError } = useProfile()
 
-  const awardsList = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
-  console.log("awardsList: ", awardsList)
-
-  // trasform awardsList into WheelDataType
-  const data_wheel: WheelDataType[] = awardsList?.data?.map((award) => ({ option: award?.name }))
-
-  const [prizeNumber, setPrizeNumber] = useState(0);
-  const [mustSpin, setMustSpin] = useState(true);
-  
-
-  const {
+    const {
     data: awardData,
     isSuccess: awardLoaded,
     error: awardError,
@@ -44,6 +33,16 @@ export function ModalContent() {
   const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
 
 
+  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError } = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
+  console.log("awardsList: ", awardsListData)
+
+  // Transform awardsList into WheelDataType
+  const data_wheel: WheelDataType[] = awardsListData ? awardsListData.map((award) => ({ option: award?.name })) : []
+  console.log("data_wheel: ", data_wheel)
+
+  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [mustSpin, setMustSpin] = useState(true);
+  
   const [wheelStopped, setWheelStopped] = useState(false);
 
   const [lastAwardToken] = useState(() => useBoundStore.getState().token)
