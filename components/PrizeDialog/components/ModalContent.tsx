@@ -19,7 +19,7 @@ export function ModalContent() {
     data: awardData,
     isSuccess: awardLoaded,
     error: awardError,
-    refetch
+    refetch,
   } = useAward()
 
   console.log("awardData: ", awardData)
@@ -28,6 +28,7 @@ export function ModalContent() {
 
 
   const notEnoughPoints = awardError?.response?.status === 400
+  console.log("notEnoughPoints: ", notEnoughPoints)
 
   const user = data as StudentProfile
   const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
@@ -49,7 +50,10 @@ export function ModalContent() {
   console.log("lastAwardToken:", lastAwardToken);
   console.log("awardData:", awardData?.id);
 
-  if (!awardData) {
+  const isVisible = useBoundStore((state) => state.redeemModalVisible)
+  console.log("isVisible:", isVisible);
+
+  if (isVisible && !awardData) {
       refetch() // Fetch only when modal opens
       console.log("🕰️ refetching...")
   }
@@ -82,16 +86,14 @@ export function ModalContent() {
               Tens <strong>{user?.studentDetails?.points}</strong> pontos por
               gastar
             </Text> */}
-            {notEnoughPoints && (
+            {notEnoughPoints ? (
               <Text c="white" ta="center" fz="md" fw={500}>
                 Faltam-te{' '}
                 <strong>{(redemptionSettings.data?.REDEEM ?? 0) - (user?.studentDetails?.points ?? 0)}</strong>{' '}
                 pontos para teres um brinde
               </Text>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-5">
+            ) : (
+              <div className="flex flex-col gap-5">
             <div className="flex flex-col items-center gap-4">
               <Transition
                 mounted={true} //{awardLoaded}
@@ -153,6 +155,71 @@ export function ModalContent() {
               </Transition>
             </div>
           </div>
+            )}
+          </div>
+
+          {/* <div className="flex flex-col gap-5">
+            <div className="flex flex-col items-center gap-4">
+              <Transition
+                mounted={true} //{awardLoaded}
+                transition="slide-up"
+                duration={200}
+                timingFunction="ease"
+                keepMounted
+              >
+              {(styles) => (
+                <div
+                  className="w-full flex flex-col gap-4 items-center"
+                  style={styles}
+                >
+                  <div>
+                    {isSameToken ? (
+                      <PrizeCard award={awardData} />
+                    ) : (
+                      !wheelStopped ? (
+                        <Wheel
+                          mustStartSpinning={mustSpin}
+                          prizeNumber={prizeNumber}
+                          data={data_wheel}
+                          onStopSpinning={() => {
+                            setTimeout(() => {
+                              setWheelStopped(true);
+                            }, 2000); // Delay of 2 seconds
+                          }}
+                          spinDuration={0.70}
+                        />
+                      ) : (
+                        <PrizeCard award={awardData} />
+                      )
+                    )}
+                  </div> */}
+
+                {/* {lastAwardToken == awardData?.id ? (
+                  <PrizeCard award={awardData} />
+                ) :( */}
+                  {/* <div>
+                    {!wheelStopped ? (
+                      <Wheel
+                        mustStartSpinning={mustSpin}
+                        prizeNumber={prizeNumber}
+                        data={data_wheel}
+                        onStopSpinning={() => { // wait 1 second for readind the prize, and then hide wheel and show qrcode
+                          setTimeout(() => {
+                            setWheelStopped(true);
+                          }, 1000);
+                        }}
+                        spinDuration={0.70}
+                      />
+                    ) : (
+                      <PrizeCard award={awardData} />
+                    )}
+                  </div> */}
+                {/* )} */}
+                {/* </div>
+                )}
+              </Transition>
+            </div>
+          </div> */}
         </div>
 
         {/* {useEffect(() => {
