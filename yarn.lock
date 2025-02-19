@@ -4632,14 +4632,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.3.3":
-  version: 1.6.7
-  resolution: "axios@npm:1.6.7"
+"axios@npm:^1.7.9":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
   dependencies:
-    follow-redirects: "npm:^1.15.4"
+    follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/131bf8e62eee48ca4bd84e6101f211961bf6a21a33b95e5dfb3983d5a2fe50d9fffde0b57668d7ce6f65063d3dc10f2212cbcb554f75cfca99da1c73b210358d
+  checksum: 10c0/b7a41e24b59fee5f0f26c1fc844b45b17442832eb3a0fb42dd4f1430eb4abc571fe168e67913e8a1d91c993232bd1d1ab03e20e4d1fee8c6147649b576fc1b0b
   languageName: node
   linkType: hard
 
@@ -6008,7 +6008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.4":
+"follow-redirects@npm:^1.15.6":
   version: 1.15.9
   resolution: "follow-redirects@npm:1.15.9"
   peerDependenciesMeta:
@@ -7371,11 +7371,11 @@ __metadata:
   linkType: hard
 
 "nanoid@npm:^3.3.4, nanoid@npm:^3.3.7":
-  version: 3.3.7
-  resolution: "nanoid@npm:3.3.7"
+  version: 3.3.8
+  resolution: "nanoid@npm:3.3.8"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 10c0/e3fb661aa083454f40500473bb69eedb85dc160e763150b9a2c567c7e9ff560ce028a9f833123b618a6ea742e311138b591910e795614a629029e86e180660f3
+  checksum: 10c0/4b1bb29f6cfebf3be3bc4ad1f1296fb0a10a3043a79f34fbffe75d1621b4318319211cd420549459018ea3592f0d2f159247a6f874911d6d26eaaadda2478120
   languageName: node
   linkType: hard
 
@@ -7896,10 +7896,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-to-regexp@npm:^6.2.1":
-  version: 6.2.1
-  resolution: "path-to-regexp@npm:6.2.1"
-  checksum: 10c0/7a73811ca703e5c199e5b50b9649ab8f6f7b458a37f7dff9ea338815203f5b1f95fe8cb24d4fdfe2eab5d67ce43562d92534330babca35cdf3231f966adb9360
+"path-to-regexp@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "path-to-regexp@npm:8.2.0"
+  checksum: 10c0/ef7d0a887b603c0a142fad16ccebdcdc42910f0b14830517c724466ad676107476bba2fe9fffd28fd4c141391ccd42ea426f32bb44c2c82ecaefe10c37b90f5a
   languageName: node
   linkType: hard
 
@@ -8272,12 +8272,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-icons@npm:^4.7.1":
-  version: 4.12.0
-  resolution: "react-icons@npm:4.12.0"
+"react-icons@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "react-icons@npm:5.4.0"
   peerDependencies:
     react: "*"
-  checksum: 10c0/2170f43031ee7365539f72d4075cbe6c7fbf9a66d6cf4494aa9393b194272da0564f5b19d1b24dbfc567c0ac89f5fe5b8974d92dd83f61e252388dde6a226fb8
+  checksum: 10c0/698b0c4616870152d86de2585fb709bf3eeb9292d971d689965dade5f0ee71cdc92d2125b728ab220cc39a4c6d6bad1ed526b9b934ab39a7b6001bc23b73ee16
   languageName: node
   linkType: hard
 
@@ -8825,7 +8825,7 @@ __metadata:
     "@types/signale": "npm:^1.4.7"
     "@types/uuid": "npm:^9.0.7"
     autoprefixer: "npm:^10.4.13"
-    axios: "npm:^1.3.3"
+    axios: "npm:^1.7.9"
     bcrypt: "npm:^5.1.0"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.0"
@@ -8844,7 +8844,7 @@ __metadata:
     next: "npm:13.2.4"
     next-api-decorators: "npm:^2.0.0"
     next-auth: "npm:^4.24.5"
-    path-to-regexp: "npm:^6.2.1"
+    path-to-regexp: "npm:^8.2.0"
     postcss: "npm:^8.4.36"
     postcss-preset-mantine: "npm:^1.13.0"
     postcss-simple-vars: "npm:^7.0.1"
@@ -8853,7 +8853,7 @@ __metadata:
     qr-scanner: "npm:^1.4.2"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    react-icons: "npm:^4.7.1"
+    react-icons: "npm:^5.4.0"
     react-qr-code: "npm:^2.0.11"
     react-qr-reader: "npm:^3.0.0-beta-1"
     react-qrcode-logo: "npm:^2.9.0"
