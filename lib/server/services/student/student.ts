@@ -453,7 +453,7 @@ export async function getAwardsList() {
     select: {
       id: true,
       name: true,
-      amountAvailable: true,
+      // amountAvailable: true,
       type: true,
     },
   })

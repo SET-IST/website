@@ -3930,6 +3930,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/caniuse-lite@npm:^1":
+  version: 1.0.5
+  resolution: "@types/caniuse-lite@npm:1.0.5"
+  checksum: 10c0/510f06241bc8274dbf41abf7658e2a72aec519f120b1ad89552a1d76d52a96fd549318d63120c89190d48ed831896b444d7ce773d1c042627cae504cf9a65023
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.38
   resolution: "@types/connect@npm:3.4.38"
@@ -4836,6 +4843,13 @@ __metadata:
   version: 1.0.30001585
   resolution: "caniuse-lite@npm:1.0.30001585"
   checksum: 10c0/d31b582ab2031ee6097aa8d6d8bc3a4e2f902e42033deb224fab210a0f380ce6be8f64a99be5aa63007ba1753ede157b75c64c1d9975ebf301c66e960b939886
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001700":
+  version: 1.0.30001700
+  resolution: "caniuse-lite@npm:1.0.30001700"
+  checksum: 10c0/3d391bcdd193208166d3ad759de240b9c18ac3759dbd57195770f0fcd2eedcd47d5e853609aba1eee5a2def44b0a14eee457796bdb3451a27de0c8b27355017c
   languageName: node
   linkType: hard
 
@@ -8822,6 +8836,7 @@ __metadata:
     "@tanstack/react-query": "npm:^4.35.7"
     "@tanstack/react-query-devtools": "npm:^4.24.14"
     "@types/bcrypt": "npm:^5.0.0"
+    "@types/caniuse-lite": "npm:^1"
     "@types/cookies": "npm:^0.7.7"
     "@types/lodash": "npm:^4.14.199"
     "@types/luxon": "npm:^3.2.0"
@@ -8837,6 +8852,7 @@ __metadata:
     autoprefixer: "npm:^10.4.13"
     axios: "npm:^1.7.9"
     bcrypt: "npm:^5.1.0"
+    caniuse-lite: "npm:^1.0.30001700"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.0"
     classnames: "npm:^2.3.2"

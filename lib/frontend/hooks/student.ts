@@ -47,20 +47,27 @@ export const useAward = () => {
   const lastToken = useBoundStore((state) => state.token)
   console.log("fetchAward...")
 
-  return useQuery<AwardToken, AxiosError>(['Award'], () => fetchAward(), {
-    enabled: false,
-    cacheTime: Infinity,
-    staleTime: Infinity,
-    refetchOnWindowFocus: false, // FIXME the page refetchs on window focus, even with false (the qrcode changes after redeem without the whell, if the user has the redeem modal open)
-    // refetchInterval: (data, query) => {
-    //   return !query.state.error ? 800000 : false
-    // },
-    retry: false, // ⬅️ Only retry twice before stopping
+  return useQuery<AwardToken, AxiosError>({
+    queryKey: ['Award'],
+    queryFn: fetchAward,
+    enabled: true,
+    // cacheTime: Infinity,
+    // staleTime: Infinity,
+    refetchOnWindowFocus: true, // FIXME the page refetchs on window focus, even with false (the qrcode changes after redeem without the whell, if the user has the redeem modal open)
+    refetchInterval: (data, query) => {
+      return !query.state.error ? 800 : false
+    },
+    // retry: false, // ⬅️ Only retry twice before stopping
     // retryDelay: (attempt) => Math.min(1000 * 5 ** attempt, 30000), // Exponential backoff
     //retry: (failureCount, error) => false,
     onSuccess: (data) => {
-      setAwardToken(data?.id || '')
+      // if (lastToken === data?.id) {
+      //   console.log("same token recieved from api")
+      // } else {
+      //   console.log("different token recieved from api")
+      // }
       console.log("fetchAward data hooks: ", data)
+      setAwardToken(data?.id || '')
     },
     onError: (error) => {
       console.error("fetchAward error hooks: ", error)
@@ -75,6 +82,7 @@ export const useAward = () => {
     // },
   })
 }
+
 
 // const setAwardToken = useBoundStore((state) => state.setAwardToken)
 

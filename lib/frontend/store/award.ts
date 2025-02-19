@@ -8,9 +8,9 @@ export interface LastAwardToken {
 export const createLastAwardToken: StateCreator<
 	LastAwardToken
 > = (set) => ({
-	token: '', // default value, no award token
+	token: '',
 	setAwardToken: (new_token: string) =>
 		set({
-		token: new_token,
+			token: new_token,
 		}),
 })

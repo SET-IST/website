@@ -13,20 +13,35 @@ const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wh
 
 
 export function ModalContent() {
+  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [mustSpin, setMustSpin] = useState(false);
+  const [wheelStopped, setWheelStopped] = useState(false);
+  const [lastAwardToken] = useState(() => useBoundStore.getState().token)
+  const [token, setToken] = useState('')
+  const showRedeemModal = useBoundStore((state) => state.showRedeemModal)
+
+  // Fetch user data
   const { data, isLoading: isUserLoading, isError: isUserError } = useProfile()
 
-    const {
+  console.log("data: ", data)
+  console.log("isUserLoading: ", isUserLoading)
+  console.log("isUserError: ", isUserError)
+
+  // Fetch award data
+  const {
     data: awardData,
     isSuccess: awardLoaded,
     error: awardError,
     refetch,
+    isLoading: isAwardLoading,
   } = useAward()
 
+  console.log("awardLoading: ", isAwardLoading)
   console.log("awardData: ", awardData)
   console.log("awardLoaded: ", awardLoaded)
   console.log("awardError: ", awardError)
 
-
+  // Check if user has enough points for a redeem
   const notEnoughPoints = awardError?.response?.status === 400
   console.log("notEnoughPoints: ", notEnoughPoints)
 
@@ -34,39 +49,64 @@ export function ModalContent() {
   const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
 
 
-  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError } = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
+  // Load awards list
+  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: wheel_data_loaded } = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
   console.log("awardsList: ", awardsListData)
 
-  // Transform awardsList into WheelDataType
-  const data_wheel: WheelDataType[] = awardsListData ? awardsListData.map((award) => ({ option: award?.name })) : [{"option": "Carregando..."}]
+  // Create data for the wheel
+  const data_wheel: WheelDataType[] = Array.isArray(awardsListData) && awardData?.type
+  ? awardsListData?.filter((award) => award.type === awardData.type)?.map((award) => ({ option: award.name, optionSize: award.amountAvailable }))
+  : [{ option: "Carregando..." }];
+
+  // const data_wheel: WheelDataType[] = awardsListData ? awardsListData.map((award) => ({ option: award?.name })) : [{"option": "Carregando..."}]
   console.log("data_wheel: ", data_wheel)
-
-  const [prizeNumber, setPrizeNumber] = useState(0);
-  const [mustSpin, setMustSpin] = useState(true);
-  
-  const [wheelStopped, setWheelStopped] = useState(false);
-
-  const [lastAwardToken] = useState(() => useBoundStore.getState().token)
   console.log("lastAwardToken:", lastAwardToken);
   console.log("awardData:", awardData?.id);
 
-  const isVisible = useBoundStore((state) => state.redeemModalVisible)
-  console.log("isVisible:", isVisible);
+  // const isVisible = useBoundStore((state) => state.redeemModalVisible)
+  // console.log("isVisible:", isVisible);
 
-  if (isVisible && !awardData) {
-      refetch() // Fetch only when modal opens
-      console.log("🕰️ refetching...")
-  }
+  // if (isVisible && !awardData) {
+  //     refetch() // Fetch only when modal opens
+  //     console.log("🕰️ refetching...")
+  // }
 
-  //lastAwardToken == awardData?.id ? console.log("same") : console.log("different") // FIXME: on mobile, it shows always the wheel
+  // Checkes if the award token has been previously seen
   const isSameToken = lastAwardToken === awardData?.id;
   console.log(isSameToken ? "same" : "different");
 
 
+  // Debug Wheel stoped
   useEffect(() => {
     console.log("Wheel Stopped:", wheelStopped); // ✅ Debugging
   }, [wheelStopped]); // Runs whenever wheelStopped changes
 
+
+  // Starts the wheel when the award is loaded
+  useEffect(() => {
+    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints) {
+      console.log("setting up wheel...");
+      const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name);
+      console.log("prizeIndex:", prizeIndex);
+      console.log("target:" , data_wheel[prizeIndex].option);
+      setPrizeNumber(prizeIndex);
+      console.log("wheel setup done");
+      setMustSpin(true);
+      console.log("wheel started");
+    }
+  }, [awardLoaded, data_wheel]);
+
+  // Closes model after redeeming
+  useEffect(() => {
+    if(awardLoaded){
+      if (token === ''){
+        setToken(awardData?.id || '')
+      }
+      else{
+        showRedeemModal(false)
+      }
+    }
+  }, [awardData]);
 
   return (
     <div className="h-screen p-4 flex flex-col">
@@ -114,10 +154,11 @@ export function ModalContent() {
                       !wheelStopped ? (
                         <Wheel
                           mustStartSpinning={mustSpin}
-                          prizeNumber={prizeNumber}
+                          prizeNumber={prizeNumber as number}
                           data={data_wheel}
                           onStopSpinning={() => {
                             setTimeout(() => {
+                              setMustSpin(false);
                               setWheelStopped(true);
                             }, 2000); // Delay of 2 seconds
                           }}
