@@ -336,7 +336,7 @@ CREATE TABLE public."StudentDetails" (
     university character varying(128) NOT NULL,
     companies_ids text[],
     "userId" text NOT NULL,
-    reedems integer DEFAULT 0 NOT NULL,
+    redeems integer DEFAULT 0 NOT NULL,
     "phoneNumber" text
 );
 
@@ -684,7 +684,7 @@ clsgvclrf0003dpfiwt87uewz	51cc81be-3dcc-46b9-b0ce-1a45ccc6d620	8c6366c3-b6cb-4ab
 -- Data for Name: StudentDetails; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."StudentDetails" (id, "cvLocation", scans, points, course, university, companies_ids, "userId", reedems, "phoneNumber") FROM stdin;
+COPY public."StudentDetails" (id, "cvLocation", scans, points, course, university, companies_ids, "userId", redeems, "phoneNumber") FROM stdin;
 1	cvs/_public/61ffb8d5-9b5e-4cdd-b5c2-739c12d7328b.pdf	2	1000	9121	1519	{7072a7fa-33d2-4de7-b83f-eb891f907cd5,cdb54fc6-f738-4177-b13f-4869d6f2a7f2}	8c6366c3-b6cb-4ab8-bff4-39eeca67cb75	0	\N
 \.
 

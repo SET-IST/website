@@ -58,6 +58,11 @@ class StudentRoutes {
   public async getRedemptionSettings() {
     return await Server.getRedemptionSettings()
   }
+
+  @Get('/awardsList')
+  public async getAwardsList() {
+    return await Server.getAwardsList()
+  }
 }
 
 export default createHandler(StudentRoutes)
