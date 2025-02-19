@@ -1,10 +1,10 @@
-import { Award } from '@/lib/frontend/api'
+import { AwardToken } from '@/lib/frontend/api'
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core'
 import { AwardType } from '@prisma/client'
 import { QRCode } from 'react-qrcode-logo'
 
 interface PrizeCardProps {
-  award: Award
+  award: AwardToken
 }
 
 export function PrizeCard({ award }: PrizeCardProps) {
@@ -16,6 +16,17 @@ export function PrizeCard({ award }: PrizeCardProps) {
       radius="md"
       withBorder
     >
+      <Card.Section>
+        <div className="flex flex-col justify-normal items-center border-t p-2">
+          {award?.type === AwardType.NORMAL && (
+            <Badge color="blue">{award.award.name}</Badge>
+          )}
+          {award?.type === AwardType.SPECIAL && (
+            <Badge color="indigo">{award.award.name}</Badge>
+          )}
+        </div>
+      </Card.Section>
+
       <Card.Section>
         <QRCode
           fgColor="#1C7ED6"

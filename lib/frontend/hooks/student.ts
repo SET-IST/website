@@ -1,6 +1,6 @@
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import {
-  Award,
+  AwardToken,
   CompanyScan,
   ScannedCompany,
   UserEnrollment,
@@ -47,7 +47,7 @@ export const useAward = () => {
   const lastToken = useBoundStore((state) => state.token)
   console.log("fetchAward...")
 
-  return useQuery<Award, AxiosError>(['Award'], () => fetchAward(), {
+  return useQuery<AwardToken, AxiosError>(['Award'], () => fetchAward(), {
     enabled: false,
     cacheTime: Infinity,
     staleTime: Infinity,
@@ -55,9 +55,11 @@ export const useAward = () => {
     // refetchInterval: (data, query) => {
     //   return !query.state.error ? 800 : false
     // },
+    // retry: 2, // ⬅️ Only retry twice before stopping
+    // retryDelay: (attempt) => Math.min(1000 * 5 ** attempt, 30000), // Exponential backoff
     onSuccess: (data) => {
       setAwardToken(data?.id || '')
-      console.log("data: ", data)
+      console.log("fetchAward data hooks: ", data)
     },
   })
 }

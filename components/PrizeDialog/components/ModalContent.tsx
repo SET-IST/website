@@ -37,7 +37,7 @@ export function ModalContent() {
   console.log("awardsList: ", awardsListData)
 
   // Transform awardsList into WheelDataType
-  const data_wheel: WheelDataType[] = awardsListData ? awardsListData.map((award) => ({ option: award?.name })) : []
+  const data_wheel: WheelDataType[] = awardsListData ? awardsListData.map((award) => ({ option: award?.name })) : [{"option": "Carregando..."}]
   console.log("data_wheel: ", data_wheel)
 
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -48,13 +48,16 @@ export function ModalContent() {
   const [lastAwardToken] = useState(() => useBoundStore.getState().token)
   console.log("lastAwardToken:", lastAwardToken);
   console.log("awardData:", awardData?.id);
-  // if (!awardData) {
-  //     refetch() // ✅ Fetch only when modal opens
-  //   }
-  // refetch()
-  // console.log("refetching...")
 
-  lastAwardToken == awardData?.id ? console.log("same") : console.log("different") // FIXME: on mobile, it shows always the wheel
+  if (!awardData) {
+      refetch() // Fetch only when modal opens
+      console.log("🕰️ refetching...")
+  }
+
+  //lastAwardToken == awardData?.id ? console.log("same") : console.log("different") // FIXME: on mobile, it shows always the wheel
+  const isSameToken = lastAwardToken === awardData?.id;
+  console.log(isSameToken ? "same" : "different");
+
 
   useEffect(() => {
     console.log("Wheel Stopped:", wheelStopped); // ✅ Debugging
@@ -102,13 +105,32 @@ export function ModalContent() {
                   className="w-full flex flex-col gap-4 items-center"
                   style={styles}
                 >
+                  <div>
+                    {isSameToken ? (
+                      <PrizeCard award={awardData} />
+                    ) : (
+                      !wheelStopped ? (
+                        <Wheel
+                          mustStartSpinning={mustSpin}
+                          prizeNumber={prizeNumber}
+                          data={data_wheel}
+                          onStopSpinning={() => {
+                            setTimeout(() => {
+                              setWheelStopped(true);
+                            }, 2000); // Delay of 2 seconds
+                          }}
+                          spinDuration={0.70}
+                        />
+                      ) : (
+                        <PrizeCard award={awardData} />
+                      )
+                    )}
+                  </div>
 
                 {/* {lastAwardToken == awardData?.id ? (
                   <PrizeCard award={awardData} />
                 ) :( */}
-                  <div>
-                    
-                
+                  {/* <div>
                     {!wheelStopped ? (
                       <Wheel
                         mustStartSpinning={mustSpin}
@@ -124,7 +146,7 @@ export function ModalContent() {
                     ) : (
                       <PrizeCard award={awardData} />
                     )}
-                  </div>
+                  </div> */}
                 {/* )} */}
                 </div>
                 )}

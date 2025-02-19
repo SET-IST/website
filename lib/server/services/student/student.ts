@@ -281,6 +281,12 @@ export async function requestAward(user: User) {
       select: {
         id: true,
         type: true,
+        award: {
+            select: {
+              id: true,
+              name: true,
+            }
+          }
       },
     })
 
@@ -330,6 +336,7 @@ export async function requestAward(user: User) {
       }
 
       const selectedPrize = weightedRandomSelection(availablePrizes);
+      console.log("selectedPrize: ", selectedPrize);
 
       return await tx.awardToken.create({
         data: {
@@ -348,6 +355,12 @@ export async function requestAward(user: User) {
         select: {
           id: true,
           type: true,
+          award: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
         },
       })
     })
