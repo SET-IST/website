@@ -3,7 +3,7 @@ import { databaseQueryWrapper } from '@/core/utils'
 import { EventLogService, getFullResourcePath } from '../../utils'
 import { EventLogType, User, UserType } from '@prisma/client'
 import { getCompanyProfile } from '../company'
-import { addTotalPoints, getRedemptionSettings, getStudentProfile } from '../student'
+import { addTotalPoints, getRedemptionSettings, getStudentProfile, weightedRandomSelection } from '../student'
 import { CreateAwardDto, UpdatePointsDto } from './dtos'
 import { BadRequestException, ConflictException } from 'next-api-decorators'
 
@@ -81,40 +81,69 @@ export async function createAward(
     if (existingToken)
       throw new ConflictException('Student already has an award pending')
 
-    const prize = await PrismaService.wheelPrize.findFirst({
-      where: {
-        name: data.prizeName,
-        ammountAvailable: { gt: 0 }
-      },
-    })
+    const response = await PrismaService.$transaction(async (tx) => {
+      // Check points
+      const studentTx = await tx.studentDetails.findUniqueOrThrow({
+        where: {
+          userId: uuid,
+        },
+        include: {
+          redeemedPrizes: true
+        },
+      })
 
-    if (!prize)
-      throw new BadRequestException('Requested prize is not available')
+      if (studentTx.points - (await getRedemptionSettings()).REDEEM < 0) {
+        throw new BadRequestException(
+          'The student does not have enough points to request awards'
+        )
+      }
 
-    const redeemedPrize = await PrismaService.redeemedPrize.create({
-      data: {
-        name: prize.name,
-        type: prize.type,
-        studentDetailsId: uuid,
-      },
-    })
+      const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
+      let availablePrizes = await tx.award.findMany({
+        where: {
+          id: {
+            notIn: redeemedPrizeIds
+          },
+          amountAvailable: { gt: 0 }
+        },
+      })
 
-    const response = await PrismaService.awardToken.create({
-      data: {
-        type: data.type,
-        student: {
-          connect: {
-            userId: uuid,
+      if (availablePrizes.length === 0) {
+        availablePrizes = await tx.award.findMany({
+          where: { 
+            amountAvailable: { gt: 0 } 
+          },
+        })
+      }
+
+      if (availablePrizes.length === 0) {
+        throw new BadRequestException(
+          'No prizes available'
+        )
+      }
+
+      const selectedPrize = weightedRandomSelection(availablePrizes);
+
+      return await tx.awardToken.create({
+        data: {
+          type: selectedPrize.type,
+          student: {
+            connect: {
+              userId: uuid
+            }
+          },
+          award: {
+            connect: {
+              id: selectedPrize.id
+            }
           },
         },
-        prize: {
-          connect: {
-            id: redeemedPrize.id
-          }
-        }
-      },
+        select: {
+          id: true,
+          type: true,
+        },
+      })
     })
-
     await EventLogService.logEvent(
       user,
       EventLogType.AWARDS,

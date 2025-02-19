@@ -7,7 +7,7 @@ import { BadRequestException, ConflictException } from 'next-api-decorators'
 import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
-function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
+export function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
   const totalWeight = availablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
   let randomValue = Math.random() * totalWeight;
 
