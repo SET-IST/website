@@ -16,7 +16,7 @@ import { useProfile } from '@/lib/frontend/hooks'
 import { CompanyProfile, StudentProfile } from '@/lib/frontend/api'
 import { useBoundStore } from '@/lib/frontend/store'
 import { getCourse } from '@/lib/frontend/utils'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { TruncatedText } from '@/components/TruncatedText'
 
 const UserCard = () => {

@@ -45,7 +45,6 @@ export const useScan = (queryClient: QueryClient) => {
 export const useAward = () => {
   const setAwardToken = useBoundStore((state) => state.setAwardToken)
   const lastToken = useBoundStore((state) => state.token)
-  console.log("fetchAward...")
 
   return useQuery<AwardToken, AxiosError>({
     queryKey: ['Award'],

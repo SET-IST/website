@@ -1,4 +1,4 @@
-import { Text, Modal, Transition } from '@mantine/core'
+import { Text, Modal, Transition, ColorInput } from '@mantine/core'
 import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
 import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Award, fetchAwardsList } from '@/lib/frontend/api'
@@ -46,7 +46,6 @@ export function ModalContent() {
 
   // Checkes if the award token has been previously seen
   const isSameToken = lastAwardToken === awardData?.id;
-  console.log(isSameToken ? "same" : "different");
 
   // Starts the wheel when the award is loaded
   useEffect(() => {
@@ -60,14 +59,23 @@ export function ModalContent() {
   // Closes model after redeeming
   useEffect(() => {
     if(awardLoaded){
+      // First token was loaded
       if (token === ''){
         setToken(awardData?.id || '')
       }
+      // Another token was loaded
       else{
         showRedeemModal(false)
       }
     }
-  }, [awardData]);
+    // No Token
+    else{
+      // There was a token but now there is an error, meaning all points were spent
+      if(awardError && awardData){
+        showRedeemModal(false)
+      }
+    }
+  }, [awardData, awardError]);
 
   return (
     <div className="h-screen p-4 flex flex-col">
