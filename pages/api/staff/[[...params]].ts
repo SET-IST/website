@@ -60,7 +60,13 @@ class StaffRoutes {
     return await StaffService.createAward(user, uuid, data)
   }
 
-  @Get('/redeem/:uuid')
+  @Get('/award/read/:uuid')
+  public async readAward(@Param('uuid') uuid: string) {
+    if (!isUUID(uuid)) throw new BadRequestException('Invalid award id')
+    return await StaffService.readAward(uuid)
+  }
+
+  @Get('/award/redeem/:uuid')
   public async redeemAward(@Param('uuid') uuid: string) {
     if (!isUUID(uuid)) throw new BadRequestException('Invalid award id')
     return await StaffService.redeemAward(uuid)

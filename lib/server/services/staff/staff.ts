@@ -154,6 +154,24 @@ export async function createAward(
   })
 }
 
+export async function readAward(uuid: string) {
+  const details = await PrismaService.awardToken.findUniqueOrThrow({
+      where: {
+        id: uuid,
+      },
+      include: {
+        student: {
+          select: {
+            id: true,
+            user: true,
+          },
+        },
+        award: true,
+      },
+    })
+    return details
+}
+
 export async function redeemAward(uuid: string, awardOverride?: string) {
   return await databaseQueryWrapper(async () => {
     const details = await PrismaService.awardToken.findUniqueOrThrow({
@@ -196,6 +214,16 @@ export async function redeemAward(uuid: string, awardOverride?: string) {
           },
         },
       })
+      await tx.award.update({
+        where: {
+          id: details.awardId,
+        },
+        data: {
+          amountAvailable: {
+            decrement: 1,
+          },
+        },
+      })
 
       await tx.redeemedPrize.create({
         data: {
@@ -205,7 +233,7 @@ export async function redeemAward(uuid: string, awardOverride?: string) {
         },
       })
     })
-    return { redeemedPrize: finalPrizeName }
+    return details
   })
 }
 

@@ -37,8 +37,13 @@ export const fetchUserDetails = async (
   return data
 }
 
+export const readAward = async (uuid: string): Promise<AwardData> => {
+  const { data } = await ApiClient.get(`staff/award/read/${uuid}`)
+  return data
+}
+
 export const redeemAward = async (uuid: string): Promise<AwardData> => {
-  const { data } = await ApiClient.get(`staff/redeem/${uuid}`)
+  const { data } = await ApiClient.get(`staff/award/redeem/${uuid}`)
   return data
 }
 

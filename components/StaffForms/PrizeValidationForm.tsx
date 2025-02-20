@@ -15,7 +15,7 @@ import { AccountSelect } from './components'
 import { AwardType, User, UserType } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { useCreateAward, useUserDetails } from '@/lib/frontend/hooks'
-import { AwardData, redeemAward } from '@/lib/frontend/api'
+import { AwardData, readAward, redeemAward } from '@/lib/frontend/api'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -87,6 +87,16 @@ const PrizeValidationForm = () => {
       })
   }
 
+  // const {data: awardsListData} = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
+  // console.log("awardsListData: ", awardsListData)
+  // awardsListData?.map((award) => ({console.log("award: ", award)}))
+  
+  // // transform awardsListData into combo box data
+  // const awardsList = awardsListData?.map((award) => ({
+  //   label: award?.name,
+  //   value: award?.id,
+  // })) ?? []
+
   return (
     <div className="h-fit p-4">
       <Text c="#00415a" fz="xl" fw={700}>
@@ -102,7 +112,7 @@ const PrizeValidationForm = () => {
         labelPosition="left"
       />
       <TextInput
-        label="Brinde"
+        label="Brinde (Token)"
         description="Só é possível resgatar brindes com um código QR"
         placeholder="UUID"
         disabled
@@ -155,6 +165,38 @@ const PrizeValidationForm = () => {
               </Text>
             </div>
           </Group>
+          <Select
+            label="Brinde"
+            description="Os brindes podem ser encontrados pelo nome"
+            defaultValue={award?.award.name ?? 'Brinde'}
+            onChange={(value) =>
+              prizeCreationForm.setFieldValue('type', value as AwardType)
+            }
+            //data={awardsList}
+            data={[
+              {
+                label: 'NORMAL',
+                value: AwardType.NORMAL,
+              },
+              {
+                label: 'BÓNUS',
+                value: AwardType.SPECIAL,
+              },
+            ]}
+            disabled={!isValidUser}
+          />
+          {/* <TextInput
+                label="Brinde"
+                description="Os brindes podem ser encontrados pelo nome"
+                placeholder="Brinde"
+                disabled
+                value={award?.award.name ?? ''}
+              /> */}
+          <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
+            <Button disabled={!isValidUser} loading={isLoading} type="submit">
+              Aplicar
+            </Button>
+          </div>
         </div>
       )}
 
@@ -219,7 +261,7 @@ const PrizeValidationForm = () => {
                   Estudante:
                 </Text>
                 <Text c="dimmed" size="xs">
-                  {createdAward?.userId}
+                  {createdAward?.id}
                 </Text>
               </div>
             </div>
@@ -235,12 +277,12 @@ const PrizeValidationForm = () => {
 
       <StaffScan
         label="Resgatar brinde"
-        fetchMethod={redeemAward}
+        fetchMethod={readAward}
         callback={(data) => {
           setAward(data)
-          showSuccessNotification({
-            message: 'Brinde confirmado',
-          })
+          // showSuccessNotification({
+          //   message: 'Brinde confirmado',
+          // })
         }}
         visible={scanModalVisible}
         onClose={closeScanModal}
