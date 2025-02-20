@@ -8,21 +8,16 @@ import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
 export function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
-  console.log('Started prize selection')
   const totalWeight = availablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
-  console.log('prizes available', totalWeight)
   let randomValue = Math.random() * totalWeight;
-  console.log('Selected', randomValue);
 
   for (const award of availablePrizes) {
     randomValue -= award.amountAvailable;
     if (randomValue <= 0) {
-      console.log("selectedPrize: ", award);
       return award;
     }
   }
 
-  console.error('Error in prize selection')
   return availablePrizes[availablePrizes.length - 1]; // Fallback (shouldn't reach here)
 }
 
