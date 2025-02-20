@@ -43,9 +43,6 @@ export const useScan = (queryClient: QueryClient) => {
 }
 
 export const useAward = () => {
-  const setAwardToken = useBoundStore((state) => state.setAwardToken)
-  const lastToken = useBoundStore((state) => state.token)
-
   return useQuery<AwardToken, AxiosError>({
     queryKey: ['Award'],
     queryFn: fetchAward,
@@ -55,12 +52,6 @@ export const useAward = () => {
     refetchOnWindowFocus: true,
     refetchInterval: (data, query) => {
       return !query.state.error ? 800 : false
-    },
-    onSuccess: (data) => {
-      setAwardToken(data?.id || '')
-    },
-    onError: (error) => {
-      console.error("fetchAward error hooks: ", error)
     },
   })
 }

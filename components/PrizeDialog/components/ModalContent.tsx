@@ -13,10 +13,36 @@ const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wh
 
 
 export function ModalContent() {
+  const disableInitialAnimation = false;  // Isto morre qnd se mete a true; n vamos questionar os deuses das react custom roulettes
+  const radiusLineWidth = 5;
+  const outerBorderWidth = 5;
+  const innerBorderWidth = 0;
+  const outerBorderColor = '#FFFFFF';
+  const innerBorderColor = '#FFFFFF';
+  const radiusLineColor = '#FFFFFF';
+  const backgroundColors = [
+    '#FF6900',
+    '#FCB900',
+    '#7BDCB5',
+    '#00D084',
+    '#8ED1FC',
+    '#0693E3',
+    '#ABB8C3',
+    '#EB144C',
+    '#F78DA7',
+    '#9900EF',
+    '#000000',
+  ];
+  const textColors = [
+    '#202020',
+  ]
+
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [mustSpin, setMustSpin] = useState(false);
   const [wheelStopped, setWheelStopped] = useState(false);
-  const [lastAwardToken] = useState(() => useBoundStore.getState().token)
+  // const [lastAwardToken, setLastToken] = useBoundStore((state) => state.LastAwardToken)
+  const setLastToken = useBoundStore((state) => state.setLastToken)
+  const lastAwardToken = useBoundStore((state) => state.token)
   const [token, setToken] = useState('')
   const showRedeemModal = useBoundStore((state) => state.showRedeemModal)
 
@@ -91,10 +117,10 @@ export function ModalContent() {
             <Text c="white" ta="center" fz={25} fw={700}>
               Olá {user?.name.split(' ')[0]}
             </Text>
-            {/* <Text c="white" ta="center" fz="lg" fw={500}>
+            <Text c="white" ta="center" fz="lg" fw={500}>
               Tens <strong>{user?.studentDetails?.points}</strong> pontos por
               gastar
-            </Text> */}
+            </Text>
             {notEnoughPoints ? (
               <Text c="white" ta="center" fz="md" fw={500}>
                 Faltam-te{' '}
@@ -123,11 +149,21 @@ export function ModalContent() {
                       !wheelStopped ? (
                         <Wheel
                           mustStartSpinning={mustSpin}
+                          backgroundColors={backgroundColors}
+                          outerBorderColor={outerBorderColor}
+                          innerBorderColor={innerBorderColor}
+                          radiusLineColor={radiusLineColor}
+                          outerBorderWidth={outerBorderWidth}
+                          innerBorderWidth={innerBorderWidth}
+                          radiusLineWidth={radiusLineWidth}
+                          disableInitialAnimation={disableInitialAnimation}
+                          textColors={textColors}
                           prizeNumber={prizeNumber as number}
                           data={data_wheel}
                           onStopSpinning={() => {
                             setTimeout(() => {
                               setMustSpin(false);
+                              setLastToken(awardData?.id || '')
                               setWheelStopped(true);
                             }, 2000);
                           }}

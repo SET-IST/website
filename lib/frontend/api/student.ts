@@ -61,7 +61,6 @@ export const scanCompany = async (companyId: string): Promise<CompanyScan> => {
 
 export const fetchAward = async (): Promise<AwardToken> => {
   const { data } = await ApiClient.get('student/award')
-  console.log("award data: ", data)
   return data
 }
 
@@ -72,6 +71,5 @@ export const fetchRedemptionSettings = async (): Promise<RedemptionSettings> => 
 
 export const fetchAwardsList = async (): Promise<Award[]> => {
   const { data } = await ApiClient.get('student/awardsList')
-  console.log("awardsList data: ", data)
   return await data
 }
