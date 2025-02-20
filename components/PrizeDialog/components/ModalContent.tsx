@@ -85,12 +85,9 @@ export function ModalContent() {
   // Closes model after redeeming
   useEffect(() => {
     if(awardLoaded){
-      // First token was loaded
       if (token === ''){
         setToken(awardData?.id || '')
-      }
-      // Another token was loaded
-      else{
+      } else if (token !== awardData?.id){        // Another token was loaded
         showRedeemModal(false)
       }
     }
