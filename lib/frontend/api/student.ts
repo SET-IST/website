@@ -27,7 +27,7 @@ export type UserEnrollment = Unpacked<
 export type CompanyScan = Awaited<ReturnType<typeof server_scanCompany>>
 export type AwardToken = Awaited<ReturnType<typeof requestAward>>
 export type RedemptionSettings = Awaited<ReturnType<typeof getRedemptionSettings>>
-export type Award = Awaited<ReturnType<typeof getAwardsList>>
+export type Awards = Awaited<ReturnType<typeof getAwardsList>>
 
 export const fetchStudentProfile = async (): Promise<StudentProfile> => {
   const { data } = await ApiClient.get('student/profile')
@@ -69,7 +69,7 @@ export const fetchRedemptionSettings = async (): Promise<RedemptionSettings> => 
   return await data
 }
 
-export const fetchAwardsList = async (): Promise<Award[]> => {
+export const fetchAwardsList = async (): Promise<Awards> => {
   const { data } = await ApiClient.get('student/awardsList')
   return await data
 }

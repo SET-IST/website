@@ -1,7 +1,7 @@
 import { Text, Modal, Transition, ColorInput } from '@mantine/core'
 import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
-import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Award, fetchAwardsList } from '@/lib/frontend/api'
+import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Awards, fetchAwardsList } from '@/lib/frontend/api'
 import { useQuery } from '@tanstack/react-query'
 import { WheelDataType } from 'react-custom-roulette'
 import React, { useEffect, useState } from 'react'
@@ -63,7 +63,7 @@ export function ModalContent() {
   const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
 
   // Load awards list
-  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: wheel_data_loaded } = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
+  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: wheel_data_loaded } = useQuery<Awards>(['awardsList'], () => fetchAwardsList())
 
   // Create data for the wheel
   const data_wheel: WheelDataType[] = Array.isArray(awardsListData) && awardData?.type
