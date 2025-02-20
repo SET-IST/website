@@ -47,6 +47,11 @@ export const redeemAward = async (uuid: string): Promise<AwardData> => {
   return data
 }
 
+export const modifyAward = async (uuid: string, award_id: number): Promise<AwardData> => {
+  const { data } = await ApiClient.put(`staff/award/modify/${uuid}/${award_id}`)
+  return data
+}
+
 export interface UpdateStudentPointsRequest {
   uuid: string
   points: number

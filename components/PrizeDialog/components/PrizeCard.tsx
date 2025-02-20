@@ -28,12 +28,14 @@ export function PrizeCard({ award }: PrizeCardProps) {
       </Card.Section>
 
       <Card.Section>
+        <center> {/* FIXME é um martelo, alguém que melhore depois por favor com flex e assim porque estou com sono para testar agora */}
         <QRCode
           fgColor="#1C7ED6"
           eyeRadius={5}
           qrStyle="dots"
           value={award?.id}
         />
+        </center>
       </Card.Section>
 
       <Card.Section>

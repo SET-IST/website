@@ -276,3 +276,19 @@ export async function setStudentPoints(
     })
   })
 }
+
+export async function modifyAward(uuid: string, award_id: number) {
+  return await databaseQueryWrapper(async () => {
+    await PrismaService.$transaction(async (tx) => {
+      await tx.awardToken.update({
+        where: {
+          id: uuid,
+        },
+        data: {
+          awardId: award_id,
+        },
+      })
+    })
+    return await readAward(uuid)
+  })
+}

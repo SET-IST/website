@@ -15,7 +15,7 @@ import { AccountSelect } from './components'
 import { AwardType, User, UserType } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { useCreateAward, useUserDetails } from '@/lib/frontend/hooks'
-import { AwardData, readAward, redeemAward } from '@/lib/frontend/api'
+import { AwardData, Awards, fetchAwardsList, readAward, redeemAward, modifyAward } from '@/lib/frontend/api'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -23,6 +23,7 @@ import {
 import { StaffScan } from './components/StaffScan/StaffScan'
 import { useDisclosure } from '@mantine/hooks'
 import { IconQrcode } from '@tabler/icons-react'
+import { useQuery } from '@tanstack/react-query'
 
 interface PrizeCreationFormValues {
   uuid?: string
@@ -87,15 +88,15 @@ const PrizeValidationForm = () => {
       })
   }
 
-  // const {data: awardsListData} = useQuery<Award[]>(['awardsList'], () => fetchAwardsList())
-  // console.log("awardsListData: ", awardsListData)
-  // awardsListData?.map((award) => ({console.log("award: ", award)}))
-  
-  // // transform awardsListData into combo box data
-  // const awardsList = awardsListData?.map((award) => ({
-  //   label: award?.name,
-  //   value: award?.id,
-  // })) ?? []
+  // Load awards list
+  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: isAwardsListSuccess } = useQuery<Awards>(['awardsList'], () => fetchAwardsList())
+  // transform awardsListData into combo box data
+  const awardsList = awardsListData?.filter((award_data) => award_data.type === AwardType.NORMAL || award_data.type === award?.type)?.map((award) => ({
+      label: award?.name,
+      value: award?.id.toString(),
+    })) ?? []
+
+  const [isChangingAward, setIsChangingAward] = useState(false)
 
   return (
     <div className="h-fit p-4">
@@ -131,17 +132,10 @@ const PrizeValidationForm = () => {
             <div style={{ flex: 1 }}>
               <div className="flex flex-row items-center gap-2">
                 <Text size="sm" fw={500}>
-                  Tipo:
+                  Brinde:
                 </Text>
+                <Badge size="md">{award?.award.name}</Badge>
                 <Badge size="sm">{award?.type}</Badge>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                <Text size="sm" fw={500}>
-                  UUID:
-                </Text>
-                <Text c="dimmed" size="xs">
-                  {award?.id}
-                </Text>
               </div>
               <Text size="sm" fw={500}>
                 Estudante:
@@ -165,36 +159,30 @@ const PrizeValidationForm = () => {
               </Text>
             </div>
           </Group>
+          {isChangingAward
+            && (
           <Select
             label="Brinde"
-            description="Os brindes podem ser encontrados pelo nome"
-            defaultValue={award?.award.name ?? 'Brinde'}
-            onChange={(value) =>
-              prizeCreationForm.setFieldValue('type', value as AwardType)
-            }
-            //data={awardsList}
-            data={[
-              {
-                label: 'NORMAL',
-                value: AwardType.NORMAL,
-              },
-              {
-                label: 'BÓNUS',
-                value: AwardType.SPECIAL,
-              },
-            ]}
-            disabled={!isValidUser}
+            description="Trocar valor abaixo para trocar o brinde"
+            defaultValue={award.award.id.toString()}
+            onChange={(value, option) => {
+              console.log('Selected award:', option);
+                modifyAward(award.id, Number(value));
+            }}
+            data={awardsList}
+            disabled={!isChangingAward}
+            allowDeselect={false}
           />
-          {/* <TextInput
-                label="Brinde"
-                description="Os brindes podem ser encontrados pelo nome"
-                placeholder="Brinde"
-                disabled
-                value={award?.award.name ?? ''}
-              /> */}
+          )}
           <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
-            <Button disabled={!isValidUser} loading={isLoading} type="submit">
-              Aplicar
+            {!isChangingAward
+            && (
+            <Button type="button" onClick={() => {setIsChangingAward(true); }}>
+              Trocar brinde
+            </Button>
+            )}
+            <Button type="button" color='green' onClick={() => {setIsChangingAward(false); redeemAward(award.id); showSuccessNotification({message: award.award.name + ' confirmado',}); setAward(undefined); }} >
+              Redimir Brinde
             </Button>
           </div>
         </div>
