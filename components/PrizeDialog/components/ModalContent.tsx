@@ -93,8 +93,11 @@ export function ModalContent() {
     }
     // No Token
     else{
-      // There was a token but now there is an error, meaning all points were spent
-      if(awardError && awardData){
+      // AwardError means there are no points
+      // AwardData means that there were points previousle
+      // meaning a qr was redeemed and all points were spent
+      // token === '' means user reopened the prize with no points after redeeming the last one
+      if(awardError && awardData && token !==''){
         showRedeemModal(false)
       }
     }
