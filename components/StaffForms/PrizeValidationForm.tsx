@@ -168,6 +168,7 @@ const PrizeValidationForm = () => {
             onChange={(value, option) => {
               console.log('Selected award:', option);
                 modifyAward(award.id, Number(value));
+                award.award.name = option.label;
             }}
             data={awardsList}
             disabled={!isChangingAward}
