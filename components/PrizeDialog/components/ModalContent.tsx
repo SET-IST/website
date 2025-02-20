@@ -75,7 +75,7 @@ export function ModalContent() {
 
   // Starts the wheel when the award is loaded
   useEffect(() => {
-    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints) {
+    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints && !mustSpin) {
       const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name);
       setPrizeNumber(prizeIndex);
       setMustSpin(true);
@@ -131,7 +131,7 @@ export function ModalContent() {
               <div className="flex flex-col gap-5">
             <div className="flex flex-col items-center gap-4">
               <Transition
-                mounted={true} //{awardLoaded}
+                mounted={awardLoaded}
                 transition="slide-up"
                 duration={200}
                 timingFunction="ease"
