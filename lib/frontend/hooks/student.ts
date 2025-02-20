@@ -10,8 +10,6 @@ import {
   scanCompany,
 } from '../api'
 import { AxiosError } from 'axios'
-import { useBoundStore } from '@/lib/frontend/store'
-import { databaseQueryWrapper } from '@/core/utils'
 
 
 export const useStudentCompanyScans = () => {

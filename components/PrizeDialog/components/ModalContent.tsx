@@ -1,4 +1,4 @@
-import { Text, Modal, Transition, ColorInput } from '@mantine/core'
+import { Text, Modal, Transition } from '@mantine/core'
 import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
 import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Awards, fetchAwardsList } from '@/lib/frontend/api'
