@@ -55,12 +55,11 @@ const ActivitiesPage = () => {
             <UserActivities />
           </Paper>
           <ActivityCard title="Speed Interviews" image={SpeedInterview}>
-            Uma Speed Interview é um pitch de 2/3 minutos em que te apresentas a
-            um conjunto de empresas que te darão feedback, o que perfaz um total
-            de 10 minutos de interação com as empresas. Podes submeter o teu CV
-            para que as empresas tenham acesso ao mesmo durante o teu pitch! Se
-            fores aceite, receberás um email com a confirmação do dia e hora
-            para a sessão, que será na sala 0-67/0-69.
+            Uma Speed Interview é um pitch + entrevista com duração total de 8 minutos,
+            seguidos de 2 minutos em que receberás feedback da empresa sobre o teu desempenho
+            e CV. Aproveita esta oportunidade de te apresentares às empresas e obter feedback
+            construtivo que podes levar para o mercado de trabalho! Submete o teu CV para as
+            empresas terem acesso ao mesmo. Se fores selecionado, receberás um email de confirmação.
           </ActivityCard>
           <ActivityCard title="Palestras" image={Palestra}>
             Poderás ouvir e questionar profissionais experientes na área da
