@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   createHandler,
 } from 'next-api-decorators'
@@ -60,10 +61,25 @@ class StaffRoutes {
     return await StaffService.createAward(user, uuid, data)
   }
 
-  @Get('/redeem/:uuid')
+  @Get('/award/read/:uuid')
+  public async readAward(@Param('uuid') uuid: string) {
+    if (!isUUID(uuid)) throw new BadRequestException('Invalid award token id')
+    return await StaffService.readAward(uuid)
+  }
+
+  @Get('/award/redeem/:uuid')
   public async redeemAward(@Param('uuid') uuid: string) {
-    if (!isUUID(uuid)) throw new BadRequestException('Invalid award id')
+    if (!isUUID(uuid)) throw new BadRequestException('Invalid award token id')
     return await StaffService.redeemAward(uuid)
+  }
+
+  @Put('/award/modify/:uuid/:award_id')
+  public async modifyAward(
+    @Param('uuid') uuid: string,
+    @Param('award_id') award_id: number,
+  ) {
+    if (!isUUID(uuid)) throw new BadRequestException('Invalid award token id')
+    return await StaffService.modifyAward(uuid, Number(award_id))
   }
 }
 

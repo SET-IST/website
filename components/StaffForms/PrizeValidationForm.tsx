@@ -15,7 +15,7 @@ import { AccountSelect } from './components'
 import { AwardType, User, UserType } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { useCreateAward, useUserDetails } from '@/lib/frontend/hooks'
-import { AwardData, redeemAward } from '@/lib/frontend/api'
+import { AwardData, Awards, fetchAwardsList, readAward, redeemAward, modifyAward } from '@/lib/frontend/api'
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -23,6 +23,7 @@ import {
 import { StaffScan } from './components/StaffScan/StaffScan'
 import { useDisclosure } from '@mantine/hooks'
 import { IconQrcode } from '@tabler/icons-react'
+import { useQuery } from '@tanstack/react-query'
 
 interface PrizeCreationFormValues {
   uuid?: string
@@ -87,6 +88,16 @@ const PrizeValidationForm = () => {
       })
   }
 
+  // Load awards list
+  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: isAwardsListSuccess } = useQuery<Awards>(['awardsList'], () => fetchAwardsList())
+  // transform awardsListData into combo box data
+  const awardsList = awardsListData?.filter((award_data) => award_data.type === AwardType.NORMAL || award_data.type === award?.type)?.map((award) => ({
+      label: award?.name,
+      value: award?.id.toString(),
+    })) ?? []
+
+  const [isChangingAward, setIsChangingAward] = useState(false)
+
   return (
     <div className="h-fit p-4">
       <Text c="#00415a" fz="xl" fw={700}>
@@ -102,7 +113,7 @@ const PrizeValidationForm = () => {
         labelPosition="left"
       />
       <TextInput
-        label="Brinde"
+        label="Brinde (Token)"
         description="Só é possível resgatar brindes com um código QR"
         placeholder="UUID"
         disabled
@@ -121,17 +132,10 @@ const PrizeValidationForm = () => {
             <div style={{ flex: 1 }}>
               <div className="flex flex-row items-center gap-2">
                 <Text size="sm" fw={500}>
-                  Tipo:
+                  Brinde:
                 </Text>
+                <Badge size="md">{award?.award.name}</Badge>
                 <Badge size="sm">{award?.type}</Badge>
-              </div>
-              <div className="flex flex-row items-center gap-2">
-                <Text size="sm" fw={500}>
-                  UUID:
-                </Text>
-                <Text c="dimmed" size="xs">
-                  {award?.id}
-                </Text>
               </div>
               <Text size="sm" fw={500}>
                 Estudante:
@@ -155,6 +159,33 @@ const PrizeValidationForm = () => {
               </Text>
             </div>
           </Group>
+          {isChangingAward
+            && (
+          <Select
+            label="Brinde"
+            description="Trocar valor abaixo para trocar o brinde"
+            defaultValue={award.award.id.toString()}
+            onChange={(value, option) => {
+              console.log('Selected award:', option);
+                modifyAward(award.id, Number(value));
+                award.award.name = option.label;
+            }}
+            data={awardsList}
+            disabled={!isChangingAward}
+            allowDeselect={false}
+          />
+          )}
+          <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
+            {!isChangingAward
+            && (
+            <Button type="button" onClick={() => {setIsChangingAward(true); }}>
+              Trocar brinde
+            </Button>
+            )}
+            <Button type="button" color='green' onClick={() => {setIsChangingAward(false); redeemAward(award.id); showSuccessNotification({message: award.award.name + ' confirmado',}); setAward(undefined); }} >
+              Redimir Brinde
+            </Button>
+          </div>
         </div>
       )}
 
@@ -219,7 +250,7 @@ const PrizeValidationForm = () => {
                   Estudante:
                 </Text>
                 <Text c="dimmed" size="xs">
-                  {createdAward?.userId}
+                  {createdAward?.id}
                 </Text>
               </div>
             </div>
@@ -235,12 +266,12 @@ const PrizeValidationForm = () => {
 
       <StaffScan
         label="Resgatar brinde"
-        fetchMethod={redeemAward}
+        fetchMethod={readAward}
         callback={(data) => {
           setAward(data)
-          showSuccessNotification({
-            message: 'Brinde confirmado',
-          })
+          // showSuccessNotification({
+          //   message: 'Brinde confirmado',
+          // })
         }}
         visible={scanModalVisible}
         onClose={closeScanModal}

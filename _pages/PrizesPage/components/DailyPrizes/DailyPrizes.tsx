@@ -37,7 +37,7 @@ export function PrizesCarousel() {
   return (
     <div className="flex flex-col items-center justify-center">
       <Paper radius="md" className="overflow-hidden w-full sm:w-fit">
-        <Carousel h={400} slideSize="100%" align="start" slidesToScroll={1}>
+        <Carousel h={500} slideSize="100%" align="start" slidesToScroll={1}>
           {slides}
         </Carousel>
       </Paper>

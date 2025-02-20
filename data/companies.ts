@@ -5,6 +5,7 @@ import Aquila from '@/assets/logos/empresas/aquila.webp'
 import Arquiconsult from '@/assets/logos/empresas/arquiconsult.webp'
 import Avanade from '@/assets/logos/empresas/avanade_rgb.webp'
 import Axians from '@/assets/logos/empresas/axians_rgb.webp'
+import Babel from '@/assets/logos/empresas/babel.webp'
 import Blip from '@/assets/logos/empresas/blip.webp'
 import BNP from '@/assets/logos/empresas/bnp.webp'
 import BPI from '@/assets/logos/empresas/bpi.webp'
@@ -13,12 +14,14 @@ import Deloitte from '@/assets/logos/empresas/deloitte.webp'
 import Devoteam from '@/assets/logos/empresas/devoteam.webp'
 import Celfocus from '@/assets/logos/empresas/celfocus.webp'
 import Cgi from '@/assets/logos/empresas/cgi.webp'
+import Elis from '@/assets/logos/empresas/elis.webp'
 import Experis from '@/assets/logos/empresas/experis.webp'
 import EY from '@/assets/logos/empresas/ey.webp'
 import Fidelidade from '@/assets/logos/empresas/fidelidade.webp'
 import Glintt from '@/assets/logos/empresas/glintt.webp'
 import GrupoVisabeira from '@/assets/logos/empresas/grupo_visabeira.webp'
 import IndieCampers from '@/assets/logos/empresas/indie_campers.webp'
+// import IndieCampers from '@/assets/logos/empresas/indie_campers_vert.webp'
 import Inesc from '@/assets/logos/empresas/inesc.webp'
 import InnovationMakers from '@/assets/logos/empresas/innovation_makers.webp'
 import Innowave from '@/assets/logos/empresas/innowave.webp'
@@ -35,6 +38,7 @@ import MagicBeans from '@/assets/logos/empresas/magic_beans.webp'
 import Neyond from '@/assets/logos/empresas/neyond.webp'
 import Noesis from '@/assets/logos/empresas/noesis_logo.webp'
 import Nos from '@/assets/logos/empresas/nos_rgb.webp'
+import NovoBanco from '@/assets/logos/empresas/novo_banco.webp'
 import NttData from '@/assets/logos/empresas/ntt_data.webp'
 import Opensoft from '@/assets/logos/empresas/opensoft.webp'
 import PremiumMinds from '@/assets/logos/empresas/premium_minds.webp'
@@ -54,6 +58,7 @@ import TheLoop from '@/assets/logos/empresas/the_loop.webp'
 import TimWeTech from '@/assets/logos/empresas/timwetech.webp'
 import Unicre from '@/assets/logos/empresas/unicre.webp'
 import Velocix from '@/assets/logos/empresas/velocix.webp'
+import Visteon from '@/assets/logos/empresas/visteon.webp'
 import Vodafone from '@/assets/logos/empresas/vodafone.webp'
 import Vtxrm from '@/assets/logos/empresas/vtxrm.webp'
 import Worten from '@/assets/logos/empresas/worten.webp'
@@ -66,36 +71,39 @@ const homeCompaniesSlider = [
   // Arquiconsult,
   // Avanade,
   // Axians,
-  // Blip,
+  Babel,
+  Blip,
   // BNP,
   // BPI,
-  // BubbleGo,
+  BubbleGo,
   // Celfocus,
   Cgi,
-  // Deloitte,
+  Deloitte,
   Devoteam,
+  Elis,
   // Experis,
-  // EY,
-  // Fidelidade,
+  EY,
+  Fidelidade,
   Glintt,
   // GrupoVisabeira,
-  // IndieCampers,
-  // Inesc,
+  IndieCampers,
+  Inesc,
   // InnovationMakers,
   Innowave,
   ItSector,
   // JeronimoMartins,
   // Kaizen,
-  // Kpmg,
+  Kpmg,
   // LaRedoute,
   // LeroyMerlin,
   // Lidl,
-  // Logicalis,
+  Logicalis,
   Lpt,
   // MagicBeans,
-  // Neyond,
-  // Noesis,
+  Neyond,
+  Noesis,
   // Nos,
+  NovoBanco,
   NttData,
   Opensoft,
   // PremiumMinds,
@@ -108,12 +116,13 @@ const homeCompaniesSlider = [
   // Skyline,
   // Somincor,
   Sonae,
-  // Synopsys,
+  Synopsys,
   // TeachForPortugal,
   // Thales,
   // TheLoop,
   // TimWeTech,
   Unicre,
+  Visteon,
   // Velocix,
   Vodafone,
   // Vtxrm,

@@ -30,6 +30,9 @@ export const useProfile = () => {
     },
     {
       enabled: session.status === 'authenticated',
+      refetchInterval: (data, query) => {
+        return !query.state.error ? 800 : false
+      },
     }
   )
 }

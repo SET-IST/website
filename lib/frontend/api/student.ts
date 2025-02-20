@@ -7,7 +7,8 @@ import {
   patchStudentProfile,
   requestAward,
   scanCompany as server_scanCompany,
-  getRedemptionSettings
+  getRedemptionSettings,
+  getAwardsList,
 } from '@/lib/server/services/student'
 import { Unpacked } from '../utils'
 
@@ -24,8 +25,9 @@ export type UserEnrollment = Unpacked<
   Awaited<ReturnType<typeof getStudentEnrollments>>
 >
 export type CompanyScan = Awaited<ReturnType<typeof server_scanCompany>>
-export type Award = Awaited<ReturnType<typeof requestAward>>
+export type AwardToken = Awaited<ReturnType<typeof requestAward>>
 export type RedemptionSettings = Awaited<ReturnType<typeof getRedemptionSettings>>
+export type Awards = Awaited<ReturnType<typeof getAwardsList>>
 
 export const fetchStudentProfile = async (): Promise<StudentProfile> => {
   const { data } = await ApiClient.get('student/profile')
@@ -57,12 +59,17 @@ export const scanCompany = async (companyId: string): Promise<CompanyScan> => {
   return data
 }
 
-export const fetchAward = async (): Promise<Award> => {
+export const fetchAward = async (): Promise<AwardToken> => {
   const { data } = await ApiClient.get('student/award')
   return data
 }
 
 export const fetchRedemptionSettings = async (): Promise<RedemptionSettings> => {
   const { data } = await ApiClient.get('student/redemptionSettings')
+  return await data
+}
+
+export const fetchAwardsList = async (): Promise<Awards> => {
+  const { data } = await ApiClient.get('student/awardsList')
   return await data
 }

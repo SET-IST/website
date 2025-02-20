@@ -1,4 +1,4 @@
-import { FaLinkedin, FaInstagram, FaTwitter, FaFacebook, FaTiktok } from "react-icons/fa";
+import { SiFacebook, SiInstagram, SiX, SiYoutube, SiLinkedin, SiTiktok } from 'react-icons/si'
 
 export default function SocialLinks() {
     return (
@@ -10,7 +10,7 @@ export default function SocialLinks() {
             aria-label="LinkedIn"
             className="text-gray-600 hover:text-blue-600"
             >
-                <FaLinkedin size={24} />
+                <SiLinkedin size={24} />
             </a>
             <a
             href="https://www.instagram.com/set.ist/"
@@ -19,7 +19,7 @@ export default function SocialLinks() {
             aria-label="Instagram"
             className="text-gray-600 hover:text-pink-600"
             >
-                <FaInstagram size={24} />
+                <SiInstagram size={24} />
             </a>
             <a
             href="https://www.tiktok.com/@set.tecnico"
@@ -28,7 +28,7 @@ export default function SocialLinks() {
             aria-label="TikTok"
             className="text-gray-600 hover:text-black"
             >
-                <FaTiktok size={24} />
+                <SiTiktok size={24} />
             </a>
             <a
             href="https://www.facebook.com/SET.Tecnico/"
@@ -37,17 +37,26 @@ export default function SocialLinks() {
             aria-label="Facebook"
             className="text-gray-600 hover:text-blue-700"
             >
-                <FaFacebook size={24} />
+                <SiFacebook size={24} />
             </a>
             <a
             href="https://x.com/SET_ISTTagus"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Twitter"
-            className="text-gray-600 hover:text-blue-400"
+            aria-label="X"
+            className="text-gray-600 hover:text-black"
             >
-                <FaTwitter size={24} />
+                <SiX size={24} />
             </a>
+            {/* <a
+            href="https://www.youtube.com/user/ISTTagusSET"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Youtube"
+            className="text-gray-600 hover:text-red-600"
+            >
+                <SiYoutube size={24} />
+            </a> */}
         </div>
     )
 }
