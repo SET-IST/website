@@ -336,7 +336,7 @@ CREATE TABLE public."StudentDetails" (
     university character varying(128) NOT NULL,
     companies_ids text[],
     "userId" text NOT NULL,
-    reedems integer DEFAULT 0 NOT NULL,
+    redeems integer DEFAULT 0 NOT NULL,
     "phoneNumber" text
 );
 
@@ -675,7 +675,7 @@ COPY public."Session" (id, "sessionToken", "userId", expires) FROM stdin;
 -- Data for Name: StudentDetails; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."StudentDetails" (id, "cvLocation", scans, points, course, university, companies_ids, "userId", reedems, "phoneNumber") FROM stdin;
+COPY public."StudentDetails" (id, "cvLocation", scans, points, course, university, companies_ids, "userId", redeems, "phoneNumber") FROM stdin;
 \.
 
 

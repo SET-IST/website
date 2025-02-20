@@ -7,6 +7,20 @@ import { BadRequestException, ConflictException } from 'next-api-decorators'
 import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
+export function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
+  const totalWeight = availablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
+  let randomValue = Math.random() * totalWeight;
+
+  for (const award of availablePrizes) {
+    randomValue -= award.amountAvailable;
+    if (randomValue <= 0) {
+      return award;
+    }
+  }
+
+  return availablePrizes[availablePrizes.length - 1]; // Fallback (shouldn't reach here)
+}
+
 export async function getStudentProfile(user: User) {
   return await databaseQueryWrapper(async () => {
     let student = await PrismaService.user.findUniqueOrThrow({
@@ -29,7 +43,7 @@ export async function getStudentProfile(user: User) {
             },
             cvLocation: true,
             phoneNumber: true,
-            reedems: true,
+            redeems: true,
           },
         },
       },
@@ -267,6 +281,12 @@ export async function requestAward(user: User) {
       select: {
         id: true,
         type: true,
+        award: {
+            select: {
+              id: true,
+              name: true,
+            }
+          }
       },
     })
 
@@ -280,6 +300,9 @@ export async function requestAward(user: User) {
         where: {
           userId: user.id,
         },
+        include: {
+          redeemedPrizes: true
+        },
       })
 
       if (studentTx.points - (await getRedemptionSettings()).REDEEM < 0) {
@@ -288,23 +311,55 @@ export async function requestAward(user: User) {
         )
       }
 
-      const ratio = (await getRedemptionSettings()).RATIO;
+      const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
+      let availablePrizes = await tx.award.findMany({
+        where: {
+          id: {
+            notIn: redeemedPrizeIds
+          },
+          amountAvailable: {
+            gt: 0
+          }
+        },
+      })
+
+      if (availablePrizes.length === 0) {
+        availablePrizes = await tx.award.findMany({
+          where: { amountAvailable: { gt: 0 } },
+        })
+      }
+
+      if (availablePrizes.length === 0) {
+        throw new BadRequestException(
+          'No prizes available'
+        )
+      }
+
+      const selectedPrize = weightedRandomSelection(availablePrizes);
 
       return await tx.awardToken.create({
         data: {
-          type:
-            (studentTx.reedems + (ratio - 1)) % ratio === 0
-              ? AwardType.SPECIAL
-              : AwardType.NORMAL,
+          type: selectedPrize.type,
           student: {
             connect: {
-              id: studentTx.id,
-            },
+              userId: user.id
+            }
+          },
+          award: {
+            connect: {
+              id: selectedPrize.id
+            }
           },
         },
         select: {
           id: true,
           type: true,
+          award: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
         },
       })
     })
@@ -390,4 +445,15 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
       },
     });
   });
+}
+
+export async function getAwardsList() {
+  return await PrismaService.award.findMany({
+    select: {
+      id: true,
+      name: true,
+      amountAvailable: true,
+      type: true,
+    },
+  })
 }

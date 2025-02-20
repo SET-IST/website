@@ -285,7 +285,7 @@ CREATE TABLE public."StudentDetails" (
     university character varying(128) NOT NULL,
     companies_ids text[],
     "userId" text NOT NULL,
-    reedems integer DEFAULT 0 NOT NULL
+    redeems integer DEFAULT 0 NOT NULL
 );
 
 
@@ -467,7 +467,7 @@ clplplrr700030ls7a2e396x5	2c334cd6-b287-4fda-bccb-4094c9d5ada7	97e4e38e-60a4-4e6
 -- Data for Name: StudentDetails; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."StudentDetails" (id, age, scans, points, course, university, companies_ids, "userId", reedems) FROM stdin;
+COPY public."StudentDetails" (id, age, scans, points, course, university, companies_ids, "userId", redeems) FROM stdin;
 \.
 
 
