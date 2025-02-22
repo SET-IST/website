@@ -75,7 +75,7 @@ export function ModalContent() {
 
   // Starts the wheel when the award is loaded
   useEffect(() => {
-    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints && !mustSpin) {
+    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints && !mustSpin && !isSameToken && !wheelStopped) {
       const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name);
       setPrizeNumber(prizeIndex);
       setMustSpin(true);
