@@ -26,16 +26,15 @@ export function ModalContent() {
     '#7BDCB5',
     '#00D084',
     '#8ED1FC',
-    '#0693E3',
     '#ABB8C3',
     '#EB144C',
     '#F78DA7',
     '#9900EF',
-    '#000000',
   ];
   const textColors = [
     '#202020',
   ]
+  const fontSize = 18;
 
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [mustSpin, setMustSpin] = useState(false);
@@ -156,6 +155,7 @@ export function ModalContent() {
                           outerBorderWidth={outerBorderWidth}
                           innerBorderWidth={innerBorderWidth}
                           radiusLineWidth={radiusLineWidth}
+                          fontSize={fontSize}
                           disableInitialAnimation={disableInitialAnimation}
                           textColors={textColors}
                           prizeNumber={prizeNumber as number}
