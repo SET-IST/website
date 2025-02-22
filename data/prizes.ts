@@ -1,12 +1,11 @@
 //  Assets
-import Airpods from '@/assets/img/airpods.jpeg'
-import JblFlip from '@/assets/img/jbl-flip-6.jpeg'
-import Kindle from '@/assets/img/kindle.jpeg'
-import Mala from '@/assets/img/mala.jpeg'
-import NintendSwitch from '@/assets/img/nintendo-switch.jpg'
-import Polaroid from '@/assets/img/polaroid.webp'
-import RatoRazor from '@/assets/img/rato-razor.jpeg'
-import Viagem from '@/assets/img/viagem.webp'
+import NintendSwitch2 from '@/assets/img/switch_2.webp'
+import EscapeRoom from '@/assets/img/game_over.webp'
+import Monitor from '@/assets/img/monitor.webp'
+import ChatGPT from '@/assets/img/chat_gpt.webp'
+import Tablet from '@/assets/img/tablet_lenovo.webp'
+import Odisseias from '@/assets/img/odisseias.webp'
+import Budapeste from '@/assets/img/budapeste.webp'
 import { StaticImageData } from 'next/image'
 
 export interface PrizeData {
@@ -18,46 +17,41 @@ export interface PrizeData {
 const daily: PrizeData[] = [
   {
     title: 'Prémio do 1º dia',
-    image: Polaroid,
-    description: 'Máquina Polaroid',
+    image: NintendSwitch2,
+    description: 'Nintendo Switch 2',
   },
   {
     title: 'Prémio do 2º dia',
-    image: JblFlip,
-    description: 'Coluna JBL Flip 6 - Preta',
+    image: Tablet,
+    description: 'Tablet Lenovo + Capa',
   },
   {
     title: 'Prémio do 3º dia',
-    image: NintendSwitch,
-    description: 'Nintendo Switch',
+    image: ChatGPT,
+    description: '6 meses ChatGPT Premium',
   },
   {
     title: 'Prémio do 4º dia',
-    image: RatoRazor,
-    description: 'Headset + Rato da Razor',
+    image: EscapeRoom,
+    description: 'Escape Room',
   },
 ]
 
 const prizes: PrizeData[] = [
   {
-    title: 'Prémio dos Workshops',
-    image: Kindle,
-    description: 'E-reader kindle',
-  },
-  {
     title: 'Prémio dos CVs',
-    image: Mala,
-    description: 'Mala de viagem grande + cabine',
+    image: Odisseias,
+    description: 'Voo de helicóptero',
   },
   {
     title: 'Prémio das Atividades',
-    image: Airpods,
-    description: 'Apple Airpods 3ª Geração',
+    image: Monitor,
+    description: 'Monitor Dell',
   },
   {
     title: 'Prémio Final',
-    image: Viagem,
-    description: 'Viagem a Amesterdão',
+    image: Budapeste,
+    description: 'Viagem a Budapeste',
   },
 ]
 
