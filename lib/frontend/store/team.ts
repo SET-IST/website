@@ -10,7 +10,7 @@ export interface TeamYearSlice {
 export const createTeamYearSlice: StateCreator<
 	TeamYearSlice
 > = (set) => ({
-	year: String(teams[teams.length-1].year), // default value, the lasat one with people photos
+	year: String(teams[teams.length-1].year), // default value, the last one with people photos
 	teamIndex: teams.length-1,
 	setSelectedYear: (year) =>
 		set({
