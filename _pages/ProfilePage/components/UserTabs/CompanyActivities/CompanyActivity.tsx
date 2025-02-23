@@ -63,7 +63,7 @@ const CompanyActivity = ({ data }: ActivityComponentProps) => {
         </div>
         <div className="flex flex-row flex-wrap gap-1">
           <Badge radius="sm" variant="dot">
-            {date.setLocale('pt').toFormat("d 'de' LLLL 'às' HH:mm")}
+            {date.setLocale('pt').toFormat("d 'de' LLLL 'de' yyyy 'às' HH:mm")}
           </Badge>
           <Badge
             radius="sm"
