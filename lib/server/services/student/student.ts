@@ -1,24 +1,27 @@
 import { databaseQueryWrapper } from '@/core/utils'
 import { PrismaService } from '../../../../core/services/server'
-import { PointSetting, AwardType, type User, Prisma } from '@prisma/client'
+import { PointSetting, Award, AwardType, User, Prisma } from '@prisma/client'
 import { PatchStudentProfileDto } from './dtos'
 import { getFile, getFullResourcePath } from '@/lib/server/utils'
 import { BadRequestException, ConflictException } from 'next-api-decorators'
 import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
-export function weightedRandomSelection<T extends { amountAvailable: number }>(availablePrizes: T[]): T {
-  const totalWeight = availablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
+export function weightedRandomSelection(availablePrizes: Award[], awardType: AwardType): Award {
+  const selectablePrizes = availablePrizes.filter((award) => award.type === awardType);
+  
+  const totalWeight = selectablePrizes.reduce((sum, award) => sum + award.amountAvailable, 0);
   let randomValue = Math.random() * totalWeight;
 
-  for (const award of availablePrizes) {
+  for (const award of selectablePrizes) {
     randomValue -= award.amountAvailable;
     if (randomValue <= 0) {
       return award;
     }
   }
 
-  return availablePrizes[availablePrizes.length - 1]; // Fallback (shouldn't reach here)
+  console.error('Weighted random selection failed');
+  return selectablePrizes[selectablePrizes.length - 1]; // Fallback (shouldn't reach here)
 }
 
 export async function getStudentProfile(user: User) {
@@ -334,12 +337,16 @@ export async function requestAward(user: User) {
           'No prizes available'
         )
       }
-
-      const selectedPrize = weightedRandomSelection(availablePrizes);
-
+      
+      const ratio = (await getRedemptionSettings()).RATIO;
+      const awardType = (studentTx.redeems + (ratio - 1)) % ratio === 0
+      ? AwardType.SPECIAL
+      : AwardType.NORMAL
+      const selectedPrize = weightedRandomSelection(availablePrizes, awardType);
+      
       return await tx.awardToken.create({
         data: {
-          type: selectedPrize.type,
+          type: awardType,
           student: {
             connect: {
               userId: user.id
