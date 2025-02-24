@@ -1,7 +1,7 @@
 import { PrismaService } from '@/core/services/server'
 import { databaseQueryWrapper } from '@/core/utils'
 import { EventLogService, getFullResourcePath } from '../../utils'
-import { EventLogType, User, UserType } from '@prisma/client'
+import { EventLogType, User, UserType, AwardType, Award } from '@prisma/client'
 import { getCompanyProfile } from '../company'
 import { addTotalPoints, getRedemptionSettings, getStudentProfile, weightedRandomSelection } from '../student'
 import { CreateAwardDto, UpdatePointsDto } from './dtos'
@@ -122,11 +122,15 @@ export async function createAward(
         )
       }
 
-      const selectedPrize = weightedRandomSelection(availablePrizes);
+      const ratio = (await getRedemptionSettings()).RATIO;
+      const awardType = (studentTx.redeems + (ratio - 1)) % ratio === 0
+      ? AwardType.SPECIAL
+      : AwardType.NORMAL
+      const selectedPrize = weightedRandomSelection(availablePrizes, awardType);
 
       return await tx.awardToken.create({
         data: {
-          type: selectedPrize.type,
+          type: awardType,
           student: {
             connect: {
               userId: uuid
@@ -141,6 +145,12 @@ export async function createAward(
         select: {
           id: true,
           type: true,
+          award: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
         },
       })
     })
