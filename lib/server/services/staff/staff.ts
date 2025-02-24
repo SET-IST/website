@@ -262,7 +262,7 @@ export async function setStudentPoints(
     await PrismaService.$transaction(async (tx) => {
       const studentTx = await tx.studentDetails.findUniqueOrThrow({
         where: {
-          userId: user.id,
+          userId: uuid,
         },
         include: {
           dayTotalPoints: {
