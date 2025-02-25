@@ -1,9 +1,9 @@
 import { databaseQueryWrapper } from '@/core/utils'
 import { PrismaService } from '../../../../core/services/server'
-import { PointSetting, Award, AwardType, User, Prisma } from '@prisma/client'
+import { PointSetting, Award, AwardType, User, Prisma, CompanyDetails } from '@prisma/client'
 import { PatchStudentProfileDto } from './dtos'
 import { getFile, getFullResourcePath } from '@/lib/server/utils'
-import { BadRequestException, ConflictException } from 'next-api-decorators'
+import { BadRequestException, ConflictException, ForbiddenException } from 'next-api-decorators'
 import { getCurrentDayCode, visitedAllDayStands } from '../../utils/event'
 import { DateTime } from 'luxon'
 
@@ -214,8 +214,42 @@ export async function scanCompany(user: User, companyId: string) {
       }
     })
 
+    // Verificar se a empresa está presente no dia atual
+    const currentDayCode = getCurrentDayCode();
+    const defaultDayCode = DateTime.fromMillis(0).toFormat('dd_LL_yyyy');
+
+    let day = await PrismaService.day.findFirst({
+      where: {
+        OR: [
+          { dateCode: currentDayCode },
+          { dateCode: defaultDayCode },
+        ],
+      },
+      orderBy: {
+        dateCode: currentDayCode === defaultDayCode ? 'asc' : 'desc',
+      },
+    });
+
+    if (!day) {
+      day = await PrismaService.day.create({
+        data: { dateCode: defaultDayCode },
+      });
+    }
+    
+    const today_s_day = await PrismaService.day.findUniqueOrThrow({
+      where: {
+        id: day.id,
+      },
+      select: {
+        companies: true,
+      },
+    })
+
+    if (!today_s_day.companies.map((company:CompanyDetails) => company.userId).includes(company.userId))
+      throw new ForbiddenException('NOT_PRESENT')
+
     if (student.companies_ids.includes(company.userId))
-      throw new ConflictException('Company already scanned')
+      throw new ConflictException('ALREADY_SCANNED')
 
     const points = (await visitedAllDayStands(student, company.userId))
       ? 50
