@@ -175,7 +175,7 @@ export function QRDialog() {
                 <Transition
                   mounted={
                     isError &&
-                    [404, 409].includes(error.response?.status ?? 500)
+                    [404, 409, 403].includes(error.response?.status ?? 500)
                   }
                   transition="fade"
                   duration={200}
@@ -184,6 +184,8 @@ export function QRDialog() {
                 >
                   {(styles) => (
                     <Badge style={styles} color="blue" size="lg" radius="md">
+                      {error?.response?.status === 403 &&
+                        'Este empresa não está presente na SET'}
                       {error?.response?.status === 409 &&
                         'Já fizeste scan desta empresa'}
                       {error?.response?.status === 404 &&
