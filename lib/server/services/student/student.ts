@@ -315,6 +315,12 @@ export async function requestAward(user: User) {
       }
 
       const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
+
+      const ratio = (await getRedemptionSettings()).RATIO;
+      const awardType = (studentTx.redeems + (ratio - 1)) % ratio === 0
+      ? AwardType.SPECIAL
+      : AwardType.NORMAL
+
       let availablePrizes = await tx.award.findMany({
         where: {
           id: {
@@ -322,7 +328,8 @@ export async function requestAward(user: User) {
           },
           amountAvailable: {
             gt: 0
-          }
+          },
+          type: awardType
         },
       })
 
@@ -338,10 +345,8 @@ export async function requestAward(user: User) {
         )
       }
       
-      const ratio = (await getRedemptionSettings()).RATIO;
-      const awardType = (studentTx.redeems + (ratio - 1)) % ratio === 0
-      ? AwardType.SPECIAL
-      : AwardType.NORMAL
+
+      console.log("availablePrizes: ", availablePrizes)
       const selectedPrize = weightedRandomSelection(availablePrizes, awardType);
       
       return await tx.awardToken.create({
