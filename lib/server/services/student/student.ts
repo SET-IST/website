@@ -335,7 +335,7 @@ export async function requestAward(user: User) {
 
       if (availablePrizes.length === 0) {
         availablePrizes = await tx.award.findMany({
-          where: { amountAvailable: { gt: 0 } },
+          where: { amountAvailable: { gt: 0 }, type: awardType }
         })
       }
 
