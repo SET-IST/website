@@ -345,8 +345,6 @@ export async function requestAward(user: User) {
         )
       }
       
-
-      console.log("availablePrizes: ", availablePrizes)
       const selectedPrize = weightedRandomSelection(availablePrizes, awardType);
       
       return await tx.awardToken.create({
