@@ -110,8 +110,8 @@ export async function createAward(
 
       if (availablePrizes.length === 0) {
         availablePrizes = await tx.award.findMany({
-          where: { 
-            amountAvailable: { gt: 0 } 
+          where: {
+            amountAvailable: { gt: 0 }
           },
         })
       }
@@ -252,11 +252,6 @@ export async function setStudentPoints(
   uuid: string,
   data: UpdatePointsDto
 ) {
-  await EventLogService.logEvent(
-    user,
-    EventLogType.POINTS,
-    `Updated points of student ${uuid} to ${data.points}`
-  )
 
   return await databaseQueryWrapper(async () => {
     await PrismaService.$transaction(async (tx) => {
@@ -273,7 +268,8 @@ export async function setStudentPoints(
         }
       })
 
-      await addTotalPoints(studentTx, data.points - studentTx.points)
+      const points_to_add = data.points - studentTx.points
+      await addTotalPoints(studentTx, points_to_add)
 
       await PrismaService.studentDetails.update({
         where: {
@@ -283,6 +279,13 @@ export async function setStudentPoints(
           points: data.points,
         },
       })
+
+      await EventLogService.logEvent(
+        user,
+        EventLogType.POINTS,
+        `Updated points of student ${uuid} from ${studentTx.points} to ${data.points} (${points_to_add})`
+      )
+
     })
   })
 }
