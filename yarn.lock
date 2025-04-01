@@ -2807,15 +2807,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/form@npm:^7.2.1":
-  version: 7.5.1
-  resolution: "@mantine/form@npm:7.5.1"
+"@mantine/form@npm:^7.17.3":
+  version: 7.17.3
+  resolution: "@mantine/form@npm:7.17.3"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
     klona: "npm:^2.0.6"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/74d2922d261a4e22c95249bda4ad93b005b53d7129c93b2801b54f324d7ef449337dd4610f4b8958b3e53fa36bf3b1e75f07997a86710a5edbf2596d99298798
+    react: ^18.x || ^19.x
+  checksum: 10c0/a37d51485b218a42d43b901cdd962b5e899aa0bf19eff16efd44d2e1823b8875d0eb33f1caaef1099b6247aa0c73324e53b9d19e483e2126f934676c38d6c778
   languageName: node
   linkType: hard
 
@@ -8837,7 +8837,7 @@ __metadata:
     "@mantine/carousel": "npm:^7.1.2"
     "@mantine/core": "npm:^7.0.1"
     "@mantine/dropzone": "npm:^7.2.2"
-    "@mantine/form": "npm:^7.2.1"
+    "@mantine/form": "npm:^7.17.3"
     "@mantine/hooks": "npm:^7.0.1"
     "@mantine/notifications": "npm:^7.3.2"
     "@prisma/client": "npm:^5.4.2"
