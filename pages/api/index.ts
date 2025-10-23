@@ -14,7 +14,7 @@ export default function handler(
   const { publicRuntimeConfig } = getConfig()
 
   res.status(200).json({
-    name: 'SET Web API Service',
+    name: 'JET Web API Service',
     package_version: publicRuntimeConfig?.version,
   })
 }
