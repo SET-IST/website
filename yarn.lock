@@ -8933,9 +8933,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jet25-website@workspace:.":
+"set24-website@workspace:.":
   version: 0.0.0-use.local
-  resolution: "jet25-website@workspace:."
+  resolution: "set24-website@workspace:."
   dependencies:
     "@auth/prisma-adapter": "npm:^1.0.12"
     "@aws-sdk/client-s3": "npm:^3.496.0"
