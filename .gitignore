@@ -41,3 +41,7 @@ next-env.d.ts
 
 # yarn
 .yarn
+
+# text editors
+.idea/
+.vscode/
