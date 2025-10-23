@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.1.0
-  title: 'SET Web API'
+  title: 'JET Web API'
   description: 'Web API for interacting with SET backend'
 
 servers:

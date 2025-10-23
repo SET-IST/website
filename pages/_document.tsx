@@ -3,14 +3,14 @@ import { Head, Html, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html lang="pt">
-      <title>SET - Semana Empresarial e Tecnológica</title>
+      <title>JET - Jornadas Empresariais e Tecnológicas</title>
       <meta
         name="description"
         content={["Feira Empresarial e Tecnológica do Instituto Superior Técnico. Encontra o teu estágio ou emprego de ", process.env.NEXT_PUBLIC_EVENT_DATES, "."].join("")}
       />
       <meta
         name="keywords"
-        content="SET, Técnico Lisboa, Tecnologia, Feira de Emprego, Inovação, Inteligência Artificial, Ciber-segurança, Consultoria"
+        content="JET, SET, Técnico Lisboa, Tecnologia, Feira de Emprego, Inovação, Inteligência Artificial, Ciber-segurança, Consultoria"
       />
       <Head>
         <link

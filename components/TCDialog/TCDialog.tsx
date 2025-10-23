@@ -42,13 +42,12 @@ export function TCDialog() {
         <Section title="1. Objectivo">
           a) O presente documento tem por objetivo definir as condições para a
           submissão de currículos através da plataforma disponibilizada pela
-          equipa do evento SET – Semana Empresarial e
-          Tecnológica, a decorrer entre os dias 24 a 27 de Fevereiro de 2025 no
+          equipa do evento JET – Jornadas Empresariais e Tecnológicas, a decorrer entre os dias 24 a 27 de Fevereiro de 2025 no
           campus Taguspark do Instituto Superior Técnico, sito em Avenida
           Professor Doutor Cavaco Silva, 2744 -016 Porto Salvo, Portugal.
         </Section>
         <Section title="2. Informações">
-          a) O evento SET – Semana Empresarial e Tecnológica é organizado pelo
+          a) O evento JET – Jornadas Empresariais e Tecnológicas é organizado pelo
           núcleo LAGE2 – Laboratório de Apoio à Gestão de Atividades
           Extracurriculares dos Estudantes, registado como associação
           MSSKILLSLAB – Núcleo de Apoio À Gestão de Atividades Extracurriculares
@@ -68,9 +67,9 @@ export function TCDialog() {
           currículos.
           <br />
           <br />
-          d) O website do evento SET (
-          <Anchor href="https://set.tecnico.ulisboa.pt/" target="_blank">
-            https://set.tecnico.ulisboa.pt
+          d) O website do evento JET (
+          <Anchor href="https://jet.tecnico.ulisboa.pt/" target="_blank">
+            https://jet.tecnico.ulisboa.pt
           </Anchor>
           ) está hospedado nos servidores do Instituto Superior Técnico,
           localizados em Portugal.

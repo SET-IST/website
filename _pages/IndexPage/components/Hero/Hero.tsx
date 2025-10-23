@@ -11,8 +11,8 @@ export default function Example() {
           'lg:text-[60px] lg:leading-[90px] lg:tracking-[0.035em]'
         )}
       >
-        Semana Empresarial e <br />
-        Tecnológica
+        Jornadas Empresariais e <br />
+        Tecnológicas
       </h1>
 
       <Text className="text-center font-poppins uppercase" fw={600} c="gray.0">

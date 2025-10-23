@@ -1,4 +1,4 @@
-# SET 24 Web Application
+# JET 25 Web Application
 
 First, install the required packages:
 
