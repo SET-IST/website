@@ -29,7 +29,7 @@ export const createActivitiesSlice: StateCreator<
   activeDays: [],
   setSelectedDate: (date) =>
     set((state) => {
-      const day = state.activeDays.find(d => d.date.toISOString() === date)
+      const day = state.activeDays.find(d => new Date(d.date).toISOString() === date)
       return {selectedDay: day}
     }),
   showCVDialog: (activity) =>
