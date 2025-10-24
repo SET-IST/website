@@ -20,6 +20,8 @@ import { User } from 'next-auth'
 import { ActivityType, UserType } from '@prisma/client'
 import { fetchStudentProfile } from '@/lib/frontend/api'
 import { CVDialog } from '@/components/CVDialog'
+import SpeedInterview from '@/assets/img/speed-interview.webp'
+import ActivityCard from '@/_pages/ActivitiesPage/components/ActivityCard'
 
 const UserActivities = () => {
   const session = useSession()
@@ -27,8 +29,8 @@ const UserActivities = () => {
   const showCVDialog = useBoundStore((state) => state.showCVDialog)
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
-  const currentDate = useBoundStore((state) => state.selectedDate)
-  const { data: activities, isLoading } = useActivities(currentDate)
+  const currentDay = useBoundStore((state) => state.selectedDay)
+  const { data: activities, isLoading } = useActivities(currentDay ? new Date(currentDay.date).toISOString() : '1970-01-01')
 
   const queryClient = useQueryClient()
 
@@ -108,6 +110,11 @@ const UserActivities = () => {
             unEnrollCallback={unEnrollStudent}
           />
         ))}
+        {activities && activities.length == 0 && (
+          <ActivityCard title="SOON">
+            As atividades deste ano ainda não foram publicadas. Podes voltar depois não te preocupes!
+          </ActivityCard>
+        )}
       </div>
       <CVDialog />
     </>

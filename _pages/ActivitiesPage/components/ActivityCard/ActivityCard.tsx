@@ -13,7 +13,7 @@ import classNames from 'classnames'
 
 interface ActivityCardProps {
   title: string
-  image: StaticImageData
+  image?: StaticImageData
 }
 
 const ActivityCard = ({
@@ -39,7 +39,9 @@ const ActivityCard = ({
           </Container>
         </div>
       </div>
-      <MantineImage className="sm:max-w-md" src={image.src} />
+      {image && (
+        <MantineImage className="sm:max-w-md" src={image.src} />
+      )}
     </div>
   )
 }
