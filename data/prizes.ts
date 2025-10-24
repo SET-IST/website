@@ -16,22 +16,22 @@ export interface PrizeData {
 
 const daily: PrizeData[] = [
   {
-    title: 'Prémio do 1º dia',
+    title: 'Prémio do 1º dia (2025)',
     image: NintendSwitch2,
     description: 'Nintendo Switch 2',
   },
   {
-    title: 'Prémio do 2º dia',
+    title: 'Prémio do 2º dia (2025)',
     image: Tablet,
     description: 'Tablet Lenovo + Capa',
   },
   {
-    title: 'Prémio do 3º dia',
+    title: 'Prémio do 3º dia (2025)',
     image: ChatGPT,
     description: '6 meses ChatGPT Premium',
   },
   {
-    title: 'Prémio do 4º dia',
+    title: 'Prémio do 4º dia (2025)',
     image: EscapeRoom,
     description: 'Escape Room',
   },
@@ -39,17 +39,17 @@ const daily: PrizeData[] = [
 
 const prizes: PrizeData[] = [
   {
-    title: 'Prémio dos CVs',
+    title: 'Prémio dos CVs (2025)',
     image: Odisseias,
     description: 'Voo de helicóptero',
   },
   {
-    title: 'Prémio das Atividades',
+    title: 'Prémio das Atividades (2025)',
     image: Monitor,
     description: 'Monitor Dell',
   },
   {
-    title: 'Prémio Final',
+    title: 'Prémio Final (2025)',
     image: Budapeste,
     description: 'Viagem a Budapeste',
   },
