@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Avatar,
   Badge,
@@ -83,7 +83,11 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
   const activeDays = useBoundStore((state) => state.activeDays)
   const fetchActiveDays = useBoundStore((state) => state.fetchActiveDays)
 
-  const { data: activities, isLoading } = useActivities(currentDay?.date.toISOString() ?? '1970-01-01')
+  useEffect(() => {
+    fetchActiveDays()
+  }, [fetchActiveDays]);
+
+  const { data: activities, isLoading } = useActivities(currentDay ? new Date(currentDay.date).toISOString() : '1970-01-01')
   const [activity, setActivity] = useState<undefined | ActivityData>(undefined)
 
   const options = (activities || []).map((item, index) => (
@@ -126,11 +130,11 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
         <Combobox.Dropdown>
           <SegmentedControl
             fullWidth
-            value={currentDay?.date?.toISOString()}
+            value={currentDay ? new Date(currentDay.date).toISOString() : undefined}
             onChange={setCurrentDate}
             data={activeDays.map(d => ({
-              label: 'Dia ' + d.date.getDay(),
-              value: DateTime.fromFormat(d.dateCode, "dd_LL_yyyy").toFormat("yyyy-LL-dd")
+              label: 'Dia ' + new Date(d.date).getDate(),
+              value: new Date(d.date).toISOString()
             }))}
           />
           <Combobox.Options>

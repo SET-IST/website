@@ -38,11 +38,11 @@ const ActivitiesPage =  () => {
             <div className="sticky sm:relative top-15 z-10 sm:top-0 px-2 sm:px-0 py-3 bg-[color:var(--mantine-color-white)]">
               <SegmentedControl
                 fullWidth
-                value={currentDay?.date?.toISOString()}
+                value={currentDay ? new Date(currentDay.date).toISOString() : undefined}
                 onChange={setCurrentDate}
                 data={activeDays.map(d => ({
-                  label: 'Dia ' + d.date.getDay(),
-                  value: DateTime.fromFormat(d.dateCode, "dd_LL_yyyy").toFormat("yyyy-LL-dd")
+                  label: 'Dia ' + new Date(d.date).getDate(),
+                  value: new Date(d.date).toISOString()
                 }))}
               />
             </div>

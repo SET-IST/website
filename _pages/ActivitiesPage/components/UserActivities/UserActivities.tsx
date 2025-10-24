@@ -30,7 +30,7 @@ const UserActivities = () => {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
   const currentDay = useBoundStore((state) => state.selectedDay)
-  const { data: activities, isLoading } = useActivities(currentDay?.date.toISOString() ?? '1970-01-01')
+  const { data: activities, isLoading } = useActivities(currentDay ? new Date(currentDay.date).toISOString() : '1970-01-01')
 
   const queryClient = useQueryClient()
 
