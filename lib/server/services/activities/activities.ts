@@ -2,7 +2,7 @@ import { databaseQueryWrapper } from '@/core/utils'
 import { PrismaService } from '../../../../core/services/server'
 import {
   Activity,
-  ActivityType,
+  ActivityType, CurrentDayState,
   EventLogType,
   Prisma,
   UserType,
@@ -295,4 +295,14 @@ export async function patchEnrollment(
 
     return { message: 'Successfully updated activity management details' }
   })
+}
+
+export async function getActiveDays() {
+  return await databaseQueryWrapper(async () => {
+    return await PrismaService.day.findMany({
+      where: {
+        state: CurrentDayState.Active
+      }
+    })
+  }) ?? []
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Avatar,
   Badge,
@@ -17,6 +17,7 @@ import { FormErrors } from '@mantine/form/lib/types'
 import { ActivityData } from '@/lib/frontend/api/activities'
 import { IconMapPin } from '@tabler/icons-react'
 import { DateTime } from 'luxon'
+import { useBoundStore } from '@/lib/frontend/store'
 
 interface AccountSelectProps {
   callback: (activity: ActivityData) => void
@@ -77,14 +78,16 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
     onDropdownClose: () => combobox.resetSelectedOption(),
   })
 
-  const [currentDate, setCurrentDate] = useState<string>(
-    (DateTime.fromISO('2025-02-24') <= DateTime.now() &&
-    DateTime.now().startOf('day') <= DateTime.fromISO('2025-02-27')
-      ? DateTime.now().startOf('day').toISODate()
-      : '2025-02-24') ?? '2025-02-24'
-  )
+  const currentDay = useBoundStore((state) => state.selectedDay)
+  const setCurrentDate = useBoundStore((state) => state.setSelectedDate)
+  const activeDays = useBoundStore((state) => state.activeDays)
+  const fetchActiveDays = useBoundStore((state) => state.fetchActiveDays)
 
-  const { data: activities, isLoading } = useActivities(currentDate)
+  useEffect(() => {
+    fetchActiveDays()
+  }, [fetchActiveDays]);
+
+  const { data: activities, isLoading } = useActivities(currentDay ? new Date(currentDay.date).toISOString() : '1970-01-01')
   const [activity, setActivity] = useState<undefined | ActivityData>(undefined)
 
   const options = (activities || []).map((item, index) => (
@@ -127,26 +130,12 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
         <Combobox.Dropdown>
           <SegmentedControl
             fullWidth
-            defaultValue={currentDate}
+            value={currentDay ? new Date(currentDay.date).toISOString() : undefined}
             onChange={setCurrentDate}
-            data={[
-              {
-                label: 'Dia 24',
-                value: '2025-02-24',
-              },
-              {
-                label: 'Dia 25',
-                value: '2025-02-25',
-              },
-              {
-                label: 'Dia 26',
-                value: '2025-02-26',
-              },
-              {
-                label: 'Dia 27',
-                value: '2025-02-27',
-              },
-            ]}
+            data={activeDays.map(d => ({
+              label: 'Dia ' + new Date(d.date).getDate(),
+              value: new Date(d.date).toISOString()
+            }))}
           />
           <Combobox.Options>
             {options}

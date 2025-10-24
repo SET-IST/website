@@ -68,9 +68,9 @@ export function TCDialog() {
           currículos.
           <br />
           <br />
-          d) O website do evento SET (
-          <Anchor href="https://set.tecnico.ulisboa.pt/" target="_blank">
-            https://set.tecnico.ulisboa.pt
+          d) O website do evento JET (
+          <Anchor href="https://jet.tecnico.ulisboa.pt/" target="_blank">
+            https://jet.tecnico.ulisboa.pt
           </Anchor>
           ) está hospedado nos servidores do Instituto Superior Técnico,
           localizados em Portugal.
@@ -80,18 +80,18 @@ export function TCDialog() {
           nos servidores do Instituto Superior Técnico, localizados em Portugal.
           <br />
           <br />
-          b) Apenas empresas que participam na mais recente edição da SET, e que
+          b) Apenas empresas que participam na mais recente edição da JET, e que
           decidam subscrever o serviço de acesso aos currículos, têm acesso à
           plataforma.
           <br />
           <br />
-          c) A equipa do evento SET fornece credenciais de acesso à
+          c) A equipa do evento JET fornece credenciais de acesso à
           plataforma a cada empresa, sendo que cada empresa se compromete a que
           a credencial dada seja apenas usada por colaboradores da empresa.
           <br />
           <br />
           d) Os currículos submetidos estarão disponíveis na plataforma durante
-          um ano após a sua submissão, sendo que a equipa do evento SET reserva
+          um ano após a sua submissão, sendo que a equipa do evento JET reserva
           o direito a apagar os ficheiros submetidos antes do prazo.
           <br />
           <br />
