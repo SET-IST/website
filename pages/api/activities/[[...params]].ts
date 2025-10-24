@@ -79,6 +79,14 @@ class ActivitiesRoutes {
       throw new BadRequestException('Invalid activity id')
     return await Server.patchEnrollment(user, Number(activityId), body)
   }
+
+  @Get('/activeDays')
+  public async getActiveDays(
+    @Req() req: NextApiRequest,
+    @Res() res: NextApiResponse,
+  ) {
+    return await Server.getActiveDays()
+  }
 }
 
 export default createHandler(ActivitiesRoutes)

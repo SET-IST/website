@@ -5,7 +5,7 @@ import {
   Title,
   Text,
   SegmentedControl,
-  Divider,
+  Divider, SegmentedControlItem,
 } from '@mantine/core'
 import { UserActivities } from './components/UserActivities'
 import Header from './components/Header'
@@ -16,10 +16,18 @@ import Workshop from '@/assets/img/workshop.jpeg'
 import Palestra from '@/assets/img/palestra-palco.webp'
 import { FooterLayout } from '../layouts'
 import { useBoundStore } from '@/lib/frontend/store'
+import { DateTime } from 'luxon'
+import { useEffect } from 'react'
 
-const ActivitiesPage = () => {
-  const currentDate = useBoundStore((state) => state.selectedDate)
+const ActivitiesPage =  () => {
+  const currentDay = useBoundStore((state) => state.selectedDay)
   const setCurrentDate = useBoundStore((state) => state.setSelectedDate)
+  const activeDays = useBoundStore((state) => state.activeDays)
+  const fetchActiveDays = useBoundStore((state) => state.fetchActiveDays)
+
+  useEffect(() => {
+    fetchActiveDays()
+  }, [fetchActiveDays]);
 
   return (
     <div className="sm:h-screen pt-15 sm:pt-18 sm:pb-3 bg-[color:var(--mantine-color-gray-1)]">
@@ -30,26 +38,12 @@ const ActivitiesPage = () => {
             <div className="sticky sm:relative top-15 z-10 sm:top-0 px-2 sm:px-0 py-3 bg-[color:var(--mantine-color-white)]">
               <SegmentedControl
                 fullWidth
-                defaultValue={currentDate}
+                value={currentDay?.date?.toISOString()}
                 onChange={setCurrentDate}
-                data={[
-                  {
-                    label: 'Dia 24',
-                    value: '2025-02-24',
-                  },
-                  {
-                    label: 'Dia 25',
-                    value: '2025-02-25',
-                  },
-                  {
-                    label: 'Dia 26',
-                    value: '2025-02-26',
-                  },
-                  {
-                    label: 'Dia 27',
-                    value: '2025-02-27',
-                  },
-                ]}
+                data={activeDays.map(d => ({
+                  label: 'Dia ' + d.date.getDay(),
+                  value: DateTime.fromFormat(d.dateCode, "dd_LL_yyyy").toFormat("yyyy-LL-dd")
+                }))}
               />
             </div>
             <UserActivities />

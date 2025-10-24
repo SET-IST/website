@@ -146,6 +146,8 @@ model Activity {
   title       String       @db.VarChar(128)
   description String       @db.VarChar(512)
   date        DateTime
+  dayId       Int          @default(9)
+  day         Day          @relation(fields: [dayId], references: [id])
   duration    Int
   location    String       @db.VarChar(80)
   points      Int?
@@ -195,19 +197,28 @@ model Award {
 }
 
 model RedeemedPrize {
-  id               Int             @id @default(autoincrement())
-  award            Award           @relation(fields: [awardId], references: [id])
+  id               Int            @id @default(autoincrement())
+  award            Award          @relation(fields: [awardId], references: [id])
   awardId          Int
   type             AwardType
-  StudentDetails   StudentDetails  @relation(fields: [studentDetailsId], references: [id])
+  StudentDetails   StudentDetails @relation(fields: [studentDetailsId], references: [id])
   studentDetailsId Int
+}
+
+enum CurrentDayState {
+  Active // When the day is in the next/current event
+  Inactive // When not
 }
 
 model Day {
   id             Int              @id @default(autoincrement())
   dateCode       String           @unique
+  date           DateTime         @default(now()) @db.Date
+  state          CurrentDayState  @default(Inactive)
   companies      CompanyDetails[]
   DayTotalPoints DayTotalPoints[]
+
+  activities Activity[]
 }
 
 enum PointSetting {

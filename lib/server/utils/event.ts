@@ -1,7 +1,8 @@
 import { PrismaService } from '@/core/services/server'
-import { StudentDetails } from '@prisma/client'
+import { CurrentDayState, Day, StudentDetails } from '@prisma/client'
 import { isEqual } from 'lodash'
 import { DateTime } from 'luxon'
+import { databaseQueryWrapper } from '@/core/utils'
 
 export function getCurrentDayCode() {
   return DateTime.now().toFormat('dd_LL_yyyy')
