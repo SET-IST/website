@@ -493,7 +493,7 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
 }
 
 export async function getAwardsList() {
-  return await PrismaService.award.findMany({
+  const awards = await PrismaService.award.findMany({
     select: {
       id: true,
       name: true,
@@ -501,4 +501,8 @@ export async function getAwardsList() {
       type: true,
     },
   })
+  return awards.map(a => ({
+    ...a,
+    amountAvailable: Math.max(0, a.amountAvailable),
+  }));
 }
