@@ -9,7 +9,6 @@ import {
   Button,
 } from '@mantine/core'
 import classes from './QRDialog.module.css'
-import { QrReader } from 'react-qr-reader'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { User } from 'next-auth'
@@ -20,6 +19,7 @@ import { showErrorNotification } from '../Notifications'
 import { PreviewCard } from '@/_pages/ProfilePage/components/UserCard/PreviewCard'
 import { IconQrcode } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
+import { Scanner } from '@yudiel/react-qr-scanner'
 
 enum QRDialogTabs {
   Scan = 'scan',
@@ -125,19 +125,15 @@ export function QRDialog() {
                       Scan
                     </Text>
                     <div className="w-44 h-44 border-2 rounded-xl">
-                      <QrReader
+                      <Scanner
                         constraints={{
-                          facingMode: 'environment',
+                          //facingMode: 'environment',
                           aspectRatio: { ideal: 1 },
                         }}
-                        videoStyle={{
+                        /*videoStyle={{
                           borderRadius: '0.75rem',
-                        }}
-                        onResult={(result, error) => {
-                          if (result) {
-                            setCompanyCode(result.getText())
-                          }
-                        }}
+                        }}*/
+                        onScan={(result) => { result && setCompanyCode(result[0].rawValue)}}
                       />
                     </div>
                   </>
