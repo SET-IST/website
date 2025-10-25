@@ -56,7 +56,7 @@ const EnrollmentsManagementForm = () => {
 
   const isValidUser = !!userDetails && userDetails.role !== UserType.Company
 
-  const { mutateAsync: updateEnrollment, isLoading } =
+  const { mutateAsync: updateEnrollment, isPending } =
     useActivityEnrollmentManagement(useQueryClient())
 
   const updateEnrollmentData = (
@@ -196,7 +196,7 @@ const EnrollmentsManagementForm = () => {
             />
 
             <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
-              <Button disabled={!isValidUser} loading={isLoading} type="submit">
+              <Button disabled={!isValidUser} loading={isPending} type="submit">
                 Adicionar inscrição
               </Button>
             </div>

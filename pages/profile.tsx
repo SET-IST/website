@@ -9,7 +9,7 @@ const UserProfile = () => {
   return <ProfilePage />
 }
 
-UserProfile.getLayout = (page: ReactElement) => {
+UserProfile.getLayout = (page: ReactElement<any>) => {
   return <UserLayout>{page}</UserLayout>
 }
 

@@ -122,7 +122,7 @@ const StudentSettingsForm = () => {
 
   const {
     mutateAsync: updateProfileData,
-    isLoading,
+    isPending,
     isError,
     error,
   } = useUpdateProfile(useQueryClient())
@@ -295,7 +295,7 @@ const StudentSettingsForm = () => {
           <Button onClick={() => showSettings(false)} variant="default">
             Cancelar
           </Button>
-          <Button loading={isLoading} type="submit">
+          <Button loading={isPending} type="submit">
             Guardar
           </Button>
         </div>

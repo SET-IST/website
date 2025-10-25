@@ -40,7 +40,7 @@ const PointsManagementForm = () => {
 
   const isValidUser = !!userDetails && userDetails.role !== UserType.Company
 
-  const { mutateAsync: updatePoints, isLoading } = useUpdateStudentPoints(
+  const { mutateAsync: updatePoints, isPending } = useUpdateStudentPoints(
     useQueryClient()
   )
 
@@ -78,7 +78,10 @@ const PointsManagementForm = () => {
       })
   }
 
-  const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
+  const redemptionSettings = useQuery({
+    queryKey: ['redemptionSettings'],
+    queryFn: () => fetchRedemptionSettings()
+  })
 
   return (
     <div className="h-fit p-4">
@@ -160,7 +163,7 @@ const PointsManagementForm = () => {
         </Button.Group>
 
         <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
-          <Button disabled={!isValidUser} loading={isLoading} type="submit">
+          <Button disabled={!isValidUser} loading={isPending} type="submit">
             Aplicar
           </Button>
         </div>

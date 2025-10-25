@@ -232,7 +232,8 @@ export async function scanCompany(user: User, companyId: string) {
 
     if (!day) {
       day = await PrismaService.day.create({
-        data: { dateCode: defaultDayCode },
+
+        data: { dateCode: defaultDayCode, date: new Date(0) },
       });
     }
     
@@ -468,7 +469,7 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
 
     if (!day) {
       day = await PrismaService.day.create({
-        data: { dateCode: defaultDayCode },
+        data: { dateCode: defaultDayCode, date: new Date(0) },
       });
     }
 

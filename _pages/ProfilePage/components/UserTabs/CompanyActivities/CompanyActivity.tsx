@@ -10,7 +10,8 @@ import {
 import { IconArrowLeft, IconArrowRight, IconMapPin } from '@tabler/icons-react'
 import { DateTime } from 'luxon'
 import { ActivityUser } from './ActivityUser'
-import { Carousel, Embla } from '@mantine/carousel'
+import { Carousel } from '@mantine/carousel'
+import { EmblaCarouselType } from 'embla-carousel';
 import { useCallback, useState } from 'react'
 import { useMediaQuery } from '@mantine/hooks'
 import { CompanyActivity as CompanyActivityData } from '@/lib/frontend/api'
@@ -21,7 +22,7 @@ interface ActivityComponentProps {
 
 const CompanyActivity = ({ data }: ActivityComponentProps) => {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
-  const [embla, setEmbla] = useState<Embla | null>(null)
+  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null)
 
   const scrollPrev = useCallback(() => {
     if (embla) embla.scrollPrev()
@@ -97,9 +98,11 @@ const CompanyActivity = ({ data }: ActivityComponentProps) => {
               <Carousel
                 className="w-2/3"
                 slideSize={isMobile ? '100%' : '33.33%'}
-                slidesToScroll={isMobile ? 1 : 3}
+                emblaOptions={{
+                  slidesToScroll: isMobile ? 1 : 3,
+                  align: isMobile ? 'center' : 'start'
+                }}
                 slideGap={0}
-                align={isMobile ? 'center' : 'start'}
                 withControls={false}
                 getEmblaApi={setEmbla}
               >

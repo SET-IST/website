@@ -9,7 +9,7 @@ const Index = () => {
   return <IndexPage />
 }
 
-Index.getLayout = (page: ReactElement) => {
+Index.getLayout = (page: ReactElement<any>) => {
   return (
     <NavbarLayout startTransparent={true}>
       <FooterLayout>{page}</FooterLayout>

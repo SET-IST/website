@@ -1,5 +1,5 @@
 import { Modal } from '@mantine/core'
-import { Scanner, ScannerProps } from './Scanner'
+import { Reader, ScannerProps } from './Reader'
 
 export function StaffScan(props: ScannerProps) {
   return (
@@ -31,7 +31,7 @@ export function StaffScan(props: ScannerProps) {
         </div>
         <div className="grow flex flex-col items-center justify-start mt-10">
           <div className="flex flex-col gap-5">
-            <Scanner {...props} />
+            <Reader {...props} />
           </div>
         </div>
       </div>

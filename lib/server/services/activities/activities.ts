@@ -298,11 +298,11 @@ export async function patchEnrollment(
 }
 
 export async function getActiveDays() {
-  return await databaseQueryWrapper(async () => {
+  return (await databaseQueryWrapper(async () => {
     return await PrismaService.day.findMany({
       where: {
         state: CurrentDayState.Active
       }
     })
-  }) ?? []
+  })) ?? [];
 }

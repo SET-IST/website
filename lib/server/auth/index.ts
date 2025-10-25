@@ -1,4 +1,4 @@
-import { AuthOptions } from 'next-auth'
+import type { AuthOptions } from 'next-auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 // Providers
