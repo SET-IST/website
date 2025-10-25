@@ -146,7 +146,7 @@ model Activity {
   title       String       @db.VarChar(128)
   description String       @db.VarChar(512)
   date        DateTime
-  dayId       Int          @default(9)
+  dayId       Int
   day         Day          @relation(fields: [dayId], references: [id])
   duration    Int
   location    String       @db.VarChar(80)
@@ -213,7 +213,7 @@ enum CurrentDayState {
 model Day {
   id             Int              @id @default(autoincrement())
   dateCode       String           @unique
-  date           DateTime         @default(now()) @db.Date
+  date           DateTime         @db.Date
   state          CurrentDayState  @default(Inactive)
   companies      CompanyDetails[]
   DayTotalPoints DayTotalPoints[]
