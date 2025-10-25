@@ -11,7 +11,7 @@ const Prizes = () => {
   return <PrizesPage />
 }
 
-Prizes.getLayout = (page: ReactElement) => {
+Prizes.getLayout = (page: ReactElement<any>) => {
   return (
     <NavbarLayout>
       <FooterLayout>{page}</FooterLayout>

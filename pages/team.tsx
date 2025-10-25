@@ -10,7 +10,7 @@ const Team = () => {
   return <EquipaPage />
 }
 
-Team.getLayout = (page: ReactElement) => {
+Team.getLayout = (page: ReactElement<any>) => {
   return (
     <NavbarLayout>
       <FooterLayout>{page}</FooterLayout>

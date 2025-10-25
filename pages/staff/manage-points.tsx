@@ -11,7 +11,7 @@ const PointsManagement = () => {
   return <PointsManagementForm />
 }
 
-PointsManagement.getLayout = (page: ReactElement) => {
+PointsManagement.getLayout = (page: ReactElement<any>) => {
   return <StaffLayout>{page}</StaffLayout>
 }
 
