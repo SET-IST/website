@@ -59,7 +59,7 @@ const PrizeValidationForm = () => {
   const {
     mutateAsync: createAward,
     data: createdAward,
-    isLoading,
+    isPending,
   } = useCreateAward()
 
   const createAwardCallback = (values: PrizeCreationFormValues) => {
@@ -89,7 +89,10 @@ const PrizeValidationForm = () => {
   }
 
   // Load awards list
-  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: isAwardsListSuccess } = useQuery<Awards>(['awardsList'], () => fetchAwardsList())
+  const { data: awardsListData, isPending: isAwardsListLoading, isError: isAwardsListError, isSuccess: isAwardsListSuccess } = useQuery({
+    queryKey: ['awardsList'],
+    queryFn: () => fetchAwardsList()
+  })
   // transform awardsListData into combo box data
   const awardsList = awardsListData?.filter((award_data) => award_data.type === AwardType.NORMAL || award_data.type === award?.type)?.map((award) => ({
       label: award?.name,
@@ -125,7 +128,6 @@ const PrizeValidationForm = () => {
           />
         }
       />
-
       {!!award && (
         <div className="w-full py-4 gap-2 flex flex-col">
           <Group wrap="nowrap">
@@ -188,7 +190,6 @@ const PrizeValidationForm = () => {
           </div>
         </div>
       )}
-
       <Divider
         my="md"
         label={
@@ -258,12 +259,11 @@ const PrizeValidationForm = () => {
         )}
 
         <div className="flex flex-col sm:flex-row  gap-3 mt-6 sm:mt-4">
-          <Button disabled={!isValidUser} loading={isLoading} type="submit">
+          <Button disabled={!isValidUser} loading={isPending} type="submit">
             Aplicar
           </Button>
         </div>
       </form>
-
       <StaffScan
         label="Resgatar brinde"
         fetchMethod={readAward}
@@ -277,7 +277,7 @@ const PrizeValidationForm = () => {
         onClose={closeScanModal}
       />
     </div>
-  )
+  );
 }
 
 export { PrizeValidationForm }

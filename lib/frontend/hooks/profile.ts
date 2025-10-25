@@ -21,20 +21,18 @@ export const useProfile = () => {
   const session = useSession()
   const user: User = session.data?.user
 
-  return useQuery<StudentProfile | CompanyProfile, Error>(
-    ['Profile'],
-    () => {
+  return useQuery<StudentProfile | CompanyProfile, Error>({
+    queryKey: ['Profile'],
+    queryFn: () => {
       return user.role === UserType.Company
         ? fetchCompanyProfile()
         : fetchStudentProfile()
     },
-    {
-      enabled: session.status === 'authenticated',
-      refetchInterval: (data, query) => {
-        return !query.state.error ? 800 : false
-      },
+    enabled: session.status === 'authenticated',
+    refetchInterval: (query) => {
+      return !query.state.error ? 800 : false
     }
-  )
+  });
 }
 
 export type PatchWithFiles<T> = T & {

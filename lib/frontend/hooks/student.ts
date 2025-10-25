@@ -13,15 +13,21 @@ import { AxiosError } from 'axios'
 
 
 export const useStudentCompanyScans = () => {
-  return useQuery<ScannedCompany[], AxiosError>(['StudentCompanyScans'], () =>
-    fetchStudentCompaniesScans()
-  )
+  return useQuery({
+    queryKey: ['StudentCompanyScans'],
+
+    queryFn: () =>
+      fetchStudentCompaniesScans()
+  });
 }
 
 export const useStudentEnrollments = () => {
-  return useQuery<UserEnrollment[], AxiosError>(['StudentEnrollments'], () =>
-    fetchEnrolledActivities()
-  )
+  return useQuery({
+    queryKey: ['StudentEnrollments'],
+
+    queryFn: () =>
+      fetchEnrolledActivities()
+  });
 }
 
 export const useScan = (queryClient: QueryClient) => {
@@ -45,11 +51,11 @@ export const useAward = () => {
     queryKey: ['Award'],
     queryFn: fetchAward,
     enabled: true,
-    cacheTime: Infinity,
+    gcTime: Infinity,
     staleTime: Infinity,
     refetchOnWindowFocus: true,
-    refetchInterval: (data, query) => {
+    refetchInterval: (query) => {
       return !query.state.error ? 800 : false
     },
-  })
+  });
 }

@@ -1,6 +1,5 @@
 export * from './api-exceptions-handler'
 export * from './api-param-decorators'
-export * from './crypto'
 export * from './db-exceptions-handler'
 export * from './db-query-wrapper'
 export * from './s3-exceptions-handler'

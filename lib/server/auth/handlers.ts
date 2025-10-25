@@ -1,5 +1,5 @@
 import { TokenSet } from 'next-auth'
-import { TokenEndpointHandler } from 'next-auth/providers'
+import type { TokenEndpointHandler } from 'next-auth/providers/oauth'
 import { FenixRegistration, Role } from './types'
 import * as CompanyService from '@/lib/server/services/company'
 import { CompanyLoginRequest } from '../services/company/dtos'

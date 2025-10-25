@@ -13,7 +13,6 @@ import {
   rem,
 } from '@mantine/core'
 import { useActivities } from '@/lib/frontend/hooks'
-import { FormErrors } from '@mantine/form/lib/types'
 import { ActivityData } from '@/lib/frontend/api/activities'
 import { IconMapPin } from '@tabler/icons-react'
 import { DateTime } from 'luxon'

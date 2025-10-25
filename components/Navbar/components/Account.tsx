@@ -39,8 +39,6 @@ export function AccountMenu({
 
   const {
     data: user,
-    isLoading: isUserLoading,
-    isError: isUserError,
   } = useProfile()
 
   return renderForMobile ? (

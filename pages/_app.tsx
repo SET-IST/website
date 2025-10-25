@@ -1,6 +1,6 @@
 import {
   DehydratedState,
-  Hydrate,
+  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
@@ -52,16 +52,16 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     <MantineProvider>
       <QueryClientProvider client={queryClient}>
         <EdgeStoreProvider>
-          <Hydrate state={pageProps.dehydratedState}>
+          <HydrationBoundary state={pageProps.dehydratedState}>
             <SessionProvider session={pageProps.session}>
               <Notifications position="top-center" />
               {getLayout(<Component {...pageProps} />)}
             </SessionProvider>
-          </Hydrate>
+          </HydrationBoundary>
         </EdgeStoreProvider>
       </QueryClientProvider>
     </MantineProvider>
-  )
+  );
 }
 
 export default App

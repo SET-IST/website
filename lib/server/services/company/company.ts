@@ -10,8 +10,6 @@ import {
 import { User } from 'next-auth'
 import { downloadFile, getFile, getFullResourcePath } from '../../utils'
 import { CompanyCategory } from '@prisma/client'
-import { createReadStream } from 'fs'
-import { NextApiResponse } from 'next'
 
 export async function login(
   req: CompanyLoginRequest
