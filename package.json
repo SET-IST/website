@@ -15,7 +15,8 @@
     "dev:db:start": "cd database && docker compose up -d",
     "dev:db:stop": "cd database && docker compose rm -s -f -v",
     "dev:db:push": "yarn prisma db push",
-    "dev:db:seed": "psql -h localhost -p 5432 -U postgres -c 'create database setdb' && psql -h localhost -p 5432 -U postgres setdb < ./database/seeds/PROD_db_seed-25-10-2025.sql",
+    "dev:db:seed": "psql -h localhost -p 5432 -U postgres -c 'create database setdb' && psql -h localhost -p 5432 -U postgres setdb < ./database/seeds/PROD_db_seed-25-10-2025.sql && yarn dev:db:seed:resolve",
+    "dev:db:seed:resolve": "bash -lc 'set -a; source .env; set +a; mkdir -p ./database/prisma/migrations/00000000000000_baseline; prisma migrate diff --from-empty --to-url \"$DATABASE_URL\" --script > ./database/prisma/migrations/00000000000000_baseline/migration.sql && prisma migrate resolve --applied 00000000000000_baseline' && yarn prisma migrate dev",
     "dev:db:dump": "pg_dump -h localhost -p 5432 -U postgres setdb -f ./database/seeds/db_seed-$(date +'%d-%m-%Y').sql && echo \"Dump saved to ./database/seeds/db_seed-$(date +'%d-%m-%Y').sql\""
   },
   "dependencies": {
