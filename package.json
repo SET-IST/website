@@ -45,7 +45,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "eslint": "8.57.0",
+    "eslint": "^9.38.0",
     "eslint-config-next": "16.0.0",
     "lodash": "^4.17.21",
     "luxon": "^3.2.1",
