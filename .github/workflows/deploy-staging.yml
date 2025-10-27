@@ -90,6 +90,12 @@ jobs:
           name: PrismaSchema
           path: database/prisma/schema.prisma
           retention-days: 1
+      - name: upload prisma migrations artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PrismaMigrations
+          path: database/prisma/migrations
+          retention-days: 1
 
   deploy:
     needs: build
@@ -107,9 +113,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: PrismaSchema
+      - name: Download Prisma Schema
+        uses: actions/download-artifact@v4
+        with:
+          name: PrismaMigrations
       - name: copy env to destination
         run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./env ubuntu@set.vps.tecnico.ulisboa.pt:~/env-main
       - name: copy prisma schema to destination
         run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./schema.prisma ubuntu@set.vps.tecnico.ulisboa.pt:~/schema.prisma-main
+      - name: copy prisma migrations to destination
+        run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./migrations ubuntu@set.vps.tecnico.ulisboa.pt:~/prisma-migrations-main
       - name: Reload Deployment
         run: ssh -o StrictHostKeyChecking=no -i ./id_rsa ubuntu@set.vps.tecnico.ulisboa.pt sudo /home/ubuntu/deploy-main.sh ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest-main

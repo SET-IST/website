@@ -43,7 +43,7 @@ RUN yarn build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine3.18 AS runner
+FROM node:22-alpine3.18 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
