@@ -4,7 +4,20 @@ const { version } = require('./package.json')
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '',
+        search: ''
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '',
+        search: ''
+      }
+    ]
   },
   turbopack: {
     // Apply SVGR so .svg imports are React components (like your webpack rule)
