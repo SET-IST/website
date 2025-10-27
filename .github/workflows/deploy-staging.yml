@@ -32,8 +32,8 @@ jobs:
           echo ES_AWS_REGION="${{ vars.S3_REGION }}" >> env
 
           # AUTHENTICATION
-          echo NEXTAUTH_URL="${{ vars.NEXTAUTH_URL_STAG }}" >> env
-          echo NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}" >> env
+          echo BETTER_AUTH_URL="${{ vars.BETTER_AUTH_URL_STAG }}" >> env
+          echo BETTER_AUTH_SECRET="${{ secrets.BETTER_AUTH_SECRET }}" >> env
 
           echo GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}" >> env
           echo GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" >> env
@@ -113,7 +113,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: PrismaSchema
-      - name: Download Prisma Schema
+      - name: Download Prisma Migrations
         uses: actions/download-artifact@v4
         with:
           name: PrismaMigrations
@@ -122,6 +122,6 @@ jobs:
       - name: copy prisma schema to destination
         run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./schema.prisma ubuntu@set.vps.tecnico.ulisboa.pt:~/schema.prisma-main
       - name: copy prisma migrations to destination
-        run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./migrations ubuntu@set.vps.tecnico.ulisboa.pt:~/prisma-migrations-main
+        run: scp -o StrictHostKeyChecking=no -i ./id_rsa -r ./migrations ubuntu@set.vps.tecnico.ulisboa.pt:~/prisma-migrations-main
       - name: Reload Deployment
         run: ssh -o StrictHostKeyChecking=no -i ./id_rsa ubuntu@set.vps.tecnico.ulisboa.pt sudo /home/ubuntu/deploy-main.sh ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO }}:latest-main
