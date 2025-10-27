@@ -1,6 +1,6 @@
 {
   "name": "jet26-website",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "private": true,
   "prisma": {
     "schema": "database/prisma/schema.prisma"

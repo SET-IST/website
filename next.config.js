@@ -27,8 +27,10 @@ const nextConfig = {
         as: '*.js',
       },
     },
-
   },
+  env: {
+    APP_VERSION: version,
+  }
 }
 
 module.exports = {

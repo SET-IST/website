@@ -16,7 +16,7 @@ export const useCompanyStudentsScans = (page?: number, search?: string) => {
     queryKey: ['CompanyStudents', { page: page, query: search }],
     queryFn: () => fetchCompanyStudentsScans(page, search),
     enabled:
-      session.status === 'authenticated' && user?.role === UserType.Company
+      user && user.role === UserType.Company
   });
 }
 

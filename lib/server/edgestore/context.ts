@@ -12,7 +12,11 @@ export async function createContext({
 }: CreateContextOptions): Promise<Context> {
   const session = await getSession(req, res)
 
+  if (!session?.user?.id) {
+    throw new Error('Unauthorized')
+  }
+
   return {
-    userId: session?.user.id,
+    userId: session.user.id,
   }
 }
