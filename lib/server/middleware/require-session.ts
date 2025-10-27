@@ -4,11 +4,15 @@ import {
   UnauthorizedException,
   createMiddlewareDecorator,
 } from 'next-api-decorators'
-import { getServerSession } from 'next-auth'
-import { AuthOptions } from '@/lib/server/auth'
+import { auth, Session } from '@/lib/server/auth'
+import { headers } from 'next/headers'
 
-export async function getSession(req: NextApiRequest, res: NextApiResponse) {
-  return await getServerSession(req, res, AuthOptions(req, res))
+export async function getSession(req: NextApiRequest, res: NextApiResponse): Promise<Session | null> {
+  return await auth.api.getSession({
+    headers: {
+      cookie: req.headers.cookie ?? "",
+    }
+  })
 }
 
 export const RequiresSession = createMiddlewareDecorator(

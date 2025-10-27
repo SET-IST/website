@@ -10,8 +10,7 @@ import {
 } from '@mantine/core'
 import classes from './QRDialog.module.css'
 import { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
-import { User } from 'next-auth'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { QRCode } from 'react-qrcode-logo'
 import { useScan } from '@/lib/frontend/hooks/student'
 import { AxiosError } from 'axios'
@@ -28,7 +27,7 @@ enum QRDialogTabs {
 
 export function QRDialog() {
   const session = useSession()
-  const user: User = session.data?.user
+  const user = session.data?.user
 
   const [currentTab, setCurrentTab] = useState<QRDialogTabs>(QRDialogTabs.Scan)
   const [companyCode, setCompanyCode] = useState<string | undefined>(undefined)
@@ -201,11 +200,11 @@ export function QRDialog() {
                     fgColor="#1C7ED6"
                     eyeRadius={5}
                     qrStyle="dots"
-                    value={user.id}
+                    value={user?.id}
                   />
                 </div>
                 <Code className="text-lg" c="white" bg="transparent">
-                  {user.id}
+                  {user?.id}
                 </Code>
               </div>
             )}

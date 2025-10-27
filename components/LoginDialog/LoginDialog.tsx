@@ -12,13 +12,13 @@ import {
 import { GoogleButton } from './GoogleButton'
 import { useBoundStore } from '@/lib/frontend/store'
 import { FenixButton } from './FenixButton'
-import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { showErrorNotification } from '@/components/Notifications'
 import { SignInPageErrorParam } from '@auth/core/types'
 import { useEffect, useState } from 'react'
 import { links } from '@/data/links'
 import { useEdgeStore } from '@/lib/frontend/edgestore'
+import { signIn } from '@/lib/frontend/utils/auth-client'
 
 export function LoginDialog() {
   const router = useRouter()
@@ -63,32 +63,28 @@ export function LoginDialog() {
 
   const handleCredentialsLogin = async (credentials: any) => {
     setCredentialsIsLoading(true)
-    signIn('credentials', {
-      ...credentials,
-      redirect: false,
-    })
-      .then((data) => {
-        console.log(data)
-        switch (data?.status) {
-          case 200:
-            reset()
-            router.push(links.company.profile)
-            showDialog(false)
-            break
-          case 401:
+    const data = signIn.username(
+      {...credentials, rememberMe: true },
+      {
+        onSuccess(ctx) {
+          reset()
+          router.push(links.company.profile)
+          showDialog(false)
+          setCredentialsIsLoading(false)
+        },
+        onError(ctx) {
+          if(ctx.error.status === 401) {
             form.setFieldError('password', 'Credenciais inválidas')
-            break
-          default:
+          } else {
             showErrorNotification({
               title: `Ocorreu um erro, por favor tenta outra vez`,
-              message: data?.error ?? 'Unexpected auth error',
+              message: ctx.error.statusText ?? 'Unexpected auth error',
             })
-            break
+          }
+          setCredentialsIsLoading(false)
         }
-      })
-      .finally(() => {
-        setCredentialsIsLoading(false)
-      })
+      }
+    )
   }
 
   return (
@@ -129,23 +125,25 @@ export function LoginDialog() {
                   color: 'blue',
                   type: 'dots',
                 }}
-                onClick={() => {
+                onClick={async () => {
                   setFenixIsLoading(true)
-                  signIn('fenix', {
-                    redirect: false,
-                    callbackUrl: links.student.profile,
-                  }).then(() => reset())
+                  await signIn.oauth2({
+                    providerId: 'fenix',
+                    callbackURL: links.student.profile,
+                  })
+                  reset()
                 }}
               >
                 Entrar com Técnico ID
               </FenixButton>
               <GoogleButton
-                onClick={() => {
+                onClick={async () => {
                   setGoogleIsLoading(true)
-                  signIn('google', {
-                    redirect: false,
-                    callbackUrl: links.student.profile,
-                  }).then(() => reset())
+                  await signIn.social({
+                    provider: 'google',
+                    callbackURL: links.student.profile,
+                  })
+                  reset()
                 }}
                 loading={googleIsLoading}
                 loaderProps={{

@@ -1,5 +1,4 @@
 import { useMediaQuery } from '@mantine/hooks'
-import { DateTime } from 'luxon'
 import { em } from '@mantine/core'
 import {
   useActivities,
@@ -9,18 +8,16 @@ import {
 import Activity from './Activity'
 import { useQueryClient } from '@tanstack/react-query'
 import { showInfoNotification } from '@/components/Notifications'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useBoundStore } from '@/lib/frontend/store'
 import {
   EnrollUserResponse,
   UnEnrollUserResponse,
 } from '@/lib/frontend/api/activities'
 import ActivitySkeleton from './ActivitySkeleton'
-import { User } from 'next-auth'
 import { ActivityType, UserType } from '@prisma/client'
 import { fetchStudentProfile } from '@/lib/frontend/api'
 import { CVDialog } from '@/components/CVDialog'
-import SpeedInterview from '@/assets/img/speed-interview.webp'
 import ActivityCard from '@/_pages/ActivitiesPage/components/ActivityCard'
 
 const UserActivities = () => {
@@ -49,14 +46,13 @@ const UserActivities = () => {
     activityId: string,
     activityType: ActivityType
   ) => {
-    if (session.status !== 'authenticated') {
+    if (!session.data) {
       showLogin(true)
       return
     }
 
     if (
-      session.data.user &&
-      (session.data.user as User).role === UserType.Company
+      session.data.user.role === UserType.Company
     )
       return
 

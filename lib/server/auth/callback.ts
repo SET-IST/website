@@ -4,7 +4,7 @@ import Cookies from 'cookies'
 import { randomUUID } from 'crypto'
 import { DateTime } from 'luxon'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { CallbacksOptions } from 'next-auth'
+/*import { CallbacksOptions } from 'next-auth'
 import { Adapter } from 'next-auth/adapters'
 import { getFullResourcePath } from '@/lib/server/utils'
 
@@ -52,3 +52,4 @@ export const AuthCallbacks = (
 
   return callbacks
 }
+*/

@@ -5,11 +5,8 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { SessionProvider } from 'next-auth/react'
 //  Types
 import type { NextPage } from 'next'
-import type { Session } from 'next-auth'
 import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 
@@ -29,7 +26,7 @@ type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 }
 
 type AppPropsWithLayout<
-  P = { dehydratedState: DehydratedState; session: Session }
+  P = { dehydratedState: DehydratedState; }
 > = AppProps<P> & {
   Component: NextPageWithLayout<P>
 }
@@ -53,10 +50,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <QueryClientProvider client={queryClient}>
         <EdgeStoreProvider>
           <HydrationBoundary state={pageProps.dehydratedState}>
-            <SessionProvider session={pageProps.session}>
-              <Notifications position="top-center" />
-              {getLayout(<Component {...pageProps} />)}
-            </SessionProvider>
+            <Notifications position="top-center" />
+            {getLayout(<Component {...pageProps} />)}
           </HydrationBoundary>
         </EdgeStoreProvider>
       </QueryClientProvider>

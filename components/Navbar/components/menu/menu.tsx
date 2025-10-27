@@ -8,8 +8,7 @@ import {
   StaffNavLinks,
 } from '@/data/nav'
 import { useMediaQuery } from '@mantine/hooks'
-import { useSession } from 'next-auth/react'
-import { User } from 'next-auth'
+import { User, useSession } from '@/lib/frontend/utils/auth-client'
 import { UserType } from '@prisma/client'
 import { NextRouter, useRouter } from 'next/router'
 
@@ -31,10 +30,10 @@ function isActive(
   }
 }
 
-function select(link: NavLinkExtendedProps, router: NextRouter, user: User) {
+function select(link: NavLinkExtendedProps, router: NextRouter, user?: User) {
   if (user && user.role && typeof link.link === 'object') {
     const links = link.link as Record<UserType, string>
-    return router.push(links[user.role])
+    return router.push(links[user.role as UserType])
   } else {
     return router.push(link.link as string)
   }
@@ -44,9 +43,9 @@ function NavComposite(
   data: NavLinkExtendedProps[] = [],
   level: number,
   isMobile: boolean,
-  user: User,
   router: NextRouter,
-  closeCallback: () => void
+  closeCallback: () => void,
+  user?: User,
 ) {
   const items = data.map((item: NavLinkExtendedProps, index) => {
     // Should it be visible?
@@ -93,9 +92,9 @@ function NavComposite(
             item.nestedNav,
             level + 1,
             isMobile,
-            user,
             router,
-            closeCallback
+            closeCallback,
+            user
           )}
         </NavLink>
       )
@@ -126,7 +125,7 @@ export function NavProfileMenu({ closeCallback }: NavProfileMenuProps) {
   const router = useRouter()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`) ?? false
   const [profileNavlinks, setProfileNavLinks] = useState(MainNavLinks)
-  const user: User = session.data?.user
+  const user = session.data?.user
 
   useEffect(() => {
     if (user) {
@@ -140,7 +139,7 @@ export function NavProfileMenu({ closeCallback }: NavProfileMenuProps) {
 
   return (
     <Box>
-      {NavComposite(profileNavlinks, 0, isMobile, user, router, closeCallback)}
+      {NavComposite(profileNavlinks, 0, isMobile, router, closeCallback, user)}
     </Box>
   )
 }

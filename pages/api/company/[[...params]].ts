@@ -26,11 +26,6 @@ import { UserData } from '@/core/utils'
 
 @Catch(handleApiException)
 class CompanyRoutes {
-  @Post('login')
-  public async login(@Body(RestrictedValidationPipe) req: CompanyLoginRequest) {
-    return await CompanyService.login(req)
-  }
-
   @Get('/profile')
   @RequiresSession()
   @Role('Company')

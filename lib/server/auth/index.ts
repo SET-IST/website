@@ -1,89 +1,74 @@
-import type { AuthOptions } from 'next-auth'
-import { NextApiRequest, NextApiResponse } from 'next'
-
-// Providers
-import GoogleProvider from 'next-auth/providers/google'
-import Credentials from 'next-auth/providers/credentials'
+import { betterAuth } from 'better-auth'
+import { genericOAuth, username } from 'better-auth/plugins'
+import { nextCookies } from "better-auth/next-js";
+import bcrypt from "bcrypt"
 
 // Handlers and Callbacks
 import {
-  CredentialsAuthorizationHandler,
-  FenixAccessTokenHandler,
   FenixProfileHandler,
   GoogleProfileHandler,
 } from './handlers'
-import { AuthCallbacks } from './callback'
-import { JWTHandlers } from './jwt'
 
 // Database adapter
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { PrismaService } from '@/core/services/server'
-import { Adapter } from 'next-auth/adapters'
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { PrismaService } from '@/core/services/server/prisma'
+import { hashPassword, isSamePassword } from '@/core/utils/auth'
 
-export function AuthOptions(
-  req: NextApiRequest,
-  res: NextApiResponse
-): AuthOptions {
-  return {
-    adapter: PrismaAdapter(PrismaService) as Adapter,
-    providers: [
-      {
-        id: 'fenix',
-        name: 'Fénix',
-        type: 'oauth',
-        version: '2.0',
-        clientId: process.env.FENIX_ID!,
-        clientSecret: process.env.FENIX_SECRET!,
-        token: FenixAccessTokenHandler,
-        authorization: {
-          url: `https://fenix.tecnico.ulisboa.pt/oauth/userdialog`,
-        },
-        userinfo: {
-          url: 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person',
-        },
-        profile: FenixProfileHandler,
+export const auth = betterAuth({
+  database: prismaAdapter(PrismaService, {
+    provider: 'sqlite',
+  }),
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "fenix"]
+    }
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: 'string',
+        input: false,
       },
-      GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        authorization: {
-          params: {
-            prompt: 'consent',
-            access_type: 'offline',
-            response_type: 'code',
-          },
-        },
-        profile: GoogleProfileHandler,
-      }),
-      Credentials({
-        type: 'credentials',
-        credentials: {},
-        authorize: CredentialsAuthorizationHandler,
-      }),
-    ],
-    events: {
-      signIn({ account, isNewUser }) {
-        if (account?.provider === 'google' && isNewUser) {
-          // Redirect new external student
-        }
+      readChangelog: {
+        type: 'string',
+        input: false,
       },
     },
-    callbacks: AuthCallbacks(req, res),
-    jwt: JWTHandlers(req, res),
-    pages: {
-      error: '/',
-      signIn: '/',
+  },
+  emailAndPassword: {
+    enabled: true,
+    password: {
+      hash: hashPassword,
+      verify: isSamePassword
     },
-    cookies: {
-      sessionToken: {
-        name: 'next-auth.session-token',
-        options: {
-          httpOnly: true,
-          sameSite: 'lax',
-          path: '/',
-          secure: process.env.NODE_ENV === 'production',
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      accessType: 'offline',
+      prompt: 'consent',
+      mapProfileToUser: GoogleProfileHandler,
+    },
+  },
+  plugins: [
+    genericOAuth({
+      config: [
+        {
+          providerId: 'fenix',
+          clientId: process.env.FENIX_ID!,
+          clientSecret: process.env.FENIX_SECRET!,
+          userInfoUrl: 'https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person',
+          authorizationUrl: 'https://fenix.tecnico.ulisboa.pt/oauth/userdialog',
+          tokenUrl: 'https://fenix.tecnico.ulisboa.pt/oauth/access_token',
+          mapProfileToUser: FenixProfileHandler,
         },
-      },
-    },
-  }
-}
+      ],
+    }),
+    username(),
+    nextCookies(),
+  ],
+})
+
+export type Session = typeof auth.$Infer.Session

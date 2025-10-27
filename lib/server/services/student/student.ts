@@ -232,7 +232,6 @@ export async function scanCompany(user: User, companyId: string) {
 
     if (!day) {
       day = await PrismaService.day.create({
-
         data: { dateCode: defaultDayCode, date: new Date(0) },
       });
     }
