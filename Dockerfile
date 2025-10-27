@@ -8,7 +8,7 @@ RUN npm install -g --arch=x64 --platform=linux --libc=musl sharp@0.33.0-rc.2
 
 # Migrate to yarn 4
 RUN corepack enable
-RUN yarn set version berry
+RUN yarn set version stable
 
 COPY package.json ./
 COPY .yarnrc.yml ./
@@ -37,10 +37,11 @@ ENV NEXT_PUBLIC_EVENT_DATES ${NEXT_PUBLIC_EVENT_DATES}
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn prisma generate
-RUN ls -l /app/node_modules/prisma
+
 RUN ls -l /app/node_modules/.prisma/client/
 RUN ls -l /app/node_modules/@prisma/client/
-RUN ls -l /app/node_modules/@prisma/client/engines
+RUN ls -l /app/node_modules/@prisma/engines
+
 RUN yarn build
 
 # If using npm comment out above and use below instead
