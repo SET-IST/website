@@ -17,7 +17,7 @@ COPY yarn.lock ./
 RUN yarn install --immutable
 
 # Rebuild the source code only when needed
-FROM node:18-alpine3.18 AS builder
+FROM node:22-alpine3.18 AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps --chown=nextjs:nodejs /usr/local/lib/node_modules/sharp /usr/local/lib/node_modules/sharp
