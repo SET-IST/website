@@ -7,8 +7,7 @@ import {
 } from '@/components/SettingsForms'
 import { PreviewCard } from './components/UserCard/PreviewCard'
 import { useBoundStore } from '@/lib/frontend/store'
-import { useSession } from 'next-auth/react'
-import { User } from 'next-auth'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { UserType } from '@prisma/client'
 import { QRDialog } from '@/components/QRDialog'
 import { useEffect } from 'react'
@@ -19,7 +18,7 @@ const ProfilePage = () => {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
   const session = useSession()
-  const user: User = session.data?.user
+  const user = session.data?.user
 
   // Getters
   const profileSettingsVisible = useBoundStore(
@@ -43,7 +42,7 @@ const ProfilePage = () => {
       {!profileSettingsVisible && <UserTabs />}
 
       {profileSettingsVisible &&
-        (user.role == UserType.Company ? (
+        (user?.role == UserType.Company ? (
           <CompanySettingsForm />
         ) : (
           <StudentSettingsForm />
@@ -62,7 +61,7 @@ const ProfilePage = () => {
         </Modal.Content>
       </Modal.Root>
 
-      {user.role && user.role !== UserType.Company && (
+      {user?.role && user.role !== UserType.Company && (
         <>
           <QRDialog />
           <PrizeDialog />

@@ -3,10 +3,10 @@ import { ReactNode, useState } from 'react'
 import { useMediaQuery, useWindowScroll } from '@mantine/hooks'
 import { VisitedStands } from './VisitedStands'
 import { UserActivities } from './UserActivities'
-import { useSession } from 'next-auth/react'
 import { UserType } from '@prisma/client'
 import { StudentDatatable } from './StudentDatatable'
 import { CompanyActivities } from './CompanyActivities'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 
 interface Tab {
   title: string

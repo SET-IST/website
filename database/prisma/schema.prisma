@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 model Account {
   id                    String    @id @default(cuid())
   accountId             String    @map("providerAccountId")
@@ -22,8 +31,9 @@ model Account {
   accessTokenExpiresAt  DateTime? @map("expires_at")
   refreshTokenExpiresAt DateTime?
   scope                 String?
-  createdAt             DateTime?
-  updatedAt             DateTime  @default(now())
+  password              String?
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
 
   @@unique([providerId, accountId])
 }
@@ -32,8 +42,10 @@ model Session {
   id        String    @id @default(cuid())
   expiresAt DateTime  @map("expires")
   token     String    @unique @map("sessionToken")
-  createdAt DateTime?
-  updatedAt DateTime?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
   userId    String
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -85,8 +97,6 @@ model DayTotalPoints {
 model CompanyDetails {
   id         Int              @id @default(autoincrement())
   category   CompanyCategory
-  username   String           @unique
-  password   String
   scans      Int              @default(0)
   students   StudentDetails[]
   activities Activity[]
@@ -102,18 +112,22 @@ model CompanyDetails {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  name           String
-  email          String          @unique
-  emailVerified  Boolean         @default(false)
-  image          String?
-  readChangelog  Boolean         @default(true)
-  accounts       Account[]
-  sessions       Session[]
-  role           UserType        @default(Student) // custom relation for roles of student and company
-  studentDetails StudentDetails? // custom table with additional info of student
-  companyDetails CompanyDetails? // custom table with additional info of company
-  EventLog       EventLog[]
+  id              String          @id @default(uuid())
+  name            String
+  username        String?         @unique
+  email           String          @unique
+  emailVerified   Boolean         @default(false)
+  image           String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime?       @updatedAt
+  readChangelog   Boolean         @default(true)
+  accounts        Account[]
+  sessions        Session[]
+  role            UserType        @default(Student) // custom relation for roles of student and company
+  displayUsername String?
+  studentDetails  StudentDetails? // custom table with additional info of student
+  companyDetails  CompanyDetails? // custom table with additional info of company
+  EventLog        EventLog[]
 }
 
 model VerificationToken {

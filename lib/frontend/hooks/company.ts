@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import {
   CompanyActivity,
   CompanyStudents,

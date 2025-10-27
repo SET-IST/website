@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useRouter } from 'next/router'
 //  Components
 import Loader from '../Loader'
@@ -13,14 +13,14 @@ type AuthGuardProps = PropsWithChildren & {
 }
 
 const AuthGuard = ({ children, roles }: AuthGuardProps) => {
-  const { status, data } = useSession()
+  const { isPending, data } = useSession()
   const router = useRouter()
 
-  if (status === 'loading') return <Loader />
+  if (isPending) return <Loader />
 
   if (
-    status === 'unauthenticated' ||
-    (status === 'authenticated' && !roles.includes(data?.user.role))
+    !data ||
+    (data && !roles.includes(data?.user?.role as UserType))
   ) {
     router.push(links.home)
     return <Loader />

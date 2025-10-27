@@ -1,7 +1,7 @@
 import { useBoundStore } from '@/lib/frontend/store'
 import { UnstyledButton, Text, Button, em } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useRouter } from 'next/router'
 
 interface TipProps {

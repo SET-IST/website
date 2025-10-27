@@ -1,8 +1,4 @@
-import { TokenSet } from 'next-auth'
-import type { TokenEndpointHandler } from 'next-auth/providers/oauth'
 import { FenixRegistration, Role } from './types'
-import * as CompanyService from '@/lib/server/services/company'
-import { CompanyLoginRequest } from '../services/company/dtos'
 import { displayName } from '../utils'
 import { Course, instituitions } from '@/data/courses'
 
@@ -64,7 +60,7 @@ function getFenixCourseCode(institutionCode: string, roles: Role[]) {
 
 /* Fenix Handlers */
 
-export const FenixAccessTokenHandler: TokenEndpointHandler = {
+/*export const FenixAccessTokenHandler: TokenEndpointHandler = {
   url: FENIX_ACCESS_TOKEN_ENDPOINT,
   async request(context) {
     if (!context.params.code) throw new Error('Fenix OAuth Error: Missing code')
@@ -100,9 +96,9 @@ export const FenixAccessTokenHandler: TokenEndpointHandler = {
 
     return { tokens }
   },
-}
+}*/
 
-export const FenixProfileHandler: any = (profile: any, tokens: TokenSet) => {
+export const FenixProfileHandler: any = (profile: any) => {
   const institutionCode = profile.campus === 'Taguspark' ? '1519' : '1518'
 
   return {
@@ -120,37 +116,8 @@ export const FenixProfileHandler: any = (profile: any, tokens: TokenSet) => {
 
 /* Google Handlers */
 
-export const GoogleProfileHandler: any = (profile: any, tokens: TokenSet) => {
+export const GoogleProfileHandler: any = (profile: any) => {
   return {
-    id: profile.sub,
-    name: profile.name,
-    email: profile.email,
-    studentDetails: {
-      create: {
-        university: '',
-        course: '',
-      },
-    },
+    id: profile.sub
   }
-}
-
-/* Credentials Handlers */
-
-export const CredentialsAuthorizationHandler = async (credentials: any) => {
-  const loginData = credentials as {
-    username: string
-    password: string
-  }
-
-  const req = new CompanyLoginRequest()
-  req.username = loginData.username
-  req.password = loginData.password
-
-  const response = await CompanyService.login(req)
-
-  if (!response) {
-    return null
-  }
-
-  return response
 }
