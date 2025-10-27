@@ -118,8 +118,6 @@ jobs:
         with:
           name: PrismaMigrations
           path: "migrations"
-      - name: list workspace
-        run: ls -R .
       - name: copy env to destination
         run: scp -o StrictHostKeyChecking=no -i ./id_rsa ./env ubuntu@set.vps.tecnico.ulisboa.pt:~/env-main
       - name: copy prisma schema to destination
