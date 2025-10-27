@@ -19,6 +19,8 @@ RUN yarn install --immutable
 # Rebuild the source code only when needed
 FROM node:22-alpine AS builder
 WORKDIR /app
+RUN corepack enable
+RUN yarn set version stable
 COPY . .
 COPY --from=deps --chown=nextjs:nodejs /usr/local/lib/node_modules/sharp /usr/local/lib/node_modules/sharp
 COPY --from=deps /app/node_modules ./node_modules
