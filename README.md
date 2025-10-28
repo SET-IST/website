@@ -1,4 +1,4 @@
-# JET 24 Web Application
+# JET 26 Web Application
 
 First, install the required packages:
 
@@ -27,10 +27,6 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
   ```
   yarn dev:db:start
   ```
-- Push all entities of the schema by running:
-  ```
-  yarn dev:db:push
-  ```
 - Sometimes it's useful to have some fake data. You can seed the database using:
   ```
   yarn dev:db:seed
@@ -40,6 +36,11 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
   ```
   yarn dev:db:dump
   ```
+- After making changes to the prisma schema, run the following command to update the db:
+  ```
+  yarn migrate dev
+  ```
+  > **Warning: You should always give suitable names for migrations and alter them in a way that won't break a production environment.**
 - To play/check values on tables created run:
   ```
   yarn prisma studio
