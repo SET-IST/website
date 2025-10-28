@@ -40,10 +40,6 @@ ENV NEXT_PUBLIC_EVENT_DATES ${NEXT_PUBLIC_EVENT_DATES}
 # ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn prisma generate
 
-RUN ls -l /app/node_modules/.prisma/client/
-RUN ls -l /app/node_modules/@prisma/client/
-RUN ls -l /app/node_modules/@prisma/engines
-
 RUN yarn build
 
 # If using npm comment out above and use below instead
