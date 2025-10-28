@@ -8,7 +8,7 @@ RUN npm install -g --arch=x64 --platform=linux --libc=musl sharp@0.33.0-rc.2
 
 # Migrate to yarn 4
 RUN corepack enable
-RUN yarn set version stable
+RUN yarn set version 4.10.3
 
 COPY package.json ./
 COPY .yarnrc.yml ./
@@ -20,7 +20,7 @@ RUN yarn install --immutable
 FROM node:22-alpine AS builder
 WORKDIR /app
 RUN corepack enable
-RUN yarn set version stable
+RUN yarn set version 4.10.3
 COPY . .
 COPY --from=deps --chown=nextjs:nodejs /usr/local/lib/node_modules/sharp /usr/local/lib/node_modules/sharp
 COPY --from=deps /app/node_modules ./node_modules
