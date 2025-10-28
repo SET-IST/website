@@ -34,7 +34,6 @@ export async function downloadFile(path: string) {
 
 export async function getFile(path: string) {
   try {
-    console.log("Getting file info for path:", path);
     const { ContentLength, LastModified, Metadata } =
       await S3ClientService.send(
         new HeadObjectCommand({
