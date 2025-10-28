@@ -3,8 +3,7 @@ import { Avatar, Badge, Button, Text, Tooltip, rem } from '@mantine/core'
 import { ActivityType, UserType } from '@prisma/client'
 import { IconMapPin } from '@tabler/icons-react'
 import { DateTime } from 'luxon'
-import { User } from 'next-auth'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 
 interface ActivityComponentProps {
   data: ActivityData
@@ -68,7 +67,7 @@ const Activity = ({
   unEnrollCallback,
 }: ActivityComponentProps) => {
   const session = useSession()
-  const user = session.data?.user as User
+  const user = session.data?.user
 
   const date = data?.date ? DateTime.fromISO(String(data.date)) : DateTime.now()
   return (
@@ -114,8 +113,7 @@ const Activity = ({
         </div>
       </div>
 
-      {((user && user.role !== UserType.Company) ||
-        session.status !== 'authenticated') && (
+      {(user && user.role !== UserType.Company) && (
         <ActivityButton
           data={data}
           isMobile={isMobile}

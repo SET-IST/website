@@ -23,16 +23,9 @@ import {
 } from '@/lib/server/middleware'
 import type { User } from '@prisma/client'
 import { UserData } from '@/core/utils'
-import type { NextApiResponse } from 'next'
-import { createReadStream } from 'fs'
 
 @Catch(handleApiException)
 class CompanyRoutes {
-  @Post('login')
-  public async login(@Body(RestrictedValidationPipe) req: CompanyLoginRequest) {
-    return await CompanyService.login(req)
-  }
-
   @Get('/profile')
   @RequiresSession()
   @Role('Company')

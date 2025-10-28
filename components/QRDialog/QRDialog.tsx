@@ -9,10 +9,8 @@ import {
   Button,
 } from '@mantine/core'
 import classes from './QRDialog.module.css'
-import { QrReader } from 'react-qr-reader'
 import { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
-import { User } from 'next-auth'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { QRCode } from 'react-qrcode-logo'
 import { useScan } from '@/lib/frontend/hooks/student'
 import { AxiosError } from 'axios'
@@ -20,6 +18,7 @@ import { showErrorNotification } from '../Notifications'
 import { PreviewCard } from '@/_pages/ProfilePage/components/UserCard/PreviewCard'
 import { IconQrcode } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
+import { Scanner } from '@yudiel/react-qr-scanner'
 
 enum QRDialogTabs {
   Scan = 'scan',
@@ -28,7 +27,7 @@ enum QRDialogTabs {
 
 export function QRDialog() {
   const session = useSession()
-  const user: User = session.data?.user
+  const user = session.data?.user
 
   const [currentTab, setCurrentTab] = useState<QRDialogTabs>(QRDialogTabs.Scan)
   const [companyCode, setCompanyCode] = useState<string | undefined>(undefined)
@@ -125,19 +124,15 @@ export function QRDialog() {
                       Scan
                     </Text>
                     <div className="w-44 h-44 border-2 rounded-xl">
-                      <QrReader
+                      <Scanner
                         constraints={{
-                          facingMode: 'environment',
+                          //facingMode: 'environment',
                           aspectRatio: { ideal: 1 },
                         }}
-                        videoStyle={{
+                        /*videoStyle={{
                           borderRadius: '0.75rem',
-                        }}
-                        onResult={(result, error) => {
-                          if (result) {
-                            setCompanyCode(result.getText())
-                          }
-                        }}
+                        }}*/
+                        onScan={(result) => { result && setCompanyCode(result[0].rawValue)}}
                       />
                     </div>
                   </>
@@ -205,11 +200,11 @@ export function QRDialog() {
                     fgColor="#1C7ED6"
                     eyeRadius={5}
                     qrStyle="dots"
-                    value={user.id}
+                    value={user?.id}
                   />
                 </div>
                 <Code className="text-lg" c="white" bg="transparent">
-                  {user.id}
+                  {user?.id}
                 </Code>
               </div>
             )}

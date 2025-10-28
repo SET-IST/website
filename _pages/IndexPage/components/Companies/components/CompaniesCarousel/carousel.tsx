@@ -42,7 +42,7 @@ export function CompaniesCarousel({ isMobile }: CompaniesCarouselProps) {
         style={{ flex: 1, width: '100%' }}
         classNames={classes}
         slideGap="md"
-        loop
+        emblaOptions={{loop: true}}
         withIndicators={!isMobile}
         withControls={isMobile}
       >

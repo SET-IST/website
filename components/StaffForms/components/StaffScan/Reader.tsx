@@ -1,8 +1,8 @@
 import { Text, Modal, Transition, Badge } from '@mantine/core'
-import { QrReader } from 'react-qr-reader'
 import { useEffect, useState } from 'react'
 import { showErrorNotification } from '@/components/Notifications'
 import { AxiosError } from 'axios'
+import { Scanner } from '@yudiel/react-qr-scanner'
 
 export interface ScannerProps {
   label: string
@@ -12,7 +12,7 @@ export interface ScannerProps {
   onClose: () => void
 }
 
-export function Scanner({
+export function Reader({
   label,
   visible,
   fetchMethod,
@@ -55,15 +55,15 @@ export function Scanner({
         {label}
       </Text>
       <div className="w-44 h-44 border-2 rounded-xl">
-        <QrReader
+        <Scanner
           constraints={{
-            facingMode: 'environment',
+            //facingMode: 'environment',
             aspectRatio: { ideal: 1 },
           }}
-          videoStyle={{
+          /*videoStyle={{
             borderRadius: '0.75rem',
-          }}
-          onResult={(result, error) => result && setCode(result.getText())}
+          }}*/
+          onScan={(result) => result && setCode(result[0].rawValue) }
         />
       </div>
 

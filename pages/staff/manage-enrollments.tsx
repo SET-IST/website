@@ -11,7 +11,7 @@ const EnrollmentsManagement = () => {
   return <EnrollmentsManagementForm />
 }
 
-EnrollmentsManagement.getLayout = (page: ReactElement) => {
+EnrollmentsManagement.getLayout = (page: ReactElement<any>) => {
   return <StaffLayout>{page}</StaffLayout>
 }
 

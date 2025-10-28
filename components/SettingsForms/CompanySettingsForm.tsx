@@ -72,7 +72,7 @@ const CompanySettingsForm = () => {
 
   const {
     mutateAsync: updateProfileData,
-    isLoading,
+    isPending,
     isError,
     error,
   } = useUpdateProfile(useQueryClient())

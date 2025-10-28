@@ -3,27 +3,37 @@ const { version } = require('./package.json')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  publicRuntimeConfig: {
-    version,
-  },
   images: {
-    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+        port: '',
+        search: ''
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '',
+        search: ''
+      }
+    ]
   },
+  turbopack: {
+    // Apply SVGR so .svg imports are React components (like your webpack rule)
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  env: {
+    APP_VERSION: version,
+  }
 }
 
 module.exports = {
   ...nextConfig,
   output: 'standalone',
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
-    })
-
-    config.resolve.fallback = { fs: false }
-
-    return config
-  },
 }

@@ -11,7 +11,7 @@ const PrizeValidation = () => {
   return <PrizeValidationForm />
 }
 
-PrizeValidation.getLayout = (page: ReactElement) => {
+PrizeValidation.getLayout = (page: ReactElement<any>) => {
   return <StaffLayout>{page}</StaffLayout>
 }
 

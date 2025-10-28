@@ -232,7 +232,7 @@ export async function scanCompany(user: User, companyId: string) {
 
     if (!day) {
       day = await PrismaService.day.create({
-        data: { dateCode: defaultDayCode },
+        data: { dateCode: defaultDayCode, date: new Date(0) },
       });
     }
     
@@ -468,7 +468,7 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
 
     if (!day) {
       day = await PrismaService.day.create({
-        data: { dateCode: defaultDayCode },
+        data: { dateCode: defaultDayCode, date: new Date(0) },
       });
     }
 
@@ -492,7 +492,7 @@ export async function addTotalPoints(studentDetails: StudentDetails, totalPoints
 }
 
 export async function getAwardsList() {
-  return await PrismaService.award.findMany({
+  const awards = await PrismaService.award.findMany({
     select: {
       id: true,
       name: true,
@@ -500,4 +500,8 @@ export async function getAwardsList() {
       type: true,
     },
   })
+  return awards.map(a => ({
+    ...a,
+    amountAvailable: Math.max(0, a.amountAvailable),
+  }));
 }

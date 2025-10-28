@@ -10,31 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  id                    String    @id @default(cuid())
+  accountId             String    @map("providerAccountId")
+  providerId            String    @map("provider")
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @map("accessToken") @db.Text
+  refreshToken          String?   @map("refresh_token") @db.Text
+  idToken               String?   @map("id_token") @db.Text
+  accessTokenExpiresAt  DateTime? @map("expires_at")
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+  @@unique([providerId, accountId])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String    @id @default(cuid())
+  expiresAt DateTime  @map("expires")
+  token     String    @unique @map("sessionToken")
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum UserType {
@@ -84,8 +97,6 @@ model DayTotalPoints {
 model CompanyDetails {
   id         Int              @id @default(autoincrement())
   category   CompanyCategory
-  username   String           @unique
-  password   String
   scans      Int              @default(0)
   students   StudentDetails[]
   activities Activity[]
@@ -101,18 +112,22 @@ model CompanyDetails {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  name           String
-  email          String          @unique
-  emailVerified  DateTime?
-  image          String?
-  readChangelog  Boolean         @default(true)
-  accounts       Account[]
-  sessions       Session[]
-  role           UserType        @default(Student) // custom relation for roles of student and company
-  studentDetails StudentDetails? // custom table with additional info of student
-  companyDetails CompanyDetails? // custom table with additional info of company
-  EventLog       EventLog[]
+  id              String          @id @default(uuid())
+  name            String
+  username        String?         @unique
+  email           String          @unique
+  emailVerified   Boolean         @default(false)
+  image           String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime?       @updatedAt
+  readChangelog   Boolean         @default(true)
+  accounts        Account[]
+  sessions        Session[]
+  role            UserType        @default(Student) // custom relation for roles of student and company
+  displayUsername String?
+  studentDetails  StudentDetails? // custom table with additional info of student
+  companyDetails  CompanyDetails? // custom table with additional info of company
+  EventLog        EventLog[]
 }
 
 model VerificationToken {
@@ -146,7 +161,7 @@ model Activity {
   title       String       @db.VarChar(128)
   description String       @db.VarChar(512)
   date        DateTime
-  dayId       Int          @default(9)
+  dayId       Int
   day         Day          @relation(fields: [dayId], references: [id])
   duration    Int
   location    String       @db.VarChar(80)
@@ -213,7 +228,7 @@ enum CurrentDayState {
 model Day {
   id             Int              @id @default(autoincrement())
   dateCode       String           @unique
-  date           DateTime         @default(now()) @db.Date
+  date           DateTime         @db.Date
   state          CurrentDayState  @default(Inactive)
   companies      CompanyDetails[]
   DayTotalPoints DayTotalPoints[]

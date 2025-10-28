@@ -1,6 +1,8 @@
 import { NavLinkProps } from '@mantine/core'
 import { UserType } from '@prisma/client'
 
+import type { JSX } from "react";
+
 export enum NavLinkVisibility {
   MOBILE,
   DESKTOP,

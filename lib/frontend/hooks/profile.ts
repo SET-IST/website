@@ -10,8 +10,7 @@ import {
 } from '@/lib/frontend/api'
 
 import { UserType } from '@prisma/client'
-import { useSession } from 'next-auth/react'
-import { User } from 'next-auth'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useEdgeStore } from '@/lib/frontend/edgestore'
 import { IPatchStudentProfile } from '@/lib/server/services/student'
 import { FileWithPath } from '@mantine/dropzone'
@@ -19,22 +18,20 @@ import { IPatchCompanyProfile } from '@/lib/server/services/company/dtos'
 
 export const useProfile = () => {
   const session = useSession()
-  const user: User = session.data?.user
+  const user = session.data?.user
 
-  return useQuery<StudentProfile | CompanyProfile, Error>(
-    ['Profile'],
-    () => {
-      return user.role === UserType.Company
+  return useQuery<StudentProfile | CompanyProfile, Error>({
+    queryKey: ['Profile'],
+    queryFn: () => {
+      return user?.role === UserType.Company
         ? fetchCompanyProfile()
         : fetchStudentProfile()
     },
-    {
-      enabled: session.status === 'authenticated',
-      refetchInterval: (data, query) => {
-        return !query.state.error ? 800 : false
-      },
+    enabled: !!user,
+    refetchInterval: (query) => {
+      return !query.state.error ? 800 : false
     }
-  )
+  });
 }
 
 export type PatchWithFiles<T> = T & {
@@ -47,7 +44,7 @@ export const useUpdateProfile = (queryClient: QueryClient) => {
   const { edgestore } = useEdgeStore()
 
   const session = useSession()
-  const user: User = session.data?.user
+  const user = session.data?.user
 
   return useMutation<
     StudentProfilePatchResponse,
@@ -63,7 +60,7 @@ export const useUpdateProfile = (queryClient: QueryClient) => {
         await edgestore.profileImages.upload({ file: data.profileImage })
       }
 
-      if (data.cv && user.role !== UserType.Company) {
+      if (data.cv && user?.role !== UserType.Company) {
         await edgestore.cvs.upload({
           file: data.cv,
           options: {
@@ -78,7 +75,7 @@ export const useUpdateProfile = (queryClient: QueryClient) => {
         cv: undefined,
       }
 
-      return user.role === UserType.Company
+      return user?.role === UserType.Company
         ? updateCompanyProfile(originalData)
         : updateStudentProfile(originalData)
     },

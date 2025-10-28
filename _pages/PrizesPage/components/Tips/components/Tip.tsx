@@ -1,7 +1,7 @@
 import { useBoundStore } from '@/lib/frontend/store'
 import { UnstyledButton, Text, Button, em } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useRouter } from 'next/router'
 
 interface TipProps {
@@ -39,7 +39,7 @@ export default function Tip({ title, description, action }: TipProps) {
       {action && (
         <Button
           onClick={() => {
-            if (action.requiresLogin && session.status !== 'authenticated') {
+            if (action.requiresLogin && !session.data) {
               showLogin(true)
               return
             }

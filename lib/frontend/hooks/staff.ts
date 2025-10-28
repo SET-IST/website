@@ -20,19 +20,20 @@ import {
 import { AxiosError } from 'axios'
 
 export const useUsersSearch = (search?: string) => {
-  return useQuery<User[], Error>(['Users', { query: search }], () =>
-    fetchUsers(search)
-  )
+  return useQuery({
+    queryKey: ['Users', { query: search }],
+
+    queryFn: () =>
+      fetchUsers(search)
+  });
 }
 
 export const useUserDetails = (uuid?: string) => {
-  return useQuery<StudentProfile | CompanyProfile, AxiosError>(
-    ['User', { uuid }],
-    () => fetchUserDetails(uuid!),
-    {
-      enabled: !!uuid,
-    }
-  )
+  return useQuery({
+    queryKey: ['User', { uuid }],
+    queryFn: () => fetchUserDetails(uuid!),
+    enabled: !!uuid
+  });
 }
 
 export const useUpdateStudentPoints = (queryClient: QueryClient) => {
@@ -53,13 +54,11 @@ export const useCreateAward = () => {
 }
 
 export const useActivityManagementDetails = (id?: number) => {
-  return useQuery<ActivityManagementDetails, AxiosError>(
-    ['ActivityManagementDetails', { id }],
-    () => fetchActivityDetails(id!),
-    {
-      enabled: !!id,
-    }
-  )
+  return useQuery({
+    queryKey: ['ActivityManagementDetails', { id }],
+    queryFn: () => fetchActivityDetails(id!),
+    enabled: !!id
+  });
 }
 
 export const useActivityEnrollmentManagement = (queryClient: QueryClient) => {

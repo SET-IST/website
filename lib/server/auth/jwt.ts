@@ -1,6 +1,6 @@
 import Cookies from 'cookies'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { JWTOptions, decode, encode } from 'next-auth/jwt'
+//import { JWTOptions, decode, encode } from 'next-auth/jwt'
 
 /* 
 
@@ -20,7 +20,7 @@ https://github.com/nextauthjs/next-auth/discussions/4394
 
 */
 
-export const JWTHandlers = (
+/*export const JWTHandlers = (
   req: NextApiRequest,
   res: NextApiResponse
 ): Partial<JWTOptions> => {
@@ -53,3 +53,4 @@ export const JWTHandlers = (
 
   return options
 }
+*/

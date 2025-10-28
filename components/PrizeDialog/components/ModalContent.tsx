@@ -3,13 +3,13 @@ import { PrizeCard } from './PrizeCard'
 import { useAward, useProfile } from '@/lib/frontend/hooks'
 import { fetchRedemptionSettings, RedemptionSettings, StudentProfile, Awards, fetchAwardsList } from '@/lib/frontend/api'
 import { useQuery } from '@tanstack/react-query'
-import { WheelDataType } from 'react-custom-roulette'
+import { WheelDataType } from 'react-custom-roulette-r19'
 import React, { useEffect, useState } from 'react'
 import { useBoundStore } from '@/lib/frontend/store'
 
 // https://github.com/effectussoftware/react-custom-roulette/issues/135#issuecomment-2038621991
 import dynamic from 'next/dynamic';
-const Wheel = dynamic(() => import('react-custom-roulette').then((mod) => mod.Wheel), { ssr: false, });
+const Wheel = dynamic(() => import('react-custom-roulette-r19').then((mod) => mod.Wheel), { ssr: false, });
 
 
 export function ModalContent() {
@@ -46,7 +46,7 @@ export function ModalContent() {
   const showRedeemModal = useBoundStore((state) => state.showRedeemModal)
 
   // Fetch user data
-  const { data, isLoading: isUserLoading, isError: isUserError } = useProfile()
+  const { data, isPending: isUserLoading, isError: isUserError } = useProfile()
 
   // Fetch award data
   const {
@@ -59,10 +59,16 @@ export function ModalContent() {
   const notEnoughPoints = awardError?.response?.status === 400
 
   const user = data as StudentProfile
-  const redemptionSettings = useQuery<RedemptionSettings>(['redemptionSettings'], () => fetchRedemptionSettings())
+  const redemptionSettings = useQuery({
+    queryKey: ['redemptionSettings'],
+    queryFn: () => fetchRedemptionSettings()
+  })
 
   // Load awards list
-  const { data: awardsListData, isLoading: isAwardsListLoading, isError: isAwardsListError, isSuccess: wheel_data_loaded } = useQuery<Awards>(['awardsList'], () => fetchAwardsList())
+  const { data: awardsListData, isPending: isAwardsListLoading, isError: isAwardsListError, isSuccess: wheel_data_loaded } = useQuery({
+    queryKey: ['awardsList'],
+    queryFn: () => fetchAwardsList()
+  })
 
   // Create data for the wheel
   const data_wheel: WheelDataType[] = Array.isArray(awardsListData) && awardData?.type

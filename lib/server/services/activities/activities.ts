@@ -78,7 +78,7 @@ export async function getActivities(
 
     if (
       !session ||
-      ![UserType.Student, UserType.Staff].includes(session.user?.role)
+      !([UserType.Student, UserType.Staff] as UserType[]).includes(session.user?.role as UserType)
     )
       return activities
 
@@ -298,11 +298,11 @@ export async function patchEnrollment(
 }
 
 export async function getActiveDays() {
-  return await databaseQueryWrapper(async () => {
+  return (await databaseQueryWrapper(async () => {
     return await PrismaService.day.findMany({
       where: {
         state: CurrentDayState.Active
       }
     })
-  }) ?? []
+  })) ?? [];
 }

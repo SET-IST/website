@@ -11,7 +11,7 @@ import {
 import { IconChevronDown } from '@tabler/icons-react'
 import classes from './Navbar.module.css'
 import classNames from 'classnames'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/frontend/utils/auth-client'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { links } from '@/data/links'
@@ -39,13 +39,11 @@ export function AccountMenu({
 
   const {
     data: user,
-    isLoading: isUserLoading,
-    isError: isUserError,
   } = useProfile()
 
   return renderForMobile ? (
     <Stack gap={8}>
-      {session.status === 'authenticated' ? (
+      {session.data ? (
         <UnstyledButton
           onClick={() => {
             router
@@ -95,7 +93,7 @@ export function AccountMenu({
       withinPortal
     >
       <Menu.Target>
-        {session.status === 'authenticated' ? (
+        {session.data ? (
           <UnstyledButton
             className={classNames(
               classes.user,
@@ -144,7 +142,7 @@ export function AccountMenu({
           </UnstyledButton>
         )}
       </Menu.Target>
-      {session.status === 'authenticated' && (
+      {session.data && (
         <Menu.Dropdown py={0} px={0}>
           <NavProfileMenu closeCallback={closeCallback} />
         </Menu.Dropdown>

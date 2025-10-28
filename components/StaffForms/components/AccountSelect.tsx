@@ -13,7 +13,7 @@ import {
 import { IconQrcode } from '@tabler/icons-react'
 import { useUsersSearch } from '@/lib/frontend/hooks'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
-import { FormErrors } from '@mantine/form/lib/types'
+import { FormErrors } from '@mantine/form'
 import { User } from '@prisma/client'
 import { StaffScan } from './StaffScan/StaffScan'
 import { fetchUser } from '@/lib/frontend/api'

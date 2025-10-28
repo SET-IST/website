@@ -9,7 +9,7 @@ const Activities = () => {
   return <ActivitiesPage />
 }
 
-Activities.getLayout = (page: ReactElement) => {
+Activities.getLayout = (page: ReactElement<any>) => {
   return <NavbarLayout>{page}</NavbarLayout>
 }
 
