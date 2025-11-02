@@ -9,8 +9,8 @@ import {
   rem,
 } from '@mantine/core'
 
-import SetLogoInverted from '@/assets/logos/logo_set_inverted.svg'
-import SetLogo from '@/assets/logos/logo_set.svg'
+import SetLogoInverted from '@/assets/logos/logo_jet_inverted.svg'
+import SetLogo from '@/assets/logos/logo_jet.svg'
 import { PropsWithChildren, useState } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'

@@ -1,5 +1,5 @@
 import { Text } from '@mantine/core'
-import SetLogo from '@/assets/logos/logo_set.svg'
+import SetLogo from '@/assets/logos/logo_jet.svg'
 import classes from './FooterLinks.module.css'
 import SocialLinks from './SocialLinks';
 
