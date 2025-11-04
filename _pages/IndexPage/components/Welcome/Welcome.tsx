@@ -16,11 +16,13 @@ export default function WelcomeSection() {
           size={isMobile ? 'md' : 'lg'}
           className="!text-[#00415a] font-medium text-left sm:text-center"
         >
-          A JET - <strong>Jornadas Empresariais e Tecnológicas</strong> do Instituto
-          Superior Técnico – Taguspark é um evento organizado por{' '}
-          <strong>alunos</strong> de todos os cursos do campus, cujo objetivo é
-          aproximar os mundos <strong>académico</strong> e{' '}
-          <strong>empresarial</strong>.
+          As Jornadas de Engenharia e Gestão Industrial (JEGI) e a Semana
+          Empresarial e Tecnológica (SET), as maiores feiras de emprego do
+          <strong> IST Oeiras</strong>, juntam-se pela primeira vez para dar origem à <strong>JET -
+          Jornadas Empresariais e Tecnológicas</strong>. A JET foi concebida
+          para proporcionar aos <strong>estudantes</strong> uma experiência mais completa e
+          enriquecedora, ampliando <strong>oportunidades, networking e
+          aprendizagem</strong> para todos os alunos do IST.
         </Text>
       </Container>
       {process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ? ("") : (
