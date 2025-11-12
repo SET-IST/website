@@ -1,94 +1,18 @@
-// pages/staff/event-log.tsx
-import { useEffect, useState } from 'react'
-import { Select, Table, Title, Text, Loader, Group, Container } from '@mantine/core'
+// Layout
+import { StaffLayout } from '@/_pages/layouts'
 
-type EventLogType = 'POINTS' | 'AWARDS' | 'ENROLLMENTS'
+// Components
+import { EventLogTable } from '@/components/StaffForms/EventLogTable'
 
-interface EventLog {
-  id: number
-  timestamp: string
-  type: EventLogType
-  description: string
-  actor?: { name: string; role: string }
-  target?: { name: string; role: string }
-  award?: { name: string }
-  activity?: { title: string }
+// Types
+import type { ReactElement } from 'react'
+
+const EventLogPage = () => {
+  return <EventLogTable />
 }
 
-export default function EventLogPage() {
-  const [logs, setLogs] = useState<EventLog[]>([])
-  const [loading, setLoading] = useState(true)
-  const [filterType, setFilterType] = useState<EventLogType | 'ALL'>('ALL')
-
-  useEffect(() => {
-    const fetchLogs = async () => {
-      setLoading(true)
-      const query = filterType !== 'ALL' ? `?type=${filterType}` : ''
-      const res = await fetch(`/api/staff/eventlog${query}`)
-      const data = await res.json()
-      setLogs(data)
-      setLoading(false)
-    }
-    fetchLogs()
-  }, [filterType])
-
-  return (
-    <Container size="lg" mt="lg">
-      <Title order={2} mb="md">
-        Event Log
-      </Title>
-
-      <Group mb="md">
-        <Select
-          label="Filter by type"
-          placeholder="Select a type"
-          value={filterType}
-          onChange={(v) => setFilterType((v as EventLogType) || 'ALL')}
-          data={[
-            { value: 'ALL', label: 'All' },
-            { value: 'POINTS', label: 'Points' },
-            { value: 'AWARDS', label: 'Awards' },
-            { value: 'ENROLLMENTS', label: 'Enrollments' },
-          ]}
-        />
-      </Group>
-
-      {loading ? (
-        <Loader />
-      ) : (
-        <Table striped highlightOnHover>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Type</th>
-              <th>Description</th>
-              <th>Actor</th>
-              <th>Target</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs.length === 0 ? (
-              <tr>
-                <td colSpan={5}>
-                  <Text align="center" color="dimmed">
-                    No logs found
-                  </Text>
-                </td>
-              </tr>
-            ) : (
-              logs.map((log) => (
-                <tr key={log.id}>
-                  <td>{new Date(log.timestamp).toLocaleString()}</td>
-                  <td>{log.type}</td>
-                  <td>{log.description}</td>
-                  <td>{log.actor?.name ?? '—'}</td>
-                  <td>{log.target?.name ?? '—'}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
-      )}
-    </Container>
-  )
+EventLogPage.getLayout = (page: ReactElement) => {
+  return <StaffLayout>{page}</StaffLayout>
 }
+
+export default EventLogPage
