@@ -3,8 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "prisma": {
-    "schema": "database/prisma/schema.prisma",
-    "seed": "ts-node database/prisma/seed.ts"
+    "schema": "database/prisma/schema.prisma"
   },
   "scripts": {
     "prepare": "husky install",
@@ -15,7 +14,7 @@
     "format": "prettier --write .",
     "dev:db:start": "cd database && docker compose up -d",
     "dev:db:stop": "cd database && docker compose rm -s -f -v",
-    "dev:db:seed": "prisma db seed",
+    "dev:db:seed": "psql -h localhost -p 5432 -U postgres -c 'create database setdb' && psql -h localhost -p 5432 -U postgres setdb < ./database/seeds/PROD_db_seed-25-10-2025.sql && yarn dev:db:seed:resolve",
     "dev:db:seed:resolve": "prisma migrate resolve --applied 00000000000000_baseline && prisma migrate deploy",
     "dev:db:dump": "pg_dump -h localhost -p 5432 -U postgres setdb -f ./database/seeds/db_seed-$(date +'%d-%m-%Y').sql && echo \"Dump saved to ./database/seeds/db_seed-$(date +'%d-%m-%Y').sql\""
   },
@@ -95,8 +94,7 @@
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^2.8.4",
-    "prisma": "^6.18.0",
-    "ts-node": "^10.9.2"
+    "prisma": "^6.18.0"
   },
   "browser": {
     "fs": false
