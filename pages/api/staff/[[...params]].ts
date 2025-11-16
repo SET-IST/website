@@ -20,6 +20,9 @@ import * as StaffService from '@/lib/server/services/staff'
 import { isUUID } from 'class-validator'
 import type { User } from '@prisma/client'
 
+import { PrismaClient, EventLogType } from '@prisma/client'
+const prisma = new PrismaClient()
+
 @Catch(handleApiException)
 @RequiresSession()
 @Role('Staff')
@@ -80,6 +83,52 @@ class StaffRoutes {
   ) {
     if (!isUUID(uuid)) throw new BadRequestException('Invalid award token id')
     return await StaffService.modifyAward(uuid, Number(award_id))
+  }
+
+    // === EVENT LOG ROUTES ===
+
+  @Get('/eventlog')
+  public async getEventLogs(@Query('type') type?: EventLogType) {
+    const where = type ? { type } : {}
+
+    return await prisma.eventLog.findMany({
+      where,
+      include: {
+        actor: { select: { id: true, name: true, role: true } },
+        target: { select: { id: true, name: true, role: true } },
+        award: { select: { id: true, name: true } },
+        activity: { select: { id: true, title: true } },
+      },
+      orderBy: { timestamp: 'desc' },
+    })
+  }
+
+  @Post('/eventlog')
+  public async createEventLog(
+    @Body()
+    body: {
+      actorId: string
+      targetId?: string
+      type: EventLogType
+      description: string
+      awardId?: number
+      activityId?: number
+    }
+  ) {
+    const { actorId, type, description } = body
+    if (!actorId || !type || !description)
+      throw new BadRequestException('Missing required fields')
+
+    return await prisma.eventLog.create({
+      data: {
+        actorId,
+        targetId: body.targetId,
+        type,
+        description,
+        awardId: body.awardId,
+        activityId: body.activityId,
+      },
+    })
   }
 }
 

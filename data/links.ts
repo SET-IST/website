@@ -13,6 +13,7 @@ const links = {
     validatePrize: '/staff/validate-prize',
     managePoints: '/staff/manage-points',
     manageEnrollments: '/staff/manage-enrollments',
+    eventLog: '/staff/event-log',
   },
   student: {
     scan: '/student/scan',
