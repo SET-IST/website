@@ -83,7 +83,7 @@ export const EventLogTable = () => {
                 {logs.length === 0 ? (
                   <tr>
                     <td colSpan={5}>
-                      <Text align="center" color="dimmed">
+                      <Text ta="center" c="dimmed">
                         No logs found
                       </Text>
                     </td>
