@@ -125,21 +125,62 @@ export function StudentDatatable() {
     reversed: reverseSortDirection,
   })?.data?.map((row) => (
     <Table.Tr key={row?.id}>
-      <Table.Td>
-        <div className="w-fit">
-          <Group wrap="nowrap" gap="sm">
+      {isMobile ? ( //faltava o mobile case (I think it works now?)
+        <Table.Td>
+          <Group gap="sm" wrap="nowrap">
             <Avatar size={42} src={row?.image} radius={42} />
-            <Text className="whitespace-nowrap" size="sm" fw={500}>
-              {row?.name}
-            </Text>
+
+            <div className="min-w-0">
+              <Text size="sm" fw={500} truncate>
+                {row?.name}
+              </Text>
+
+              <Text size="xs" c="dimmed" truncate>
+                {getCourse(row?.university, row?.course)?.name}
+              </Text>
+
+              <Text size="xs" c="dimmed" truncate>
+                {getInstitution(row?.university)?.name}
+              </Text>
+            </div>
+
+            {company?.companyDetails?.category === CompanyCategory.Platinum && (
+              <ActionIcon
+                disabled={!row.cvLocation}
+                size="md"
+                variant="subtle"
+                component="a"
+                href={
+                  row.cvLocation
+                    ? process.env.NEXT_PUBLIC_API_BASE_URL +
+                      '/company/students/cv/' +
+                      encodeURIComponent(row.cvLocation)
+                    : ''
+                }
+              >
+                <IconFileDownload
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.4}
+                />
+              </ActionIcon>
+            )}
           </Group>
-        </div>
-      </Table.Td>
-      {!isMobile && (
+        </Table.Td>
+      ) : (
         <>
+          <Table.Td>
+            <Group wrap="nowrap" gap="sm">
+              <Avatar size={42} src={row?.image} radius={42} />
+              <Text className="whitespace-nowrap" size="sm" fw={500}>
+                {row?.name}
+              </Text>
+            </Group>
+          </Table.Td>
+
           <Table.Td>{row?.email}</Table.Td>
           <Table.Td>{getCourse(row?.university, row?.course)?.name}</Table.Td>
           <Table.Td>{getInstitution(row?.university)?.name}</Table.Td>
+
           {company?.companyDetails?.category === CompanyCategory.Platinum && (
             <Table.Td>
               <ActionIcon
@@ -168,91 +209,107 @@ export function StudentDatatable() {
   ))
 
   return (
-    <div className="h-full flex flex-col overflow-y-hidden">
-      <TextInput
-        placeholder="Procurar por estudante, curso ou instituição"
-        leftSection={
-          <IconSearch
-            style={{ width: rem(16), height: rem(16) }}
-            stroke={1.5}
-          />
-        }
-        onChange={(evt) => setSearchQuery(evt.currentTarget.value)}
-        p="xs"
-      />
-      <div className="h-full overflow-scroll">
-        <Table horizontalSpacing="md" verticalSpacing="xs" layout="auto">
-          <Table.Tbody>
-            <Table.Tr className="sticky top-0 !bg-[var(--mantine-color-white)] z-20">
-              <Th
-                sorted={sortBy === 'name'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('name')}
-              >
-                Nome
-              </Th>
-              {!isMobile && (
-                <>
-                  <Th
-                    sorted={sortBy === 'email'}
-                    reversed={reverseSortDirection}
-                    onSort={() => setSorting('email')}
-                  >
-                    Email
-                  </Th>
-                  <Th
-                    sorted={sortBy === 'course'}
-                    reversed={reverseSortDirection}
-                    onSort={() => setSorting('course')}
-                  >
-                    Curso
-                  </Th>
-                  <Th
-                    sorted={sortBy === 'university'}
-                    reversed={reverseSortDirection}
-                    onSort={() => setSorting('university')}
-                  >
-                    Instituição
-                  </Th>
-                  {company?.companyDetails?.category ===
-                    CompanyCategory.Platinum && (
-                    <Table.Th className={classes.th}>
-                      <UnstyledButton className={classes.control}>
-                        <Group justify="space-between">
-                          <Text fw={500} fz="sm">
-                            CV
-                          </Text>
-                        </Group>
-                      </UnstyledButton>
-                    </Table.Th>
-                  )}
-                </>
-              )}
-            </Table.Tr>
-          </Table.Tbody>
-          <Table.Tbody>
-            {rows && rows.length > 0 ? (
-              rows
-            ) : (
-              <Table.Tr>
-                <Table.Td colSpan={isMobile ? 1 : 4}>
-                  <Text fw={500} ta="center">
-                    Sem resultados
-                  </Text>
-                </Table.Td>
-              </Table.Tr>
-            )}
-          </Table.Tbody>
-        </Table>
-      </div>
-      <div className="flex flex-col items-end p-4">
-        <Pagination
-          onChange={setPage}
-          defaultValue={page}
-          size="sm"
-          total={data?.pagination.pages ?? 0}
+  <div className="h-full flex flex-col overflow-y-hidden">
+    <TextInput
+      placeholder="Procurar por estudante, curso ou instituição"
+      leftSection={
+        <IconSearch
+          style={{ width: rem(16), height: rem(16) }}
+          stroke={1.5}
         />
-      </div>
+      }
+      onChange={(evt) => setSearchQuery(evt.currentTarget.value)}
+      p="xs"
+    />
+
+    <div className="h-full overflow-scroll">
+      <Table horizontalSpacing="md" verticalSpacing="xs" layout="auto">
+        <Table.Thead>
+          <Table.Tr className="sticky top-0 z-20 bg-[var(--mantine-color-body)]">
+            {isMobile ? ( //faltava o mobile case (I think it works now?)
+              <Table.Th className={classes.th}>
+                <Text fw={500} fz="sm">
+                  Estudante
+                </Text>
+              </Table.Th>
+            ) : (
+              <>
+                <Th
+                  sorted={sortBy === 'name'}
+                  reversed={reverseSortDirection}
+                  onSort={() => setSorting('name')}
+                >
+                  Nome
+                </Th>
+
+                <Th
+                  sorted={sortBy === 'email'}
+                  reversed={reverseSortDirection}
+                  onSort={() => setSorting('email')}
+                >
+                  Email
+                </Th>
+
+                <Th
+                  sorted={sortBy === 'course'}
+                  reversed={reverseSortDirection}
+                  onSort={() => setSorting('course')}
+                >
+                  Curso
+                </Th>
+
+                <Th
+                  sorted={sortBy === 'university'}
+                  reversed={reverseSortDirection}
+                  onSort={() => setSorting('university')}
+                >
+                  Instituição
+                </Th>
+
+                {company?.companyDetails?.category === CompanyCategory.Platinum && (
+                  <Table.Th className={classes.th}>
+                    <Text fw={500} fz="sm">
+                      CV
+                    </Text>
+                  </Table.Th>
+                )}
+              </>
+            )}
+          </Table.Tr>
+        </Table.Thead>
+
+        <Table.Tbody>
+          {rows && rows.length > 0 ? (
+            rows
+          ) : (
+            <Table.Tr>
+              <Table.Td
+                colSpan={
+                  isMobile
+                    ? 1
+                    : company?.companyDetails?.category ===
+                      CompanyCategory.Platinum
+                    ? 5
+                    : 4
+                }
+              >
+                <Text fw={500} ta="center">
+                  Sem resultados
+                </Text>
+              </Table.Td>
+            </Table.Tr>
+          )}
+        </Table.Tbody>
+      </Table>
     </div>
-  )
-}
+
+    <div className="flex flex-col items-end p-4">
+      <Pagination
+        value={page}
+        onChange={setPage}
+        size="sm"
+        total={data?.pagination.pages ?? 0}
+      />
+    </div>
+  </div>
+)}
