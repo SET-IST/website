@@ -1,5 +1,5 @@
 import { AwardType } from '@prisma/client'
-import { IsIn, IsInt, Max, Min } from 'class-validator'
+import { IsIn, IsInt, Max, Min, IsBoolean, IsOptional } from 'class-validator'
 
 export class UpdatePointsDto {
   @IsInt()
@@ -11,4 +11,7 @@ export class UpdatePointsDto {
 export class CreateAwardDto {
   @IsIn([AwardType.NORMAL, AwardType.SPECIAL])
   type!: AwardType
+  @IsOptional()
+  @IsBoolean()
+  bypassPoints?: boolean
 }

@@ -76,11 +76,16 @@ export interface CreateAwardRequest {
   type: AwardType
 }
 
-export const createAward = async ({ uuid, type }: CreateAwardRequest) => {
+export interface CreateAwardRequestExt extends CreateAwardRequest {
+  bypassPoints?: boolean
+}
+
+export const createAward = async ({ uuid, type, bypassPoints }: CreateAwardRequestExt) => {
   const { data: award } = await ApiClient.post(
     `staff/users/${uuid}/create-award`,
     {
       type,
+      bypassPoints,
     }
   )
 

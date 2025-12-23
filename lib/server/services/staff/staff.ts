@@ -82,36 +82,30 @@ export async function createAward(
       throw new ConflictException('Student already has an award pending')
 
     const response = await PrismaService.$transaction(async (tx) => {
-      // Check points
+      // Fetch student and available prizes (don't require points for staff assignment)
       const studentTx = await tx.studentDetails.findUniqueOrThrow({
         where: {
           userId: uuid,
         },
         include: {
-          redeemedPrizes: true
+          redeemedPrizes: true,
         },
       })
-
-      if (studentTx.points - (await getRedemptionSettings()).REDEEM < 0) {
-        throw new BadRequestException(
-          'The student does not have enough points to request awards'
-        )
-      }
 
       const redeemedPrizeIds = studentTx.redeemedPrizes.map((p) => p.awardId)
       let availablePrizes = await tx.award.findMany({
         where: {
           id: {
-            notIn: redeemedPrizeIds
+            notIn: redeemedPrizeIds,
           },
-          amountAvailable: { gt: 0 }
+          amountAvailable: { gt: 0 },
         },
       })
 
       if (availablePrizes.length === 0) {
         availablePrizes = await tx.award.findMany({
           where: {
-            amountAvailable: { gt: 0 }
+            amountAvailable: { gt: 0 },
           },
         })
       }
@@ -122,24 +116,25 @@ export async function createAward(
         )
       }
 
-      const ratio = (await getRedemptionSettings()).RATIO;
-      const awardType = (studentTx.redeems + (ratio - 1)) % ratio === 0
-      ? AwardType.SPECIAL
-      : AwardType.NORMAL
-      const selectedPrize = weightedRandomSelection(availablePrizes, awardType);
+      const ratio = (await getRedemptionSettings()).RATIO
+      // Prefer the type provided by staff; fallback to computed type if none provided
+      const computedType = (studentTx.redeems + (ratio - 1)) % ratio === 0 ? AwardType.SPECIAL : AwardType.NORMAL
+      const awardType = (data && data.type) ? data.type : computedType
+      const selectedPrize = weightedRandomSelection(availablePrizes, awardType)
 
       return await tx.awardToken.create({
         data: {
           type: awardType,
+          bypassPoints: true,
           student: {
             connect: {
-              userId: uuid
-            }
+              userId: uuid,
+            },
           },
           award: {
             connect: {
-              id: selectedPrize.id
-            }
+              id: selectedPrize.id,
+            },
           },
         },
         select: {
@@ -148,9 +143,9 @@ export async function createAward(
           award: {
             select: {
               id: true,
-              name: true
-            }
-          }
+              name: true,
+            },
+          },
         },
       })
     })
@@ -211,19 +206,24 @@ export async function redeemAward(uuid: string, awardOverride?: string) {
         },
       })
 
-      await tx.studentDetails.update({
-        where: {
-          userId: details.userId,
-        },
-        data: {
-          points: {
-            decrement: (await getRedemptionSettings()).REDEEM,
+      const studentUpdateData: any = {}
+      if (!details.bypassPoints) {
+        studentUpdateData.points = {
+          decrement: (await getRedemptionSettings()).REDEEM,
+        }
+        studentUpdateData.redeems = {
+          increment: 1,
+        }
+      }
+
+      if (Object.keys(studentUpdateData).length > 0) {
+        await tx.studentDetails.update({
+          where: {
+            userId: details.userId,
           },
-          redeems: {
-            increment: 1,
-          },
-        },
-      })
+          data: studentUpdateData,
+        })
+      }
       await tx.award.update({
         where: {
           id: details.awardId,

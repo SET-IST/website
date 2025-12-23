@@ -200,6 +200,7 @@ model AwardToken {
   student StudentDetails @relation(fields: [userId], references: [userId])
   award   Award          @relation(fields: [awardId], references: [id])
   awardId Int
+  bypassPoints Boolean    @default(false)
 }
 
 model Award {

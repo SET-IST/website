@@ -68,6 +68,7 @@ const PrizeValidationForm = () => {
     createAward({
       uuid: values.uuid,
       type: values.type,
+      bypassPoints: true,
     })
       .then(() => {
         showSuccessNotification({
