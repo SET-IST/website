@@ -126,7 +126,7 @@ export async function createAward(
         data: {
           type: awardType,
           bypassPoints: true,
-          student: {
+          student: { 
             connect: {
               userId: uuid,
             },

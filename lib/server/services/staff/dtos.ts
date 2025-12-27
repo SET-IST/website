@@ -13,5 +13,5 @@ export class CreateAwardDto {
   type!: AwardType
   @IsOptional()
   @IsBoolean()
-  bypassPoints?: boolean
+  bypassPoints?: boolean 
 }

@@ -74,18 +74,15 @@ export const updateStudentPoints = async ({
 export interface CreateAwardRequest {
   uuid: string
   type: AwardType
-}
-
-export interface CreateAwardRequestExt extends CreateAwardRequest {
   bypassPoints?: boolean
 }
 
-export const createAward = async ({ uuid, type, bypassPoints }: CreateAwardRequestExt) => {
+export const createAward = async ({ uuid, type, bypassPoints }: CreateAwardRequest) => {
   const { data: award } = await ApiClient.post(
     `staff/users/${uuid}/create-award`,
     {
       type,
-      bypassPoints,
+      bypassPoints, 
     }
   )
 
