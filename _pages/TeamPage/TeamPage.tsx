@@ -5,6 +5,8 @@ import Department from './components/Department'
 import {
   Paper,
   SegmentedControl,
+  Button,
+  Group,
 } from '@mantine/core'
 import React, { useEffect, useRef } from 'react';
 import { useBoundStore } from '@/lib/frontend/store'
@@ -25,9 +27,17 @@ const TeamPage = () => {
     yearData.push({value: String(teams[teams.length-1].year +1), label: String(teams[teams.length-1].year +1), disabled: true});
   }
 
-  // const currentYear = useBoundStore((state) => state.year)
-  const teamIndex = useBoundStore((state) => state.teamIndex)
+  const year = useBoundStore((state) => state.year)
+  const eventType = useBoundStore((state) => state.eventType)
   const setCurrentYear = useBoundStore((state) => state.setSelectedYear)
+  const setEventType = useBoundStore((state) => state.setEventType)
+  const getCurrentTeam = useBoundStore((state) => state.getCurrentTeam)
+  
+  // Show toggle only for year 2025
+  const showEventToggle = Number(year) === 2025
+  
+  // Get the current team based on year and eventType
+  const currentTeam = getCurrentTeam()
 
   return (
     <div
@@ -36,7 +46,7 @@ const TeamPage = () => {
       )}
     >
       <Header />
-      <Paper className="h-fit w-screen px-0 sm:p-6 flex flex-col justify-stretch">
+      <Paper className="h-fit w-screen px-0 sm:p-6 flex flex-col justify-stretch gap-4">
           <div
             className="sticky sm:relative top-15 z-10 sm:top-0 px-2 sm:px-0 py-3 bg-[color:var(--mantine-color-white)]"
             ref={scrollableContainerRef}
@@ -71,10 +81,42 @@ const TeamPage = () => {
                 />
               </div>
             </div>
+            
+            {showEventToggle && (
+              <div
+                className="px-2 sm:px-0 pb-3 bg-[color:var(--mantine-color-white)]"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Group gap="xs">
+                  <Button
+                    size="md"
+                    radius="xl"
+                    variant={eventType === 'SET' ? 'filled' : 'light'}
+                    color="blue"
+                    onClick={() => setEventType('SET')}
+                  >
+                    SET
+                  </Button>
+                  <Button
+                    size="md"
+                    radius="xl"
+                    variant={eventType === 'NEEGI' ? 'filled' : 'light'}
+                    color="blue"
+                    onClick={() => setEventType('NEEGI')}
+                  >
+                    NEEGI
+                  </Button>
+                </Group>
+              </div>
+            )}
           </Paper>
       <div className="w-full flex flex-col gap-12">
-        {teams[teamIndex].team.map((department, index) => (
-          <Department key={index} {...department} imageFormat={teams[teamIndex].imageFormat} />
+        {currentTeam && currentTeam.team.map((department, index) => (
+          <Department key={index} {...department} imageFormat={currentTeam.imageFormat} />
         ))}
       </div>
     </div>
