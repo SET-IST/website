@@ -115,7 +115,7 @@ const TeamPage = () => {
             )}
           </Paper>
       <div className="w-full flex flex-col gap-12">
-        {currentTeam && currentTeam.team.map((department, index) => (
+        {currentTeam && currentTeam.team.map((department: import('@/data/team').IDepartment, index: number) => (
           <Department key={index} {...department} imageFormat={currentTeam.imageFormat} />
         ))}
       </div>
