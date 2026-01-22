@@ -2,15 +2,15 @@ import type { IDepartment } from './team'
 import person from '@/assets/team//avatar.webp';
 
 // Direção
-import duarteBarbosa from '@/assets/team/2026/Direcao/Coordenacao Geral - Duarte Barbosa.webp';
-import gabrielGabriel from '@/assets/team/2026/Direcao/Coordenacao Geral - Gabriel Gabriel.webp';
-import joanaQueiros from '@/assets/team/2026/Direcao/Coordenacao Geral - Joana Queiros.webp';
-import saraMarques from '@/assets/team/2026/Direcao/Coordenacao Geral - Sara Marques.webp';
-import marianaNobrega from '@/assets/team/2026/Direcao/Coordenacao Financeira - Mariana Nobrega.webp';
-import tomasRosado from '@/assets/team/2026/Direcao/Coordenacao Financeira - Tomas Rosado.webp';
-import franciscoColaco from '@/assets/team/2026/Direcao/Secretario - Francisco Colaço.webp';
+import duarteBarbosa from '@/assets/team/2026/Direcao/Coordenacao_Geral_Duarte_Barbosa.webp';
+import gabrielGabriel from '@/assets/team/2026/Direcao/Coordenacao_Geral_Gabriel_Gabriel.webp';
+import joanaQueiros from '@/assets/team/2026/Direcao/Coordenacao_Geral_Joana_Queiros.webp';
+import saraMarques from '@/assets/team/2026/Direcao/Coordenacao_Geral_Sara_Marques.webp';
+import marianaNobrega from '@/assets/team/2026/Direcao/Coordenacao_Financeira_Mariana_Nobrega.webp';
+import tomasRosado from '@/assets/team/2026/Direcao/Coordenacao_Financeira_Tomas_Rosado.webp';
+import franciscoColaco from '@/assets/team/2026/Direcao/Secretario_Francisco_Colaco.webp';
 
-const direção26: IDepartment = {
+const direcao26: IDepartment = {
   name: 'Direção',
   slug: 'direção',
   coordinators: [
@@ -27,17 +27,17 @@ const direção26: IDepartment = {
 }
 
 // Marketing & Design
-import marketingAfonsoFigueira from '@/assets/team/2026/Marketing/Marketing - Afonso Figueira.webp';
-import marketingFelipeKoyama from '@/assets/team/2026/Marketing/Marketing - Felipe Koyama.webp';
-import marketingGabrielaNegroni from '@/assets/team/2026/Marketing/Marketing - Gabriela Negroni.webp';
-import marketingGuilhermeRomano from '@/assets/team/2026/Marketing/Marketing - Guilherme Romano.webp';
-import marketingHenriqueCavaco from '@/assets/team/2026/Marketing/Marketing - Henrique Cavaco.webp';
-import marketingHugoYe from '@/assets/team/2026/Marketing/Marketing - Hugo Ye.webp';
-import marketingMadalenaBordadagua from '@/assets/team/2026/Marketing/Marketing - Madalena Bordadagua.webp';
-import marketingMargaridaSimoes from '@/assets/team/2026/Marketing/Marketing - Margarida Simoes.webp';
-import marketingPedroFerreira from '@/assets/team/2026/Marketing/Marketing - Pedro Ferreira.webp';
-import marketingTomasAntao from '@/assets/team/2026/Marketing/Marketing - Tomas Antao.webp';
-import marketingXavierSilva from '@/assets/team/2026/Marketing/Marketing - Xavier Silva.webp';
+import marketingAfonsoFigueira from '@/assets/team/2026/Marketing/Marketing_Afonso_Figueira.webp';
+import marketingFelipeKoyama from '@/assets/team/2026/Marketing/Marketing_Felipe_Koyama.webp';
+import marketingGabrielaNegroni from '@/assets/team/2026/Marketing/Marketing_Gabriela_Negroni.webp';
+import marketingGuilhermeRomano from '@/assets/team/2026/Marketing/Marketing_Guilherme_Romano.webp';
+import marketingHenriqueCavaco from '@/assets/team/2026/Marketing/Marketing_Henrique_Cavaco.webp';
+import marketingHugoYe from '@/assets/team/2026/Marketing/Marketing_Hugo_Ye.webp';
+import marketingMadalenaBordadagua from '@/assets/team/2026/Marketing/Marketing_Madalena_Bordadagua.webp';
+import marketingMargaridaSimoes from '@/assets/team/2026/Marketing/Marketing_Margarida_Simoes.webp';
+import marketingPedroFerreira from '@/assets/team/2026/Marketing/Marketing_Pedro_Ferreira.webp';
+import marketingTomasAntao from '@/assets/team/2026/Marketing/Marketing_Tomas_Antao.webp';
+import marketingXavierSilva from '@/assets/team/2026/Marketing/Marketing_Xavier_Silva.webp';
 
 const marketingDesign26: IDepartment = {
   name: 'Marketing & Design',
@@ -62,19 +62,19 @@ const marketingDesign26: IDepartment = {
 }
 
 // Logística
-import logisticaAfonso from '@/assets/team/2026/Logistica/Logistica - Afonso.webp';
-import logisticaAfonsoHenriques from '@/assets/team/2026/Logistica/Logistica - Afonso Henriques.webp';
-import logisticaDiogoFevereiro from '@/assets/team/2026/Logistica/Logistica - Diogo Fevereiro.webp';
-import logisticaGabrielaSilva from '@/assets/team/2026/Logistica/Logistica - Gabriela Silva.webp';
-import logisticaKarenPaliche from '@/assets/team/2026/Logistica/Logistica - Karen Paliche.webp';
-import logisticaMadalenaFelix from '@/assets/team/2026/Logistica/Logistica - Madalena Félix.webp';
-import logisticaMargarida from '@/assets/team/2026/Logistica/Logistica - Margarida.webp';
-import logisticaMariaCosta from '@/assets/team/2026/Logistica/Logistica - Maria Costa.webp';
-import logisticaMiguelTrepa from '@/assets/team/2026/Logistica/Logistica - Miguel Trêpa.webp';
-import logisticaMiguelVieira from '@/assets/team/2026/Logistica/Logistica - Miguel Vieira.webp';
-import logisticaRafael from '@/assets/team/2026/Logistica/Logistica - Rafael.webp';
-import logisticaTiagoVideira from '@/assets/team/2026/Logistica/Logistica - Tiago Videira.webp';
-import logisticaZara from '@/assets/team/2026/Logistica/Logistica - Zara.webp';
+import logisticaAfonso from '@/assets/team/2026/Logistica/Logistica_Afonso.webp';
+import logisticaAfonsoHenriques from '@/assets/team/2026/Logistica/Logistica_Afonso_Henriques.webp';
+import logisticaDiogoFevereiro from '@/assets/team/2026/Logistica/Logistica_Diogo_Fevereiro.webp';
+import logisticaGabrielaSilva from '@/assets/team/2026/Logistica/Logistica_Gabriela_Silva.webp';
+import logisticaKarenPaliche from '@/assets/team/2026/Logistica/Logistica_Karen_Paliche.webp';
+import logisticaMadalenaFelix from '@/assets/team/2026/Logistica/Logistica_Madalena_Felix.webp';
+import logisticaMargarida from '@/assets/team/2026/Logistica/Logistica_Margarida.webp';
+import logisticaMariaCosta from '@/assets/team/2026/Logistica/Logistica_Maria_Costa.webp';
+import logisticaMiguelTrepa from '@/assets/team/2026/Logistica/Logistica_Miguel_Trepa.webp';
+import logisticaMiguelVieira from '@/assets/team/2026/Logistica/Logistica_Miguel_Vieira.webp';
+import logisticaRafael from '@/assets/team/2026/Logistica/Logistica_Rafael.webp';
+import logisticaTiagoVideira from '@/assets/team/2026/Logistica/Logistica_Tiago_Videira.webp';
+import logisticaZara from '@/assets/team/2026/Logistica/Logistica_Zara.webp';
 
 const logistica26: IDepartment = {
   name: 'Logística',
@@ -99,22 +99,22 @@ const logistica26: IDepartment = {
 }
 
 // Relações Externas
-import reAfonsoMendes from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Afonso Mendes.webp';
-import reCamilaDelgado from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Camila Delgado.webp';
-import reCarlotaPereira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Carlota Pereira.webp';
-import reDorisaSilva from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Dorisa Silva.webp';
-import reFranciscoBica from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Francisco Bica.webp';
-import reFranciscoFranco from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Francisco Franco.webp';
-import reGoncaloCosta from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Gonçalo Costa.webp';
-import reGoncaloReboleira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Gonçalo Reboleira.webp';
-import reJoaoAmaral from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - João Amaral.webp';
-import reMarianaAntunes from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Mariana Antunes.webp';
-import reRitaCardeira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Rita Cardeira.webp';
-import reSofiaVarandas from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas - Sofia Varandas.webp';
-import reAfonsoLouro from '@/assets/team/2026/Relacoes_Externas/Externas_Externas - Afonso Louro.webp';
-import reCarolinaNunes from '@/assets/team/2026/Relacoes_Externas/Externas_Externas - Carolina Nunes.webp';
-import reEvanetteEvaristo from '@/assets/team/2026/Relacoes_Externas/Externas_Externas - Evanette Evaristo.webp';
-import reJoaoGoncalves from '@/assets/team/2026/Relacoes_Externas/Externas_Externas - Joao Goncalves.webp';
+import reAfonsoMendes from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Afonso_Mendes.webp';
+import reCamilaDelgado from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Camila_Delgado.webp';
+import reCarlotaPereira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Carlota_Pereira.webp';
+import reDorisaSilva from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Dorisa_Silva.webp';
+import reFranciscoBica from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Francisco_Bica.webp';
+import reFranciscoFranco from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Francisco_Franco.webp';
+import reGoncaloCosta from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Goncalo_Costa.webp';
+import reGoncaloReboleira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Goncalo_Reboleira.webp';
+import reJoaoAmaral from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Joao_Amaral.webp';
+import reMarianaAntunes from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Mariana_Antunes.webp';
+import reRitaCardeira from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Rita_Cardeira.webp';
+import reSofiaVarandas from '@/assets/team/2026/Relacoes_Externas/Relacoes_Externas_Sofia_Varandas.webp';
+import reAfonsoLouro from '@/assets/team/2026/Relacoes_Externas/Externas_Externas_Afonso_Louro.webp';
+import reCarolinaNunes from '@/assets/team/2026/Relacoes_Externas/Externas_Externas_Carolina_Nunes.webp';
+import reEvanetteEvaristo from '@/assets/team/2026/Relacoes_Externas/Externas_Externas_Evanette_Evaristo.webp';
+import reJoaoGoncalves from '@/assets/team/2026/Relacoes_Externas/Externas_Externas_Joao_Goncalves.webp';
 
 const relacoesExternas26: IDepartment = {
   name: 'Relações Externas',
@@ -142,11 +142,11 @@ const relacoesExternas26: IDepartment = {
 }
 
 // Suporte Informático
-import siFilipeMiranda from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico - Filipe_Miranda.webp';
-import siFilipeAlves from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico - Filipe Alves.webp';
-import siJoseAtaide from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico - José Ataide.webp';
-import siLourencoBorges from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico - Lourenço Borges.webp';
-import siMargaridaLopes from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico - Margarida Lopes.webp';
+import siFilipeMiranda from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico_Filipe_Miranda.webp';
+import siFilipeAlves from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico_Filipe_Alves.webp';
+import siJoseAtaide from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico_Jose_Ataide.webp';
+import siLourencoBorges from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico_Lourenco_Borges.webp';
+import siMargaridaLopes from '@/assets/team/2026/Suporte_Informatico/Suporte_Informatico_Margarida_Lopes.webp';
 
 const suporteInformatico26: IDepartment = {
   name: 'Suporte Informático',
@@ -164,7 +164,7 @@ const suporteInformatico26: IDepartment = {
 }
 
 export {
-  direção26,
+  direcao26,
   marketingDesign26,
   logistica26,
   relacoesExternas26,

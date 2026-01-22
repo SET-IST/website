@@ -14,7 +14,7 @@ import { coordenacao17, logistics17, marketing17, relacoesExternas17, suporteInf
 import { coordenacao25_neegi, marketingDesign25_neegi, logistica25_neegi, relacoesExternas25_neegi, suporteInformatico25_neegi } from './team25_neegi';
 
 // JET teams
-import { direção26, marketingDesign26, logistica26, relacoesExternas26, suporteInformatico26 } from './team26';
+import { direcao26, marketingDesign26, logistica26, relacoesExternas26, suporteInformatico26 } from './team26';
 
 export type ImageFormat = 'round' | 'original' | 'round-2x';
 
@@ -39,6 +39,31 @@ export interface Team {
     team: IDepartment[];
 }
 
+// JET 2026
+export const team26: Team = {
+  year: 2026,
+  imageFormat: 'round',
+  team: [
+    direcao26,
+    marketingDesign26,
+    logistica26,
+    relacoesExternas26,
+    suporteInformatico26,
+  ],
+}
+
+export const team25_neegi: Team = {
+  year: 2025,
+  imageFormat: 'original',
+  team: [
+    coordenacao25_neegi,
+    marketingDesign25_neegi,
+    logistica25_neegi,
+    relacoesExternas25_neegi,
+    suporteInformatico25_neegi,
+  ],
+}
+
 export const team25: Team = {
     year: 2025,
     imageFormat: 'original',
@@ -50,6 +75,7 @@ export const team25: Team = {
         suporteInformatico25,
     ],
 }
+
 export const team24: Team = {
     year: 2024,
     imageFormat: 'round-2x',
@@ -140,32 +166,6 @@ export const team17: Team = {
         relacoesExternas17,
         suporteInformatico17,
         eventSupporter17,
-    ],
-}
-
-// NEEGI Teams
-export const team25_neegi: Team = {
-    year: 2025,
-    imageFormat: 'original',
-    team: [
-        coordenacao25_neegi,
-        marketingDesign25_neegi,
-        logistica25_neegi,
-        relacoesExternas25_neegi,
-        suporteInformatico25_neegi,
-    ],
-}
-
-// JET 2026
-export const team26: Team = {
-    year: 2026,
-    imageFormat: 'round',
-    team: [
-        direção26,
-        marketingDesign26,
-        logistica26,
-        relacoesExternas26,
-        suporteInformatico26,
     ],
 }
 
