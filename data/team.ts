@@ -11,7 +11,7 @@ import { coordenacao18, logistica18, marketing18, relacoesExternas18, suporteInf
 import { coordenacao17, logistics17, marketing17, relacoesExternas17, suporteInformatico17, eventSupporter17 } from './team17';
 
 // NEEGI teams
-import { coordenacao25_neegi, marketingDesign25_neegi, logistica25_neegi, relacoesExternas25_neegi, suporteInformatico25_neegi } from './team25_neegi';
+import { coordenacao25_neegi, marketingDesign25_neegi, logistica25_neegi, relacoesExternas25_neegi } from './team25_neegi';
 
 // JET teams
 import { direcao26, marketingDesign26, logistica26, relacoesExternas26, suporteInformatico26 } from './team26';
@@ -59,8 +59,7 @@ export const team25_neegi: Team = {
     coordenacao25_neegi,
     marketingDesign25_neegi,
     logistica25_neegi,
-    relacoesExternas25_neegi,
-    suporteInformatico25_neegi,
+    relacoesExternas25_neegi
   ],
 }
 
