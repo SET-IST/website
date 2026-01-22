@@ -123,11 +123,16 @@ model User {
   readChangelog   Boolean         @default(true)
   accounts        Account[]
   sessions        Session[]
-  role            UserType        @default(Student) // custom relation for roles of student and company
+  role            UserType        @default(Student)
   displayUsername String?
-  studentDetails  StudentDetails? // custom table with additional info of student
-  companyDetails  CompanyDetails? // custom table with additional info of company
-  EventLog        EventLog[]
+  studentDetails  StudentDetails?
+  companyDetails  CompanyDetails?
+
+  // Existing relation
+  EventLog        EventLog[] @relation("EventActor") 
+
+  // Add the new inverse relation for target
+  TargetEventLogs EventLog[] @relation("EventTarget")
 }
 
 model VerificationToken {
@@ -172,6 +177,8 @@ model Activity {
   companies CompanyDetails[]
 
   enrollments ActivityEnrollment[]
+
+  EventLogs EventLog[]
 }
 
 // create the QRCode model
@@ -209,6 +216,8 @@ model Award {
   type            AwardType
   AwardToken      AwardToken[]
   RedeemedPrize   RedeemedPrize[]
+
+  EventLogs EventLog[]
 }
 
 model RedeemedPrize {
@@ -257,11 +266,23 @@ enum EventLogType {
 }
 
 model EventLog {
-  id          Int          @id @default(autoincrement())
-  timestamp   DateTime
-  type        EventLogType
-  description String
+  id            Int          @id @default(autoincrement())
+  timestamp     DateTime     @default(now())
+  type          EventLogType
+  description   String
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  // Who performed the action
+  actorId       String
+  actor         User         @relation("EventActor", fields: [actorId], references: [id])
+
+  // Optional: Who was affected by the action (e.g. a student)
+  targetId      String?
+  target        User?        @relation("EventTarget", fields: [targetId], references: [id])
+
+  // Optional: Reference to related object (award, activity, etc.)
+  awardId       Int?         // e.g., if type == AWARDS
+  award         Award?       @relation(fields: [awardId], references: [id])
+
+  activityId    Int?         // e.g., if type == ENROLLMENTS
+  activity      Activity?    @relation(fields: [activityId], references: [id])
 }
