@@ -120,6 +120,18 @@ export const StaffNavLinks: NavLinkExtendedProps[] = [
           <IconGift style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
         ),
       },
+      {
+        visibility: NavLinkVisibility.ALL,
+        label: 'Registo de eventos',
+        navId: 'event_log',
+        link: links.staff.eventLog, // you'll define this next
+        leftSection: (
+          <IconList
+            style={{ width: rem(20), height: rem(20) }}
+            stroke={1.5}
+          />
+        ),
+      },
     ],
   },
 ]
