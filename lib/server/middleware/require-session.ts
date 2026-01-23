@@ -5,7 +5,6 @@ import {
   createMiddlewareDecorator,
 } from 'next-api-decorators'
 import { auth, Session } from '@/lib/server/auth'
-import { headers } from 'next/headers'
 
 export async function getSession(req: NextApiRequest, res: NextApiResponse): Promise<Session | null> {
   return await auth.api.getSession({
