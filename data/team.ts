@@ -54,7 +54,7 @@ export const team26: Team = {
 
 export const team25_neegi: Team = {
   year: 2025,
-  imageFormat: 'original',
+  imageFormat: 'round',
   team: [
     coordenacao25_neegi,
     marketingDesign25_neegi,
