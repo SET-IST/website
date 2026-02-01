@@ -72,7 +72,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "@svgr/webpack": "^6.5.1",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@types/bcrypt": "^5.0.0",
     "@types/caniuse-lite": "^1",
