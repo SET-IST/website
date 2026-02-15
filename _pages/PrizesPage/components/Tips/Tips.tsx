@@ -10,11 +10,11 @@ const TipsSection = () => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-6">
         <Tip
           title="Networking"
-          description="Interage com as empresas e faz scan dos códigos QR"
+          description="Interage com as empresas e faz scan dos códigos QR."
         />
         <Tip
           title="Atividades"
-          description="Participa em atividades, ganha pontos e habilita-te a ganhar o prémio das atividades"
+          description="Participa em atividades, ganha pontos e habilita-te a ganhar o prémio."
           action={{
             title: 'Ver atividades',
             url: links.activities,
@@ -23,7 +23,7 @@ const TipsSection = () => {
         />
         <Tip
           title="Destaca-te"
-          description="Faz upload do teu currículo e habilita-te a ganhar o prémio dos CVs"
+          description="Faz upload do teu currículo e habilita-te a ganhar o prémio."
           action={{
             title: 'Ver o meu perfil',
             url: links.student.profile,
