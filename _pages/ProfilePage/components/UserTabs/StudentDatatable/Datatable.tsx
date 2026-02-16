@@ -125,7 +125,7 @@ export function StudentDatatable() {
     reversed: reverseSortDirection,
   })?.data?.map((row) => (
     <Table.Tr key={row?.id}>
-      {isMobile ? ( //faltava o mobile case (I think it works now?)
+      {isMobile ? (
         <Table.Td>
           <Group gap="sm" wrap="nowrap">
             <Avatar size={42} src={row?.image} radius={42} />
@@ -226,12 +226,8 @@ export function StudentDatatable() {
       <Table horizontalSpacing="md" verticalSpacing="xs" layout="auto">
         <Table.Thead>
           <Table.Tr className="sticky top-0 z-20 bg-[var(--mantine-color-body)]">
-            {isMobile ? ( //faltava o mobile case (I think it works now?)
-              <Table.Th className={classes.th}>
-                <Text fw={500} fz="sm">
-                  Estudante
-                </Text>
-              </Table.Th>
+            {isMobile ? (
+              <></>
             ) : (
               <>
                 <Th
