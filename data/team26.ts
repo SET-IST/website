@@ -152,14 +152,39 @@ const suporteInformatico26: IDepartment = {
   name: 'Suporte Informático',
   slug: 'suporte-informatico',
   coordinators: [
-    { name: 'Filipe Miranda', image: siFilipeMiranda, role: 'Coordenador', linkedin: '' },
-
+    {
+      name: 'Filipe Miranda',
+      image: siFilipeMiranda,
+      role: 'Coordenador',
+      linkedin: 'https://www.linkedin.com/in/filipe-miranda-a90804317',
+    },
   ],
   members: [
-    { name: 'Filipe Alves', image: siFilipeAlves, role: 'Colaborador', linkedin: '' },
-    { name: 'José Ataíde', image: siJoseAtaide, role: 'Colaborador', linkedin: '' },
-    { name: 'Lourenço Borges', image: siLourencoBorges, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/louren%C3%A7o-borges-31274a38b/' },
-    { name: 'Margarida Lopes', image: siMargaridaLopes, role: 'Colaboradora', linkedin: 'https://www.linkedin.com/in/margaridalopes03?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
+    {
+      name: 'Filipe Alves',
+      image: siFilipeAlves,
+      role: 'Colaborador',
+      linkedin: '',
+    },
+    {
+      name: 'José Ataíde',
+      image: siJoseAtaide,
+      role: 'Colaborador',
+      linkedin: '',
+    },
+    {
+      name: 'Lourenço Borges',
+      image: siLourencoBorges,
+      role: 'Colaborador',
+      linkedin: 'https://www.linkedin.com/in/louren%C3%A7o-borges-31274a38b/',
+    },
+    {
+      name: 'Margarida Lopes',
+      image: siMargaridaLopes,
+      role: 'Colaboradora',
+      linkedin:
+        'https://www.linkedin.com/in/margaridalopes03?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+    },
   ],
 }
 
