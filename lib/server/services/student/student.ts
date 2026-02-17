@@ -499,6 +499,9 @@ export async function getAwardsList() {
       amountAvailable: true,
       type: true,
     },
+    where: {
+      active: true
+    }
   })
   return awards.map(a => ({
     ...a,
