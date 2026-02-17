@@ -9,18 +9,18 @@ interface LogEventOptions {
 }
 
 export async function logEvent(
-  actor: User,               // who performed the action
+  actor: { id: string }, // who performed the action
   type: EventLogType,
   description: string,
-  options?: LogEventOptions  // optional target, award, or activity
+  options?: LogEventOptions // optional target, award, or activity
 ) {
   await PrismaService.eventLog.create({
     data: {
       timestamp: DateTime.now().toJSDate(),
       type,
       description,
-      actorId: actor.id,            // required actor
-      targetId: options?.target?.id, 
+      actorId: actor.id, // required actor
+      targetId: options?.target?.id,
       awardId: options?.awardId,
       activityId: options?.activityId,
     },

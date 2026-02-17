@@ -157,7 +157,7 @@ export async function createAward(
     await EventLogService.logEvent(
       user, // actor
       EventLogType.AWARDS,
-      `Created award ${response.id} (${response.type}) for student ${uuid}`,
+      `Created award ${response.id} (${response.type}) for student`,
       { target: { id: uuid }, awardId: response.award.id } // target student + award reference
     )
 
