@@ -129,7 +129,7 @@ model User {
   companyDetails  CompanyDetails?
 
   // Existing relation
-  EventLog        EventLog[] @relation("EventActor") 
+  EventLog EventLog[] @relation("EventActor")
 
   // Add the new inverse relation for target
   TargetEventLogs EventLog[] @relation("EventTarget")
@@ -214,6 +214,7 @@ model Award {
   name            String
   amountAvailable Int // The available amount of this prize
   type            AwardType
+  active          Boolean         @default(true)
   AwardToken      AwardToken[]
   RedeemedPrize   RedeemedPrize[]
 
@@ -266,23 +267,23 @@ enum EventLogType {
 }
 
 model EventLog {
-  id            Int          @id @default(autoincrement())
-  timestamp     DateTime     @default(now())
-  type          EventLogType
-  description   String
+  id          Int          @id @default(autoincrement())
+  timestamp   DateTime     @default(now())
+  type        EventLogType
+  description String
 
   // Who performed the action
-  actorId       String
-  actor         User         @relation("EventActor", fields: [actorId], references: [id])
+  actorId String
+  actor   User   @relation("EventActor", fields: [actorId], references: [id])
 
   // Optional: Who was affected by the action (e.g. a student)
-  targetId      String?
-  target        User?        @relation("EventTarget", fields: [targetId], references: [id])
+  targetId String?
+  target   User?   @relation("EventTarget", fields: [targetId], references: [id])
 
   // Optional: Reference to related object (award, activity, etc.)
-  awardId       Int?         // e.g., if type == AWARDS
-  award         Award?       @relation(fields: [awardId], references: [id])
+  awardId Int? // e.g., if type == AWARDS
+  award   Award? @relation(fields: [awardId], references: [id])
 
-  activityId    Int?         // e.g., if type == ENROLLMENTS
-  activity      Activity?    @relation(fields: [activityId], references: [id])
+  activityId Int? // e.g., if type == ENROLLMENTS
+  activity   Activity? @relation(fields: [activityId], references: [id])
 }
