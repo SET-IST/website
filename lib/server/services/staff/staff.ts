@@ -157,7 +157,7 @@ export async function createAward(
     await EventLogService.logEvent(
       user, // actor
       EventLogType.AWARDS,
-      `Created award ${response.id} (${response.type}) for student ${uuid}`,
+      `Created award ${response.id} (${response.type}) for student`,
       { target: { id: uuid }, awardId: response.award.id } // target student + award reference
     )
 
@@ -284,7 +284,7 @@ export async function setStudentPoints(
       await EventLogService.logEvent(
         user, // actor
         EventLogType.POINTS,
-        `Updated points of student ${uuid} from ${studentTx.points} to ${data.points} (${points_to_add})`,
+        `Updated points of student from ${studentTx.points} to ${data.points} (${points_to_add})`,
         { target: { id: uuid } } // affected student
       )
 

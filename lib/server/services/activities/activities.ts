@@ -241,12 +241,6 @@ export async function patchEnrollment(
   patchActivity: PatchActivityDto
 ) {
   return await databaseQueryWrapper(async () => {
-    await EventLogService.logEvent(
-      user,
-      EventLogType.ENROLLMENTS,
-      `Updated enrollment state of user ${patchActivity.userId} to ${patchActivity.action} at activity with id ${id}`
-    )
-
     if (patchActivity.action != 'DISCARD') {
       const confirmed = patchActivity.action == 'CONFIRM'
 
@@ -292,6 +286,13 @@ export async function patchEnrollment(
         },
       })
     }
+
+    await EventLogService.logEvent(
+      user,
+      EventLogType.ENROLLMENTS,
+      `Updated enrollment state of target user to ${patchActivity.action} at activity with id ${id}`,
+      { activityId: id, target: { id: patchActivity.userId } }
+    )
 
     return { message: 'Successfully updated activity management details' }
   })
