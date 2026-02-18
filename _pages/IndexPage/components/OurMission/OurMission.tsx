@@ -27,7 +27,7 @@ const OurMissionSection = () => {
           <Container p={0}>
             <Text size={isMobile ? 'md' : 'lg'} className={classes.description}>
               Este evento enquadra-se na iniciativa{' '}
-              <strong>IST Career Weeks</strong>, onde se pretende, por um lado,
+              <strong>Técnico Career Weeks</strong>, onde se pretende, por um lado,
               ajudar os alunos a conhecer melhor as oportunidades para o seu
               futuro profissional, e por outro, ajudar as empresas a divulgar as
               suas atividades e necessidades. Todos os anos estão presentes

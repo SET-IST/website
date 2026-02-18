@@ -44,7 +44,7 @@ export function TCDialog() {
           submissão de currículos através da plataforma disponibilizada pela
           equipa do evento JET – Jornadas Empresariais e
           Tecnológicas, a decorrer entre os dias 24 a 27 de Fevereiro de 2025 no
-          campus Taguspark do Instituto Superior Técnico, sito em Avenida
+          campus Oeiras do Instituto Superior Técnico, sito em Avenida
           Professor Doutor Cavaco Silva, 2744 -016 Porto Salvo, Portugal.
         </Section>
         <Section title="2. Informações">
@@ -53,7 +53,7 @@ export function TCDialog() {
           Extracurriculares dos Estudantes, registado como associação
           MSSKILLSLAB – Núcleo de Apoio À Gestão de Atividades Extracurriculares
           dos Estudantes, com sede em Instituto Superior Técnico – Campus
-          Taguspark, Avenida Professor Doutor Cavaco Silva, 2744-016 Porto
+          Oeiras, Avenida Professor Doutor Cavaco Silva, 2744-016 Porto
           Salvo, Portugal. <br />
           <br />
           b) A submissão de currículos por parte dos alunos, e o posterior

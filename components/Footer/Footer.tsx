@@ -19,7 +19,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-0">
             <Text className={classes.title}>Localização</Text>
-            <span>Instituto Superior Técnico (Campus Taguspark)</span>
+            <span>Instituto Superior Técnico (Campus Oeiras)</span>
             <span>Av. Prof. Doutor Cavaco Silva, 2744-016 Porto Salvo</span>
           </div>
           <div className="flex flex-col gap-0">
