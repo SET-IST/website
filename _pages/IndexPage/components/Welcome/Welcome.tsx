@@ -18,11 +18,11 @@ export default function WelcomeSection() {
         >
           As Jornadas de Engenharia e Gestão Industrial (JEGI) e a Semana
           Empresarial e Tecnológica (SET), as maiores feiras de emprego do
-          <strong> IST Oeiras</strong>, juntam-se pela primeira vez para dar origem à <strong>JET -
+          <strong>Técnico Oeiras</strong>, juntam-se pela primeira vez para dar origem à <strong>JET -
           Jornadas Empresariais e Tecnológicas</strong>. A JET foi concebida
           para proporcionar aos <strong>estudantes</strong> uma experiência mais completa e
           enriquecedora, ampliando <strong>oportunidades, networking e
-          aprendizagem</strong> para todos os alunos do IST.
+          aprendizagem</strong> para todos os alunos do Técnico.
         </Text>
       </Container>
       {process.env.NEXT_PUBLIC_PREPARE_NEXT_EDITION == "true" ? ("") : (
