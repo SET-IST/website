@@ -14,15 +14,51 @@ const direcao26: IDepartment = {
   name: 'Direção',
   slug: 'direção',
   coordinators: [
-    { name: 'Duarte Barbosa', image: duarteBarbosa, role: 'Coordenador Geral', linkedin: 'www.linkedin.com/in/duartefbarbosa' },
-    { name: 'Gabriel Gabriel', image: gabrielGabriel, role: 'Coordenador Geral', linkedin: 'https://www.linkedin.com/in/gabrieldggabriel/' },
-    { name: 'Joana Queirós', image: joanaQueiros, role: 'Coordenadora Geral', linkedin: '' },
-    { name: 'Sara Marques', image: saraMarques, role: 'Coordenadora Geral', linkedin: 'https://www.linkedin.com/in/sarapmmarques?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
+    {
+      name: 'Duarte Barbosa',
+      image: duarteBarbosa,
+      role: 'Coordenador Geral',
+      linkedin: 'https://www.linkedin.com/in/duartefbarbosa',
+    },
+    {
+      name: 'Gabriel Gabriel',
+      image: gabrielGabriel,
+      role: 'Coordenador Geral',
+      linkedin: 'https://www.linkedin.com/in/gabrieldggabriel/',
+    },
+    {
+      name: 'Joana Queirós',
+      image: joanaQueiros,
+      role: 'Coordenadora Geral',
+      linkedin: '',
+    },
+    {
+      name: 'Sara Marques',
+      image: saraMarques,
+      role: 'Coordenadora Geral',
+      linkedin:
+        'https://www.linkedin.com/in/sarapmmarques?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+    },
   ],
   members: [
-    { name: 'Marina Nóbrega', image: marianaNobrega, role: 'Tesoureira', linkedin: 'www.linkedin.com/in/marina-mnóbrega' },
-    { name: 'Tomás Rosado', image: tomasRosado, role: 'Tesoureiro', linkedin: '' },
-    { name: 'Francisco Colaço', image: franciscoColaco, role: 'Secretário', linkedin: 'https://www.linkedin.com/in/franciscocolaco/' },
+    {
+      name: 'Marina Nóbrega',
+      image: marianaNobrega,
+      role: 'Tesoureira',
+      linkedin: 'www.linkedin.com/in/marina-mnóbrega',
+    },
+    {
+      name: 'Tomás Rosado',
+      image: tomasRosado,
+      role: 'Tesoureiro',
+      linkedin: '',
+    },
+    {
+      name: 'Francisco Colaço',
+      image: franciscoColaco,
+      role: 'Secretário',
+      linkedin: 'https://www.linkedin.com/in/franciscocolaco/',
+    },
   ],
 }
 
