@@ -1,28 +1,28 @@
 import type { IDepartment } from './team'
 
 import person from '@/assets/team//avatar.webp';
-import martaLourenco from '@/assets/team/2025/NEEGI/Marta lourenço.jpg';
-import luejeCruz from '@/assets/team/2025/NEEGI/Lueje cruz.jpg';
-import pedroFerreira from '@/assets/team/2025/NEEGI/Pedro ferreira.jpg';
-import carolinaNunes from '@/assets/team/2025/NEEGI/Carolina nunes.jpg';
-import afonsoFigueira from '@/assets/team/2025/NEEGI/Afonso figueira.jpg';
-import teresaMoura from '@/assets/team/2025/NEEGI/Teresa Moura.jpg';
-import manuelTenazinha from '@/assets/team/2025/NEEGI/Manuel tenazinha.jpg';
-import dianaMartins from '@/assets/team/2025/NEEGI/Diana martins.jpg';
-import mariaJoaoLeite from '@/assets/team/2025/NEEGI/Maria joao leite.jpg';
-import mariaLuisCosta from '@/assets/team/2025/NEEGI/Maria luis costa.jpg';
-import joaoTarouca from '@/assets/team/2025/NEEGI/Joao tarouca.jpg';
-import franciscoDias from '@/assets/team/2025/NEEGI/Francisco dias.jpg';
-import madalenaFelix from '@/assets/team/2025/NEEGI/Madalena felix.jpg';
-import miguelVieira from '@/assets/team/2025/NEEGI/Miguel Vieira.jpg';
-import margaridaSismeiro from '@/assets/team/2025/NEEGI/Margarida sismeiro.jpg';
-import madalenaMoura from '@/assets/team/2025/NEEGI/Madalena Moura.jpg';
-import danielCampos from '@/assets/team/2025/NEEGI/Daniel campos.jpg';
-import ritaCosta from '@/assets/team/2025/NEEGI/Rita Costa.jpg';
-import pedroLima from '@/assets/team/2025/NEEGI/Pedro lima.jpg';
-import joaoGoncalves from '@/assets/team/2025/NEEGI/João gonçalves.jpg';
-import alexandreMarques from '@/assets/team/2025/NEEGI/Alexandre marques.jpg';
-import franciscaCerqueira from '@/assets/team/2025/NEEGI/Francisca Cerqueira.jpg';
+import martaLourenco from '@/assets/team/2025/NEEGI/marta_lourenco.webp';
+import luejeCruz from '@/assets/team/2025/NEEGI/lueje_cruz.webp';
+import pedroFerreira from '@/assets/team/2025/NEEGI/pedro_ferreira.webp';
+import carolinaNunes from '@/assets/team/2025/NEEGI/carolina_nunes.webp';
+import afonsoFigueira from '@/assets/team/2025/NEEGI/afonso_figueira.webp';
+import teresaMoura from '@/assets/team/2025/NEEGI/teresa_moura.webp';
+import manuelTenazinha from '@/assets/team/2025/NEEGI/manuel_tenazinha.webp';
+import dianaMartins from '@/assets/team/2025/NEEGI/diana_martins.webp';
+import mariaJoaoLeite from '@/assets/team/2025/NEEGI/maria_joao_leite.webp';
+import mariaLuisCosta from '@/assets/team/2025/NEEGI/maria_luis_costa.webp';
+import joaoTarouca from '@/assets/team/2025/NEEGI/joao_tarouca.webp';
+import franciscoDias from '@/assets/team/2025/NEEGI/francisco_dias.webp';
+import madalenaFelix from '@/assets/team/2025/NEEGI/madalena_felix.webp';
+import miguelVieira from '@/assets/team/2025/NEEGI/miguel_vieira.webp';
+import margaridaSismeiro from '@/assets/team/2025/NEEGI/margarida_sismeiro.webp';
+import madalenaMoura from '@/assets/team/2025/NEEGI/madalena_moura.webp';
+import danielCampos from '@/assets/team/2025/NEEGI/daniel_campos.webp';
+import ritaCosta from '@/assets/team/2025/NEEGI/rita_costa.webp';
+import pedroLima from '@/assets/team/2025/NEEGI/pedro_lima.webp';
+import joaoGoncalves from '@/assets/team/2025/NEEGI/joao_goncalves.webp';
+import alexandreMarques from '@/assets/team/2025/NEEGI/alexandre_marques.webp';
+import franciscaCerqueira from '@/assets/team/2025/NEEGI/francisca_cerqueira.webp';
 
 const coordenacao25_neegi: IDepartment = {
   name: 'Coordenação',
