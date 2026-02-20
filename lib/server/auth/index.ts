@@ -21,8 +21,8 @@ export const auth = betterAuth({
   account: {
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "fenix"]
-    }
+      trustedProviders: ['google', 'fenix'],
+    },
   },
   user: {
     additionalFields: {
@@ -40,7 +40,7 @@ export const auth = betterAuth({
     enabled: true,
     password: {
       hash: hashPassword,
-      verify: isSamePassword
+      verify: isSamePassword,
     },
   },
   socialProviders: {
@@ -66,7 +66,9 @@ export const auth = betterAuth({
         },
       ],
     }),
-    username(),
+    username({
+      minUsernameLength: 2,
+    }),
     nextCookies(),
   ],
 })
