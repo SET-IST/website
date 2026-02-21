@@ -112,21 +112,24 @@ model CompanyDetails {
 }
 
 model User {
-  id              String          @id @default(uuid())
+  id              String    @id @default(uuid())
   name            String
-  username        String?         @unique
-  email           String          @unique
-  emailVerified   Boolean         @default(false)
+  username        String?   @unique
+  email           String    @unique
+  emailVerified   Boolean   @default(false)
   image           String?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime?       @updatedAt
-  readChangelog   Boolean         @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  readChangelog   Boolean   @default(true)
   accounts        Account[]
   sessions        Session[]
-  role            UserType        @default(Student)
+  role            UserType  @default(Student)
   displayUsername String?
-  studentDetails  StudentDetails?
-  companyDetails  CompanyDetails?
+
+  authMeta Json? // Temporary way to create StudentDetails later on the OAuth flow
+
+  studentDetails StudentDetails?
+  companyDetails CompanyDetails?
 
   // Existing relation
   EventLog EventLog[] @relation("EventActor")

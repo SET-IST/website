@@ -105,11 +105,9 @@ export const FenixProfileHandler: any = (profile: any) => {
     id: profile.username,
     name: displayName(profile.name),
     email: profile.email,
-    studentDetails: {
-      create: {
-        university: institutionCode,
-        course: getFenixCourseCode(institutionCode, profile.roles),
-      },
+    authMeta: {
+      university: institutionCode,
+      course: getFenixCourseCode(institutionCode, profile.roles),
     },
   }
 }
