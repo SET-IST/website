@@ -100,7 +100,7 @@ export const auth = betterAuth({
           if(meta) {
             await PrismaService.user.update({
               where: { id: user.id },
-              data: { authMeta: undefined },
+              data: { authMeta: {} },
             })
           }
         },
