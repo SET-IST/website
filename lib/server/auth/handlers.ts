@@ -102,7 +102,7 @@ export const FenixProfileHandler: any = (profile: any) => {
   const institutionCode = profile.campus === 'Taguspark' || profile.campus === 'Oeiras' ? '1519' : '1518'
 
   return {
-    id: profile.username,
+    username: profile.username,
     name: displayName(profile.name),
     email: profile.email,
     authMeta: {

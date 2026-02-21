@@ -57,6 +57,11 @@ export const auth = betterAuth({
       mapProfileToUser: GoogleProfileHandler,
     },
   },
+  advanced: {
+    database: {
+      generateId: false
+    },
+  },
   plugins: [
     genericOAuth({
       config: [
