@@ -45,7 +45,7 @@ const direcao26: IDepartment = {
       name: 'Marina Nóbrega',
       image: marianaNobrega,
       role: 'Tesoureira',
-      linkedin: 'www.linkedin.com/in/marina-mnóbrega',
+      linkedin: 'https://www.linkedin.com/in/marina-mnóbrega',
     },
     {
       name: 'Tomás Rosado',
@@ -117,7 +117,7 @@ const logistica26: IDepartment = {
   slug: 'logistica',
   coordinators: [
     { name: 'Maria Costa', image: logisticaMariaCosta, role: 'Coordenadora', linkedin: 'https://www.linkedin.com/in/maria-lu%C3%ADs-costa-ab5761296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
-    { name: 'Madalena Félix', image: logisticaMadalenaFelix, role: 'Coordenadora', linkedin: 'www.linkedin.com/in/madalena-félix-912468330' },
+    { name: 'Madalena Félix', image: logisticaMadalenaFelix, role: 'Coordenadora', linkedin: 'https://www.linkedin.com/in/madalena-félix-912468330' },
     { name: 'Miguel Vieira', image: logisticaMiguelVieira, role: 'Coordenador', linkedin: '' },
   ],
   members: [
@@ -128,8 +128,8 @@ const logistica26: IDepartment = {
     { name: 'Margarida Simões', image: logisticaMargarida, role: 'Colaboradora', linkedin: 'https://www.linkedin.com/in/margarida-sim%C3%B5es-111367352?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
     { name: 'Miguel Trêpa', image: logisticaMiguelTrepa, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/migueltrepa' },
     { name: 'Karen Paliche', image: logisticaKarenPaliche, role: 'Colaboradora', linkedin: 'http://linkedin.com/in/karen-paliche-953373250' },
-    { name: 'Rafael Afonso', image: logisticaRafael, role: 'Colaborador', linkedin: 'www.linkedin.com/in/rafael-afonso-305187300' },
-    { name: 'Tiago Videira', image: logisticaTiagoVideira, role: 'Colaborador', linkedin: 'www.linkedin.com/in/tiago-videira-78a887196' },
+    { name: 'Rafael Afonso', image: logisticaRafael, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/rafael-afonso-305187300' },
+    { name: 'Tiago Videira', image: logisticaTiagoVideira, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/tiago-videira-78a887196' },
     { name: 'Zara Hassanali', image: logisticaZara, role: 'Colaboradora', linkedin: 'https://www.linkedin.com/in/zara-hassanali-a94016246?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
   ],
 }
@@ -156,23 +156,23 @@ const relacoesExternas26: IDepartment = {
   name: 'Relações Externas',
   slug: 'relacoes-externas',
   coordinators: [
-    { name: 'Afonso Louro', image: reAfonsoLouro, role: 'Coordenador', linkedin: 'www.linkedin.com/in/afonso-silva-louro-4a6a0632a' },
+    { name: 'Afonso Louro', image: reAfonsoLouro, role: 'Coordenador', linkedin: 'https://www.linkedin.com/in/afonso-silva-louro-4a6a0632a' },
     { name: 'Carolina Nunes', image: reCarolinaNunes, role: 'Coordenadora', linkedin: 'https://www.linkedin.com/in/carolina-n-s-c-nunes?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
     { name: 'Evanette Evaristo', image: reEvanetteEvaristo, role: 'Coordenadora', linkedin: 'https://www.linkedin.com/in/evanette-evaristo-19760023a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
     { name: 'João Gonçalves', image: reJoaoGoncalves, role: 'Coordenador', linkedin: 'https://www.linkedin.com/in/joão-paulo-soares-gonçalves-5236a8328?utm_source=share_via&utm_content=profile&utm_medium=member_android' },
   ],
   members: [
-    { name: 'Afonso Mendes', image: reAfonsoMendes, role: 'Colaborador', linkedin: 'www.linkedin.com/in/afonso- figueira-mendes/' },
-    { name: 'Camila Delgado', image: reCamilaDelgado, role: 'Colaboradora', linkedin: 'http://linkedin.com/in/ccamiladelgado' },
+    { name: 'Afonso Mendes', image: reAfonsoMendes, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/afonso- figueira-mendes/' },
+    { name: 'Camila Delgado', image: reCamilaDelgado, role: 'Colaboradora', linkedin: 'https://linkedin.com/in/ccamiladelgado' },
     { name: 'Carlota Pereira', image: reCarlotaPereira, role: 'Colaboradora', linkedin: 'https://www.linkedin.com/in/carlota-pereira-90a462391?utm_source=share_via&utm_content=profile&utm_medium=member_android' },
     { name: 'Dorisa Silva', image: reDorisaSilva, role: 'Colaboradora', linkedin: '' },
-    { name: 'Francisco Bica', image: reFranciscoBica, role: 'Colaborador', linkedin: 'http://linkedin.com/in/francisco-bica-8b6b4238b' },
+    { name: 'Francisco Bica', image: reFranciscoBica, role: 'Colaborador', linkedin: 'https://linkedin.com/in/francisco-bica-8b6b4238b' },
     { name: 'Francisco Franco', image: reFranciscoFranco, role: 'Colaborador', linkedin: '' },
     { name: 'Gonçalo Costa', image: reGoncaloCosta, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/gon%C3%A7alo-costa-711659338?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app' },
     { name: 'Gonçalo Reboleira', image: reGoncaloReboleira, role: 'Colaborador', linkedin: '' },
     { name: 'João Amaral', image: reJoaoAmaral, role: 'Colaborador', linkedin: 'https://www.linkedin.com/in/joaofgcamaral' },
     { name: 'Mariana Antunes', image: reMarianaAntunes, role: 'Colaboradora', linkedin: '' },
-    { name: 'Rita Cardeira', image: reRitaCardeira, role: 'Colaboradora', linkedin: 'http://linkedin.com/in/rita-cardeira-645b07281' },
+    { name: 'Rita Cardeira', image: reRitaCardeira, role: 'Colaboradora', linkedin: 'https://linkedin.com/in/rita-cardeira-645b07281' },
     { name: 'Sofia Varandas', image: reSofiaVarandas, role: 'Colaboradora', linkedin: 'https://www.linkedin.com/in/sofia-varandas-0713a8395?trk=contact-info' },
   ],
 }
