@@ -13,6 +13,7 @@ import {
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaService } from '@/core/services/server/prisma'
 import { hashPassword, isSamePassword } from '@/core/utils/auth'
+import { Prisma } from '@prisma/client'
 
 export const auth = betterAuth({
   database: prismaAdapter(PrismaService, {
@@ -100,7 +101,7 @@ export const auth = betterAuth({
           if(meta) {
             await PrismaService.user.update({
               where: { id: user.id },
-              data: { authMeta: undefined },
+              data: { authMeta: Prisma.DbNull },
             })
           }
         },
