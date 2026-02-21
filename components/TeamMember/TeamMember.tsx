@@ -64,7 +64,12 @@ const TeamMember = ({
         <ActionIcon
           component="a"
           target="_blank"
-          href={data.linkedin}
+          rel="noopener noreferrer"
+          href={
+            data.linkedin.startsWith('http')
+              ? data.linkedin
+              : `https://${data.linkedin}`
+          }
           size="lg"
           variant="subtle"
           aria-label="LinkedIn"
