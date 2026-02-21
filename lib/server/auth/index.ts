@@ -16,7 +16,7 @@ import { hashPassword, isSamePassword } from '@/core/utils/auth'
 
 export const auth = betterAuth({
   database: prismaAdapter(PrismaService, {
-    provider: 'sqlite',
+    provider: 'postgresql',
   }),
   account: {
     accountLinking: {
@@ -32,6 +32,10 @@ export const auth = betterAuth({
       },
       readChangelog: {
         type: 'string',
+        input: false,
+      },
+      authMeta: {
+        type: 'json',
         input: false,
       },
     },
@@ -71,6 +75,38 @@ export const auth = betterAuth({
     }),
     nextCookies(),
   ],
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          console.log("USERRRRRRR", user)
+          if(user.role != "Student" && user.role != "Staff") return;
+
+          const meta = user.authMeta as any;
+
+          await PrismaService.studentDetails.upsert({
+            where: { userId: user.id },
+            update: {
+              university: meta ? meta.university : "",
+              course: meta ? meta.course : "",
+            },
+            create: {
+              userId: user.id,
+              university: meta ? meta.university : "",
+              course: meta ? meta.course : "",
+            },
+          })
+
+          if(meta) {
+            await PrismaService.user.update({
+              where: { id: user.id },
+              data: { authMeta: undefined },
+            })
+          }
+        },
+      },
+    },
+  },
 })
 
 export type Session = typeof auth.$Infer.Session
