@@ -42,30 +42,31 @@ export function TCDialog() {
         <Section title="1. Objectivo">
           a) O presente documento tem por objetivo definir as condições para a
           submissão de currículos através da plataforma disponibilizada pela
-          equipa do evento JET – Jornadas Empresariais e
-          Tecnológicas, a decorrer entre os dias 24 a 27 de Fevereiro de 2025 no
-          campus Oeiras do Instituto Superior Técnico, sito em Avenida
-          Professor Doutor Cavaco Silva, 2744 -016 Porto Salvo, Portugal.
+          equipa do evento JET – Jornadas Empresariais e Tecnológicas, a
+          decorrer entre os dias 23 a 25 de Fevereiro de 2026 no campus Oeiras
+          do Instituto Superior Técnico, sito em Avenida Professor Doutor Cavaco
+          Silva, 2744 -016 Porto Salvo, Portugal.
         </Section>
         <Section title="2. Informações">
-          a) O evento JET – Jornadas Empresariais e Tecnológicas é organizado pelo
-          núcleo LAGE2 – Laboratório de Apoio à Gestão de Atividades
-          Extracurriculares dos Estudantes, registado como associação
+          a) O evento JET – Jornadas Empresariais e Tecnológicas é organizado
+          pelo núcleo NEEGI – Núcleo de Estudantes de Engenharia e Gestão
+          Industrial e o núcleo LAGE2 – Laboratório de Apoio à Gestão de
+          Atividades Extracurriculares dos Estudantes, registado como associação
           MSSKILLSLAB – Núcleo de Apoio À Gestão de Atividades Extracurriculares
           dos Estudantes, com sede em Instituto Superior Técnico – Campus
-          Oeiras, Avenida Professor Doutor Cavaco Silva, 2744-016 Porto
-          Salvo, Portugal. <br />
+          Oeiras, Avenida Professor Doutor Cavaco Silva, 2744-016 Porto Salvo,
+          Portugal.
+          <br />
           <br />
           b) A submissão de currículos por parte dos alunos, e o posterior
-          acesso por parte das empresas, tem por principal objetivo dar mais
-          uma oportunidade aos alunos de serem reconhecidos pelas empresas que
-          detêm acesso aos currículos. <br />
+          acesso por parte das empresas, tem por principal objetivo dar mais uma
+          oportunidade aos alunos de serem reconhecidos pelas empresas que detêm
+          acesso aos currículos. <br />
           <br />
-          c) A plataforma de submissão de currículos do evento JET,
-          incluída na app da JET, é uma plataforma onde os participantes desta
-          edição podem submeter os seus currículos, em formato digital PDF, para
-          consulta das empresas que escolham e decidam ter acesso aos
-          currículos.
+          c) A plataforma de submissão de currículos do evento JET, incluída na
+          app da JET, é uma plataforma onde os participantes desta edição podem
+          submeter os seus currículos, em formato digital PDF, para consulta das
+          empresas que escolham e decidam ter acesso aos currículos.
           <br />
           <br />
           d) O website do evento JET (
@@ -85,9 +86,9 @@ export function TCDialog() {
           plataforma.
           <br />
           <br />
-          c) A equipa do evento JET fornece credenciais de acesso à
-          plataforma a cada empresa, sendo que cada empresa se compromete a que
-          a credencial dada seja apenas usada por colaboradores da empresa.
+          c) A equipa do evento JET fornece credenciais de acesso à plataforma a
+          cada empresa, sendo que cada empresa se compromete a que a credencial
+          dada seja apenas usada por colaboradores da empresa.
           <br />
           <br />
           d) Os currículos submetidos estarão disponíveis na plataforma durante
@@ -105,7 +106,7 @@ export function TCDialog() {
           empresa tenha interesse em apresentar alguma proposta ao aluno.
         </Section>
         <Text fw="bold" size="sm">
-          Porto Salvo, 1 de Janeiro de 2025
+          Porto Salvo, 22 de Fevereiro de 2026
         </Text>
       </div>
     </Modal>
