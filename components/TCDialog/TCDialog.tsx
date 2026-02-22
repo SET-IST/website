@@ -92,8 +92,9 @@ export function TCDialog() {
           <br />
           <br />
           d) Os currículos submetidos estarão disponíveis na plataforma durante
-          um ano após a sua submissão, sendo que a equipa do evento JET reserva
-          o direito a apagar os ficheiros submetidos antes do prazo.
+          um ano após a sua submissão. O utilizador poderá, a qualquer momento,
+          solicitar a retificação ou eliminação dos seus dados através do
+          contacto oficial da organização geral@jet-tagus.tecnico.ulisboa.pt.
           <br />
           <br />
           e) Cada empresa também se compromete a apagar o(s) currículo(s)
