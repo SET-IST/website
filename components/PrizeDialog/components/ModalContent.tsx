@@ -82,6 +82,14 @@ export function ModalContent() {
   useEffect(() => {
     if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints && !mustSpin) {
       const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name);
+
+      if (prizeIndex < 0) {
+        console.error('Award not found in wheel data:')
+        setWheelStopped(true)
+        setMustSpin(false)
+        return
+      }
+
       setPrizeNumber(prizeIndex);
       setMustSpin(true);
     }
