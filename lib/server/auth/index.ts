@@ -1,6 +1,5 @@
 import { betterAuth } from 'better-auth'
 import { genericOAuth, username } from 'better-auth/plugins'
-import { nextCookies } from "better-auth/next-js";
 import bcrypt from "bcrypt"
 
 // Handlers and Callbacks
@@ -78,8 +77,7 @@ export const auth = betterAuth({
     }),
     username({
       minUsernameLength: 2,
-    }),
-    nextCookies(),
+    })
   ],
   databaseHooks: {
     user: {
