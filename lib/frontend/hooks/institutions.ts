@@ -9,7 +9,7 @@ import {
 export const useInstitutions = () => {
   return useQuery<InstituitonData, Error>({
     queryKey: ['Institutions'],
-    ...fetchInstituitonData
+    queryFn: fetchInstituitonData
   });
 }
 
