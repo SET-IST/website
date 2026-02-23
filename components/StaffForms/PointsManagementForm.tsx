@@ -121,11 +121,11 @@ const PointsManagementForm = () => {
         <Button.Group orientation="vertical">
           <Button
             disabled={!isValidUser}
-            onClick={() => reducePoints(40)}
+            onClick={() => reducePoints(20)}
             fullWidth
             variant="default"
           >
-            Compra Crepe (-40)
+            Compra Crepe (-20)
           </Button>
           <Button
             disabled={!isValidUser}
