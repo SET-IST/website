@@ -9,6 +9,7 @@ import { fetchRedemptionSettings, RedemptionSettings, StudentProfile } from '@/l
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   showErrorNotification,
+  showInfoNotification,
   showSuccessNotification,
 } from '../Notifications'
 
@@ -55,6 +56,19 @@ const PointsManagementForm = () => {
 
   const addPoints = (points: number) => {
     const val = !form.values.points ? points : form.values.points + points
+    form.setFieldValue('points', val)
+  }
+
+  const reducePoints = (points: number) => {
+    if(!form.values.points) form.values.points = 0;
+    const val = form.values.points - points
+    if(val < 0) {
+      showErrorNotification({
+        title: 'Quantidade Inválida',
+        message: 'Pontos insuficientes para a redução.',
+      })
+      return;
+    }
     form.setFieldValue('points', val)
   }
 
@@ -105,6 +119,14 @@ const PointsManagementForm = () => {
           allowNegative={false}
         />
         <Button.Group orientation="vertical">
+          <Button
+            disabled={!isValidUser}
+            onClick={() => reducePoints(40)}
+            fullWidth
+            variant="default"
+          >
+            Compra Crepe (-40)
+          </Button>
           <Button
             disabled={!isValidUser}
             onClick={() => addPoints(redemptionSettings.data?.REWARD ?? 10)}
