@@ -11,6 +11,7 @@ import {
   Tooltip,
   SegmentedControl,
   rem,
+  ScrollArea,
 } from '@mantine/core'
 import { useActivities } from '@/lib/frontend/hooks'
 import { ActivityData } from '@/lib/frontend/api/activities'
@@ -129,20 +130,29 @@ export function ActivitySelect({ callback }: AccountSelectProps) {
         <Combobox.Dropdown>
           <SegmentedControl
             fullWidth
-            value={currentDay ? new Date(currentDay.date).toISOString() : undefined}
+            value={
+              currentDay ? new Date(currentDay.date).toISOString() : undefined
+            }
             onChange={setCurrentDate}
-            data={activeDays.map(d => ({
+            data={activeDays.map((d) => ({
               label: 'Dia ' + new Date(d.date).getDate(),
-              value: new Date(d.date).toISOString()
+              value: new Date(d.date).toISOString(),
             }))}
           />
-          <Combobox.Options>
-            {options}
-            {!activities ||
-              (activities?.length === 0 && (
-                <Combobox.Empty>Sem resultados</Combobox.Empty>
-              ))}
-          </Combobox.Options>
+          <ScrollArea.Autosize
+            mah="60vh"
+            miw={0}
+            type="auto"
+            offsetScrollbars
+          >
+            <Combobox.Options>
+              {options}
+              {!activities ||
+                (activities?.length === 0 && (
+                  <Combobox.Empty>Sem resultados</Combobox.Empty>
+                ))}
+            </Combobox.Options>
+          </ScrollArea.Autosize>
         </Combobox.Dropdown>
       </Combobox>
     </>
