@@ -48,7 +48,7 @@
     "embla-carousel-react": "^8.6.0",
     "eslint": "^9.38.0",
     "eslint-config-next": "16.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "luxon": "^3.2.1",
     "mantine-form-yup-resolver": "^2.0.0",
     "mime": "^3.0.0",
