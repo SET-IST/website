@@ -1,56 +1,61 @@
 # JET 26 Web Application
 
-First, install the required packages:
+## Quick start
 
-```bash
-yarn install
-```
+**Prerequisites:** [Node.js](https://nodejs.org/en/download), Yarn 4 (run `corepack enable` if `yarn --version` isn't 4.x), [Docker Desktop](https://www.docker.com/products/docker-desktop/) and the `psql` client. On Windows see the note below.
 
-Then run the development server:
+1. Install the dependencies and generate the Prisma client:
+   ```bash
+   yarn install
+   yarn prisma generate
+   ```
+2. Set up your environment file (`.env`, in the repo root, next to `package.json`). Do this **before** the seed: its migration step reads the database URL from `.env`.
+   - There is no `.env.example`: **ask the team lead for the `.env` file** and save it in the repo root. It is gitignored, so never commit it.
+   - Windows: Explorer won't let you name a file `.env` directly. Rename it from a terminal (`ren a.env .env`) or in VS Code, and make sure it isn't saved as `.env.txt`.
+3. Start the database container (it starts **empty**):
+   ```bash
+   yarn dev:db:start
+   ```
+4. Create the `setdb` database and load the seed data:
+   ```bash
+   yarn dev:db:seed
+   ```
+   This creates `setdb`, imports `database/seeds/PROD_db_seed-22-10-2026.sql` and applies the migrations. That file is **gitignored** (the `seeds/` folder is): ask the team lead for it and save it in `database/seeds/` first. `psql` will ask for the `postgres` password; it is the one defined for the database service in `database/docker-compose.yml`.
+5. Start the dev server and open [http://localhost:3000](http://localhost:3000):
+   ```bash
+   yarn dev
+   ```
+   If you see `Cannot read properties of undefined` on an enum, the Prisma client is missing or stale. Stop the server (`Ctrl+C`) and run:
+   ```bash
+   yarn prisma generate
+   rmdir /s /q .next     # cmd; in PowerShell/WSL: rm -rf .next
+   yarn dev
+   ```
 
-```bash
-yarn dev
-```
+> **Windows:** you can work natively or in WSL.
+> - **Native (cmd/PowerShell):** run `corepack enable` once in a terminal opened **as Administrator** (it starts in `C:\Windows\System32`; if `corepack` isn't recognized, run `npm install -g corepack` first), then work from a normal terminal in the repo folder (`cd /d "C:\path\to\project"`). To get `psql`, install [PostgreSQL for Windows](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) (on *Select Components*, untick everything except *Command Line Tools*) and add `C:\Program Files\PostgreSQL\<version>\bin` to your `PATH`.
+> - **WSL:** Docker Desktop's WSL integration must be enabled (Settings → Resources → WSL integration → your distro), and Node, Yarn and `psql` must be installed **inside WSL**. Follow the [WSL steps in LOCAL_SETUP.md](LOCAL_SETUP.md#windows).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **Port 5432 already in use?** Only if Postgres is installed locally, stop it with `sudo service postgresql stop`. On a clean machine you can skip this (a "Unit not loaded" message is harmless). On native Windows, a full PostgreSQL install also runs a service on 5432: stop it in `services.msc` (or install only the command line tools).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Stuck? See the full guide in [LOCAL_SETUP.md](LOCAL_SETUP.md).
 
-## Set up alongside database:
+## Database commands
 
-- Make sure you have docker and docker-compose installed
-- Make sure you are not running any service of postgres locally by running:
-  ```
-  sudo service postgresql stop
-  ```
-- Start the db
-  ```
-  yarn dev:db:start
-  ```
-- Sometimes it's useful to have some fake data. You can seed the database using:
-  ```
-  yarn dev:db:seed
-  ```
-  > **Warning: Do not run this command after a db push!**
-- You can also save a snapshot of the data present in the db using:
-  ```
-  yarn dev:db:dump
-  ```
-- After making changes to the prisma schema, run the following command to update the db:
-  ```
-  yarn migrate dev
-  ```
-  > **Warning: You should always give suitable names for migrations and alter them in a way that won't break a production environment.**
-- To play/check values on tables created run:
-  ```
-  yarn prisma studio
-  ```
-- To stop the db instance:
-  ```
-  yarn dev:db:stop
-  ```
+| Command | What it does |
+| --- | --- |
+| `yarn dev:db:start` | Start the Postgres container |
+| `yarn dev:db:seed` | Create `setdb` and load seed data (**do not run after a db push**, it fails if `setdb` already exists) |
+| `yarn dev:db:dump` | Save a snapshot of `setdb` to `database/seeds/` |
+| `yarn prisma migrate dev` | Apply/create migrations after changing the Prisma schema |
+| `yarn prisma studio` | Browse and edit the tables at <http://localhost:5555> (run it in a second terminal while `yarn dev` runs) |
+| `yarn dev:db:stop` | Stop **and remove** the containers, Postgres and Redis (**your local data is deleted**, run `yarn dev:db:dump` first) |
 
-Tip: vscode docker extension let's you see the instances created
+> **Warning:** give migrations suitable names and write them so they won't break a production environment.
+
+Tip: the VS Code Docker extension lets you see the running containers.
+
+The `pages/api` directory is mapped to `/api/*`. Files there are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Development Processes
 
