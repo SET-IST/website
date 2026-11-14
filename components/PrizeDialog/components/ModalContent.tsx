@@ -78,43 +78,61 @@ export function ModalContent() {
   // Checkes if the award token has been previously seen
   const isSameToken = lastAwardToken === awardData?.id;
 
+  // Reset wheel state whenever the award changes (fixes stale state after QR closes)
+  useEffect(() => {
+    setWheelStopped(false)
+    setMustSpin(false)
+    setPrizeNumber(0)
+  }, [awardData?.id])
+
   // Starts the wheel when the award is loaded
   useEffect(() => {
-    if (awardLoaded && data_wheel.length > 1 && !notEnoughPoints && !mustSpin) {
-      const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name);
-
-      if (prizeIndex < 0) {
-        console.error('Award not found in wheel data:')
-        setWheelStopped(true)
-        setMustSpin(false)
-        return
-      }
-
-      setPrizeNumber(prizeIndex);
-      setMustSpin(true);
+    if (!awardLoaded || notEnoughPoints || !Array.isArray(data_wheel) || data_wheel.length === 0) {
+      return
     }
-  }, [awardLoaded, data_wheel]);
+
+    const prizeIndex = data_wheel.findIndex((item) => item.option === awardData?.award.name)
+
+    if (prizeIndex < 0) {
+      console.error('Award not found in wheel data', {
+        awardId: awardData?.id,
+        awardName: awardData?.award?.name,
+        wheelData: data_wheel,
+      })
+
+      setWheelStopped(true)
+      setMustSpin(false)
+      return
+    }
+
+    setPrizeNumber(prizeIndex)
+    setMustSpin(true)
+  }, [awardLoaded, data_wheel, awardData?.id, awardData?.award?.name, notEnoughPoints])
 
   // Closes model after redeeming
   useEffect(() => {
-    if(awardLoaded){
-      if (token === ''){
+    if (awardLoaded) {
+      if (token === '') {
         setToken(awardData?.id || '')
-      } else if (token !== awardData?.id){        // Another token was loaded
+      } else if (token !== awardData?.id) {
+        setWheelStopped(false)
+        setMustSpin(false)
+        setPrizeNumber(0)
         showRedeemModal(false)
       }
-    }
-    // No Token
-    else{
+    } else {
       // AwardError means there are no points
-      // AwardData means that there were points previousle
+      // AwardData means that there were points previously
       // meaning a qr was redeemed and all points were spent
       // token === '' means user reopened the prize with no points after redeeming the last one
-      if(awardError && awardData && token !==''){
+      if (awardError && awardData && token !== '') {
+        setWheelStopped(false)
+        setMustSpin(false)
+        setPrizeNumber(0)
         showRedeemModal(false)
       }
     }
-  }, [awardData, awardError]);
+  }, [awardData, awardError, token, showRedeemModal])
 
   return (
     <div className="h-screen p-4 flex flex-col">
