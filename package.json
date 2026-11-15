@@ -3,7 +3,8 @@
   "version": "0.2.0",
   "private": true,
   "prisma": {
-    "schema": "database/prisma/schema.prisma"
+    "schema": "database/prisma/schema.prisma",
+    "seed": "tsx database/prisma/seed.ts"
   },
   "scripts": {
     "prepare": "husky install",
@@ -94,7 +95,8 @@
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^2.8.4",
-    "prisma": "^6.18.0"
+    "prisma": "^6.18.0",
+    "tsx": "^4.23.15"
   },
   "browser": {
     "fs": false
