@@ -59,3 +59,10 @@ export const useAward = () => {
     },
   });
 }
+
+export const useInvalidateAward = (queryClient: QueryClient) => {
+  return () => {
+    queryClient.invalidateQueries({ queryKey: ['Award'] })
+    queryClient.invalidateQueries({ queryKey: ['Profile'] })
+  }
+}
