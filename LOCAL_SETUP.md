@@ -6,10 +6,10 @@ Step-by-step guide to run the JET 26 website on your machine. The short version 
 
 | Tool | Notes |
 | --- | --- |
-| Node.js | [Download](https://nodejs.org/en/download). Use the version the team uses (ask if unsure) |
-| Yarn 4 | The repo pins `yarn@4.10.3`. Run `corepack enable` once (recent Node versions don't bundle corepack: `npm install -g corepack` first) |
+| Node.js 22 | [Download](https://nodejs.org/en/download). The Dockerfile uses `node:22-alpine`, so use Node 22 |
+| Yarn 4 | The repo pins `yarn@4.10.3`. Run `corepack enable` once (it comes with Node 22. If `corepack` isn't found, run `npm install -g corepack` first) |
 | Docker + Compose | [Docker Desktop](https://www.docker.com/products/docker-desktop/) on Windows/macOS |
-| `psql` / `pg_dump` | Client only, same version as the container's Postgres or newer (Windows: [PostgreSQL installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)). Needed by `yarn dev:db:seed` and `yarn dev:db:dump`. Ubuntu/WSL: `sudo apt install postgresql-client` |
+| `psql` / `pg_dump` | Client only, same version as the container's Postgres or newer (Windows: [PostgreSQL installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)). Needed by `yarn dev:db:seed` and `yarn dev:db:dump`. Ubuntu/WSL: see WSL step 4 |
 | Git | |
 
 ### Windows
@@ -18,13 +18,13 @@ You can work natively (cmd/PowerShell) or in WSL2.
 
 **Native Windows**
 
-1. Install Node.js and Docker Desktop.
+1. Install Node.js 22 and Docker Desktop.
 2. Open cmd **as Administrator** and run:
    ```bat
    corepack enable
    ```
    Without admin rights it fails with a permissions error. The folder doesn't matter for this command (an admin cmd starts in `C:\Windows\System32`), but then close that window.
-   If it says `'corepack' is not recognized`, your Node probably doesn't bundle corepack (recent versions). Run `npm install -g corepack` first, then `corepack enable`. If `node --version` also fails, reopen the terminal (or Windows) so the PATH refreshes, or reinstall Node.
+   If it says `'corepack' is not recognized`, your Node probably doesn't bundle corepack (newer versions don't). Run `npm install -g corepack` first, then `corepack enable`. If `node --version` also fails, reopen the terminal (or Windows) so the PATH refreshes, or reinstall Node.
 3. Open a normal terminal **in the repo folder** (for an admin cmd: `cd /d "C:\path\to\project"`, `/d` also switches drive, quotes are needed if the path has spaces) and continue below. Check `yarn --version` prints 4.x (a global Yarn 1.22.x installed by another project will otherwise be used).
 4. Install the `psql` client by installing PostgreSQL for Windows ([download](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)), but **only the command line tools**. On the installer's *Select Components* screen:
    - **untick** *PostgreSQL Server*, *pgAdmin 4* and *Stack Builder*
@@ -39,25 +39,28 @@ Everything must be installed **inside WSL**. WSL inherits your Windows PATH, so 
 
 1. Install WSL2 and a distro (e.g. Ubuntu).
 2. Docker Desktop → **Settings → Resources → WSL integration** → enable it for your distro → *Apply & restart*. In the WSL terminal, check that `docker ps` works.
-3. Install Node with nvm, then Yarn. In the WSL terminal:
+3. Install Node 22 with nvm, then Yarn. In the WSL terminal:
    ```bash
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
    ```
    Close and reopen the terminal (or `nvm` won't be found), then:
    ```bash
-   nvm install --lts
-   npm install -g corepack     # recent Node versions no longer bundle it
+   nvm install 22              # if "command not found": npm install -g corepack
    corepack enable
    which node corepack yarn    # must be under ~/.nvm/..., NOT /mnt/c/...
    ```
    (If `curl` is missing: `sudo apt update && sudo apt install -y curl`.)
-4. Install the Postgres **client** (needed by `yarn dev:db:seed` and `yarn dev:db:dump`; this does not install a Postgres server). Its version must be **the same as or newer than the container's Postgres** (currently 18; check with `docker ps` / the image in `database/docker-compose.yml`), and Ubuntu's own `postgresql-client` is older, so use the official PostgreSQL apt repository:
-   ```bash
-   sudo apt update && sudo apt install -y postgresql-common
-   sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-   sudo apt install -y postgresql-client-18
-   pg_dump --version      # should print 18.x
-   ```
+4. Install the Postgres **client** (needed by `yarn dev:db:seed` and `yarn dev:db:dump`; this does not install a Postgres server). Its version must be **the same as or newer than the container's Postgres**. `database/docker-compose.yml` uses `image: postgres` with no version tag, so the container follows the latest major version: check it with the containers running (`yarn dev:db:start`, see section 4):
+```bash
+docker exec <container> postgres --version     # container name from `docker ps`
+```
+   Ubuntu's own `postgresql-client` is older, so install the matching major version (`<major>`, the first number of that output) from the official PostgreSQL apt repository:
+```bash
+sudo apt update && sudo apt install -y postgresql-common
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+sudo apt install -y postgresql-client-<major>
+pg_dump --version      # same major version as the container, or newer
+```
 5. Clone the repo **inside WSL** (e.g. `~/projects`). Under `/mnt/c/...` it also works but is much slower (installs, builds, the pre-push hook).
 6. `cd` into the cloned folder (the one containing `package.json`), check `yarn --version` prints 4.x, and run every command below from there.
 
@@ -112,7 +115,7 @@ yarn dev:db:start     # start the container
 yarn dev:db:seed      # create setdb + import seed + apply migrations
 ```
 
-**Before seeding**, get the seed file from the team lead and save it as `database/seeds/PROD_db_seed-22-10-2026.sql`. It is not in the repo: the `seeds/` folder is in `.gitignore` (and the file may contain production data, so don't force-add it to Git).
+**Before seeding**, get the seed file referenced by the `dev:db:seed` script in `package.json` from the team lead and save it as `database/seeds/` under the name the script expects. It is not in the repo: the `seeds/` folder is in `.gitignore` (and the file may contain production data, so don't force-add it to Git).
 
 `yarn dev:db:seed` runs `psql`, so it will ask for the `postgres` password. It stops at the first error, for example if `setdb` already exists.
 
@@ -167,8 +170,8 @@ Use it to browse and edit tables, for example the role of your own user, to see 
 | Port 5432 already in use | Local Postgres is running: `sudo service postgresql stop` |
 | `docker: command not found` in WSL | Enable Docker Desktop's WSL integration (section 1) |
 | `psql: command not found` | Install the client (WSL step 4, or the native Windows steps) |
-| `pg_dump: error: aborting because of server version mismatch` | The client is older than the container's Postgres (Ubuntu's default is 14, the container runs 18). Install `postgresql-client-18` from the PostgreSQL apt repository (WSL step 4) |
-| Seed fails with "No such file" / "cannot find the file" for `PROD_db_seed-...sql` | The seed file is missing (it's gitignored). Ask the team lead for it and save it in `database/seeds/`. The script had already created an empty `setdb`, so drop it before retrying: `psql -h localhost -p 5432 -U postgres -c "drop database setdb"`, then `yarn dev:db:seed` |
+| `pg_dump: error: aborting because of server version mismatch` | The client is older than the container's Postgres (Ubuntu's default `postgresql-client` is older). Check the container's version with `docker exec <container> postgres --version` and install the matching `postgresql-client-<major>` from the PostgreSQL apt repository (WSL step 4) |
+| Seed fails with "No such file" / "cannot find the file" for the seed file referenced by the `dev:db:seed` script | The seed file is missing (it's gitignored). Ask the team lead for it and save it in `database/seeds/` under the name the script expects. The script had already created an empty `setdb`, so drop it before retrying: `psql -h localhost -p 5432 -U postgres -c "drop database setdb"`, then `yarn dev:db:seed` |
 | `database "setdb" already exists` on seed | It was already created, e.g. by another clone or from Windows/WSL (the container is shared). Skip the seed, or `yarn dev:db:dump` and then stop and start the containers (losing data) |
 | `Missing script: migrate` | Use `yarn prisma migrate dev` |
 | `.env` not picked up | It must be named exactly `.env` (not `a.env`, not `.env.txt`) and sit next to `package.json`. Restart `yarn dev` after changing it |

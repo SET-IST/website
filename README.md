@@ -2,7 +2,7 @@
 
 ## Quick start
 
-**Prerequisites:** [Node.js](https://nodejs.org/en/download), Yarn 4 (run `corepack enable` if `yarn --version` isn't 4.x), [Docker Desktop](https://www.docker.com/products/docker-desktop/) and the `psql` client. On Windows see the note below.
+**Prerequisites:** [Node.js 22](https://nodejs.org/en/download), Yarn 4 (run `corepack enable` if `yarn --version` isn't 4.x), [Docker Desktop](https://www.docker.com/products/docker-desktop/) and the `psql` client(same version as the container's Postgres, or newer). On Windows see the note below.
 
 1. Install the dependencies and generate the Prisma client:
    ```bash
@@ -20,7 +20,7 @@
    ```bash
    yarn dev:db:seed
    ```
-   This creates `setdb`, imports `database/seeds/PROD_db_seed-22-10-2026.sql` and applies the migrations. That file is **gitignored** (the `seeds/` folder is): ask the team lead for it and save it in `database/seeds/` first. `psql` will ask for the `postgres` password; it is the one defined for the database service in `database/docker-compose.yml`.
+   This creates `setdb`, imports the seed file referenced by the `dev:db:seed` script in `package.json` and applies the migrations. That file is **gitignored** (the `seeds/` folder is): ask the team lead for it and save it in `database/seeds/` first. `psql` will ask for the `postgres` password; it is the one defined for the database service in `database/docker-compose.yml`.
 5. Start the dev server and open [http://localhost:3000](http://localhost:3000):
    ```bash
    yarn dev
