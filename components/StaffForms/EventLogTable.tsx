@@ -1,6 +1,7 @@
 // components/StaffForms/EventLogTable.tsx
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import {
   Alert,
   Badge,
@@ -37,6 +38,8 @@ interface EventLog {
 }
 
 const PAGE_SIZE = 25
+const REFETCH_INTERVAL_MS = 15_000
+const EMPTY_LOGS: EventLog[] = []
 
 const TYPE_COLORS: Record<EventLogType, string> = {
   POINTS: 'blue',
@@ -44,10 +47,38 @@ const TYPE_COLORS: Record<EventLogType, string> = {
   ENROLLMENTS: 'teal',
 }
 
+interface SortHeaderProps {
+  label: string
+  k: SortKey
+  sortKey: SortKey
+  sortDir: SortDir
+  onToggle: (key: SortKey) => void
+}
+
+const SortHeader = ({
+  label,
+  k,
+  sortKey,
+  sortDir,
+  onToggle,
+}: SortHeaderProps) => (
+  <UnstyledButton onClick={() => onToggle(k)} fw={700} fz="inherit">
+    {label}
+    {sortKey === k ? (sortDir === 'asc' ? ' ▲' : ' ▼') : ''}
+  </UnstyledButton>
+)
+
 export const EventLogTable = () => {
-  const [logs, setLogs] = useState<EventLog[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { data, isLoading, isFetching, error, refetch } = useQuery<EventLog[]>({
+    queryKey: ['staff', 'eventlog'],
+    queryFn: async () => {
+      const res = await fetch('/api/staff/eventlog')
+      if (!res.ok) throw new Error(`Request failed (${res.status})`)
+      return res.json()
+    },
+    refetchInterval: REFETCH_INTERVAL_MS,
+  })
+  const logs = data ?? EMPTY_LOGS
 
   const [filterType, setFilterType] = useState<EventLogType | 'ALL'>('ALL')
   const [from, setFrom] = useState('')
@@ -57,32 +88,14 @@ export const EventLogTable = () => {
 
   const [sortKey, setSortKey] = useState<SortKey>('timestamp')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
-  const [page, setPage] = useState(1)
 
   const isMobile = useMediaQuery('(max-width: 48em)')
-
-  // Fetch all entries once; sorting/filtering/pagination happen client-side
-  useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const res = await fetch('/api/staff/eventlog')
-        if (!res.ok) throw new Error(`Request failed (${res.status})`)
-        setLogs(await res.json())
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Unknown error')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchLogs()
-  }, [])
 
   const filtered = useMemo(() => {
     const q = debouncedSearch.trim().toLowerCase()
     const fromTime = from ? new Date(from).getTime() : null
-    const toTime = to ? new Date(to).getTime() : null
+    // datetime-local has minute precision: include the whole end minute
+    const toTime = to ? new Date(to).getTime() + 59_999 : null
 
     const result = logs.filter((log) => {
       if (filterType !== 'ALL' && log.type !== filterType) return false
@@ -112,12 +125,16 @@ export const EventLogTable = () => {
     })
   }, [logs, filterType, from, to, debouncedSearch, sortKey, sortDir])
 
-  // Go back to page 1 whenever the result set changes
-  useEffect(() => {
-    setPage(1)
-  }, [filterType, from, to, debouncedSearch, sortKey, sortDir])
+  // The page is tied to the current filters/sort: when they change, the stored
+  // page no longer matches and we fall back to page 1 (no effect needed).
+  const filterKey = `${filterType}|${from}|${to}|${debouncedSearch}|${sortKey}|${sortDir}`
+  const [pageState, setPageState] = useState({ key: filterKey, page: 1 })
+  const setPage = (p: number) => setPageState({ key: filterKey, page: p })
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const requestedPage = pageState.key === filterKey ? pageState.page : 1
+  // also covers the list shrinking after an auto-refresh
+  const page = Math.min(requestedPage, totalPages)
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
   const hasFilters =
@@ -139,15 +156,8 @@ export const EventLogTable = () => {
     }
   }
 
-  const SortHeader = ({ label, k }: { label: string; k: SortKey }) => (
-    <UnstyledButton onClick={() => toggleSort(k)} fw={700} fz="inherit">
-      {label}
-      {sortKey === k ? (sortDir === 'asc' ? ' ▲' : ' ▼') : ''}
-    </UnstyledButton>
-  )
-
   const renderBody = () => {
-    if (loading) {
+    if (isLoading) {
       return (
         <Stack gap="xs">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -160,7 +170,7 @@ export const EventLogTable = () => {
     if (error) {
       return (
         <Alert color="red" title="Could not load the event log">
-          {error}
+          {error.message}
         </Alert>
       )
     }
@@ -209,14 +219,32 @@ export const EventLogTable = () => {
           <Table.Thead>
             <Table.Tr>
               <Table.Th>
-                <SortHeader label="Timestamp" k="timestamp" />
+                <SortHeader
+                  label="Timestamp"
+                  k="timestamp"
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onToggle={toggleSort}
+                />
               </Table.Th>
               <Table.Th>
-                <SortHeader label="Type" k="type" />
+                <SortHeader
+                  label="Type"
+                  k="type"
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onToggle={toggleSort}
+                />
               </Table.Th>
               <Table.Th>Description</Table.Th>
               <Table.Th>
-                <SortHeader label="Actor" k="actor" />
+                <SortHeader
+                  label="Actor"
+                  k="actor"
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onToggle={toggleSort}
+                />
               </Table.Th>
               <Table.Th>Target</Table.Th>
             </Table.Tr>
@@ -310,15 +338,28 @@ export const EventLogTable = () => {
             )}
           </Group>
 
-          {!loading && !error && (
-            <Text size="sm" c="dimmed">
-              {filtered.length} {filtered.length === 1 ? 'entry' : 'entries'}
-            </Text>
+          {!isLoading && (
+            <Group justify="space-between">
+              {!error && (
+                <Text size="sm" c="dimmed">
+                  {filtered.length}{' '}
+                  {filtered.length === 1 ? 'entry' : 'entries'}
+                </Text>
+              )}
+              <Button
+                variant="light"
+                size="xs"
+                loading={isFetching}
+                onClick={() => refetch()}
+              >
+                Refresh
+              </Button>
+            </Group>
           )}
 
           {renderBody()}
 
-          {!loading && !error && filtered.length > PAGE_SIZE && (
+          {!isLoading && !error && filtered.length > PAGE_SIZE && (
             <Group justify="center">
               <Pagination total={totalPages} value={page} onChange={setPage} />
             </Group>
